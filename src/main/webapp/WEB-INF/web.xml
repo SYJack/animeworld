@@ -5,6 +5,55 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	
-	<display-name>Archetype Created Web Application</display-name>
+	<display-name>animeworld</display-name>
+	
+	<welcome-file-list>  
+        <welcome-file>/WEB-INF/jsp/login.jsp</welcome-file>  
+    </welcome-file-list>  
+	<!-- 配置DispatcherServlet -->
+	<servlet>
+		<servlet-name>animeworld</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 配置springMVC需要加载的配置文件
+			spring-dao.xml,spring-service.xml,spring-web.xml
+			Mybatis - > spring -> springmvc
+		 -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring/spring-web.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>  
+        <async-supported>true</async-supported>
+	</servlet>
+	
+	 <!--加载spring容器-->
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>classpath:spring/applicationContext-*.xml</param-value>
+	</context-param>
+	 <listener>
+    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+ 	 </listener>
+ 	 
+	<servlet-mapping>  
+        <servlet-name>animeworld</servlet-name>  
+        <!-- 对所有请求进行拦截 -->  
+        <url-pattern>/</url-pattern>  
+    </servlet-mapping> 
+
+	<!-- 配置过滤器-->
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
 
