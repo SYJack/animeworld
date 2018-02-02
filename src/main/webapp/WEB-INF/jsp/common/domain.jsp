@@ -9,4 +9,3 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <c:set var="baseJsPath" value="${baseUrl }/res/js" scope="application"></c:set>
 <c:set var="baseStylePath" value="${baseUrl }/res/style" scope="application"></c:set>
 <c:set var="baseResPath" value="${baseUrl }/res" scope="application"></c:set>
-<c:set var="baseResLayuiPath" value="${baseUrl }/res/layui" scope="application"></c:set>

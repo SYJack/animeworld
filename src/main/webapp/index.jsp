@@ -5,93 +5,58 @@
 <jsp:include page="/WEB-INF/jsp/common/domain.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>开始使用layui</title>
-  <script src="${baseResLayuiPath}/layui.js"></script>
-  <link rel="stylesheet" href="${baseResLayuiPath}/css/layui.css">
-</head>
-<body>
-<div class="layui-layout layui-layout-admin">
-  <div class="layui-header">
-    <div class="layui-logo">layui 后台布局</div>
-    <!-- 头部区域（可配合layui已有的水平导航） -->
-    <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
-      <li class="layui-nav-item"><a href="">用户</a></li>
-      <li class="layui-nav-item">
-        <a href="javascript:;">其它系统</a>
-        <dl class="layui-nav-child">
-          <dd><a href="">邮件管理</a></dd>
-          <dd><a href="">消息管理</a></dd>
-          <dd><a href="">授权管理</a></dd>
-        </dl>
-      </li>
-    </ul>
-    <ul class="layui-nav layui-layout-right">
-      <li class="layui-nav-item">
-        <a href="javascript:;">
-          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          贤心
-        </a>
-        <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">安全设置</a></dd>
-        </dl>
-      </li>
-      <li class="layui-nav-item"><a href="">退了</a></li>
-    </ul>
-  </div>
-  
-  <div class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">所有商品</a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="javascript:;">列表三</a></dd>
-            <dd><a href="">超链接</a></dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">解决方案</a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item"><a href="">云市场</a></li>
-        <li class="layui-nav-item"><a href="">发布商品</a></li>
-      </ul>
-    </div>
-  </div>
-  
-  <div class="layui-body">
-    <!-- 内容主体区域 -->
-    <div style="padding: 15px;">内容主体区域</div>
-  </div>
-  
-  <div class="layui-footer">
-    <!-- 底部固定区域 -->
-    © layui.com - 底部固定区域
-  </div>
-</div>
-</body>
-<script>
-//一般直接写在一个js文件中
-layui.use('element', function(){
-  var element = layui.element;
-  
-});
+    <head>
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link type="text/css" rel="stylesheet" href="${baseResPath}/materialize/css/materialize.min.css"  media="screen,projection"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
 
-var device = layui.device();
-console.log(device)
-</script> 
+     <body>
+      <nav class="light-blue lighten-1" role="navigation">
+	    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+	      <ul class="right hide-on-med-and-down">
+	        <li><a href="#">导航链接</a></li>
+	      </ul>
+	    </div>
+	  </nav>
+	  
+	  <div id="main" class="container">
+	       <div class="wrapper">
+	        	<aside id="left-sidebar-nav">
+	        		<ul id="slide-out" class="side-nav fixed leftside-navigation">
+	        			<li class="user-details cyan darken-2">
+	        				<div class="row">
+			                    <div class="col col s4 m4 l4">
+			                        <img src="${baseResPath}/images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
+			                    </div>
+			                    <div class="col col s8 m8 l8">
+			                        <ul id="profile-dropdown" class="dropdown-content">
+			                            <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
+			                            </li>
+			                            <li><a href="#"><i class="mdi-action-settings"></i> Settings</a>
+			                            </li>
+			                            <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
+			                            </li>
+			                            <li class="divider"></li>
+			                            <li><a href="#"><i class="mdi-action-lock-outline"></i> Lock</a>
+			                            </li>
+			                            <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+			                            </li>
+			                        </ul>
+			                        <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">John Doe<i class="mdi-navigation-arrow-drop-down right"></i></a>
+			                        <p class="user-roal">Administrator</p>
+			                    </div>
+			                </div>
+	        			<li>
+	        		<ul>
+	        	</aside>
+	       </div>
+       </div>
+      <script type="text/javascript" src="${baseResPath}/materialize/js/jquery-3.1.1.min.js"></script>
+      <script type="text/javascript" src="${baseResPath}/materialize/js/materialize.min.js"></script>
+    </body>
+	<script>
+	
+	</script> 
 </html>
       
