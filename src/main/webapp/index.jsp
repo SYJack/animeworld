@@ -8,6 +8,7 @@
     <head>
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="${baseResPath}/materialize/css/materialize.min.css"  media="screen,projection"/>
+      <link href="${baseResPath}/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
@@ -26,28 +27,25 @@
 	        		<ul id="slide-out" class="side-nav fixed leftside-navigation">
 	        			<li class="user-details cyan darken-2">
 	        				<div class="row">
-			                    <div class="col col s4 m4 l4">
+			                    <div class="col s4 m4 l4">
 			                        <img src="${baseResPath}/images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
 			                    </div>
-			                    <div class="col col s8 m8 l8">
+			                    <div class="col s8 m8 l8">
 			                        <ul id="profile-dropdown" class="dropdown-content">
-			                            <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
-			                            </li>
-			                            <li><a href="#"><i class="mdi-action-settings"></i> Settings</a>
-			                            </li>
-			                            <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
-			                            </li>
+			                            <li><a href="#"><i class="small material-live_help"></i>个人信息</a></li>
+			                            <li><a href="#"><i class="small material-settings"></i>设置</a></li>
+			                            <li><a href="#"><i class="small material-live_help"></i>帮助</a></li>
 			                            <li class="divider"></li>
-			                            <li><a href="#"><i class="mdi-action-lock-outline"></i> Lock</a>
-			                            </li>
-			                            <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
-			                            </li>
+			                            <li><a href="#"><i class="small material-lock_outline"></i>Lock</a></li>
+			                            <li><a href="#"><i class="small material-live_help"></i>退出</a></li>
 			                        </ul>
-			                        <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">John Doe<i class="mdi-navigation-arrow-drop-down right"></i></a>
+			                        <a class="btn-flat profile-btn dropdown-button waves-effect" href="#" data-activates="profile-dropdown">椎名真白<i class="mdi-navigation-arrow-drop-down right"></i></a>
 			                        <p class="user-roal">Administrator</p>
 			                    </div>
 			                </div>
 	        			<li>
+	        			<li class="bold active"><a href="#" class="waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a>
+                		</li>
 	        		<ul>
 	        	</aside>
 	       </div>
