@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jack.anime.dao.AnimeTimetableMapper">
+  <resultMap id="BaseResultMap" type="org.jack.anime.entity.AnimeTimetable">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="ANIME_BID" jdbcType="INTEGER" property="animeBid" />
+    <result column="ANIME_ID" jdbcType="BIGINT" property="animeId" />
+    <result column="ANIME_NAME" jdbcType="VARCHAR" property="animeName" />
+    <result column="ANIME_COVER" jdbcType="VARCHAR" property="animeCover" />
+    <result column="ANIME_VERTICAL_COVER" jdbcType="VARCHAR" property="animeVerticalCover" />
+    <result column="ANIME_PLAY_DATE" jdbcType="VARCHAR" property="animePlayDate" />
+    <result column="ANIME_PLAY_TIME" jdbcType="VARCHAR" property="animePlayTime" />
+    <result column="ANIME_ORIGIN_TIME" jdbcType="VARCHAR" property="animeOriginTime" />
+    <result column="ANIME_PLAY_SITE" jdbcType="VARCHAR" property="animePlaySite" />
+    <result column="ANIME_ORIGIN_STATION" jdbcType="VARCHAR" property="animeOriginStation" />
+    <result column="ANIME_PLAY_EPISODE" jdbcType="VARCHAR" property="animePlayEpisode" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.jack.anime.entity.AnimeTimetable">
+    <result column="ANIME_PLAY_URL" jdbcType="LONGVARCHAR" property="animePlayUrl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ANIME_BID, ANIME_ID, ANIME_NAME, ANIME_COVER, ANIME_VERTICAL_COVER, ANIME_PLAY_DATE, 
+    ANIME_PLAY_TIME, ANIME_ORIGIN_TIME, ANIME_PLAY_SITE, ANIME_ORIGIN_STATION, ANIME_PLAY_EPISODE
+  </sql>
+  <sql id="Blob_Column_List">
+    ANIME_PLAY_URL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from anime_timetable
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="totalItem" resultType="java.lang.Long">
+  	select count(1) from anime_timetable
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from anime_timetable
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.jack.anime.entity.AnimeTimetable">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into anime_timetable (ANIME_BID, ANIME_ID, ANIME_NAME, 
+      ANIME_COVER, ANIME_VERTICAL_COVER, ANIME_PLAY_DATE, 
+      ANIME_PLAY_TIME, ANIME_ORIGIN_TIME, ANIME_PLAY_SITE, 
+      ANIME_ORIGIN_STATION, ANIME_PLAY_EPISODE, ANIME_PLAY_URL
+      )
+    values (#{animeBid,jdbcType=INTEGER}, #{animeId,jdbcType=BIGINT}, #{animeName,jdbcType=VARCHAR}, 
+      #{animeCover,jdbcType=VARCHAR}, #{animeVerticalCover,jdbcType=VARCHAR}, #{animePlayDate,jdbcType=VARCHAR}, 
+      #{animePlayTime,jdbcType=VARCHAR}, #{animeOriginTime,jdbcType=VARCHAR}, #{animePlaySite,jdbcType=VARCHAR}, 
+      #{animeOriginStation,jdbcType=VARCHAR}, #{animePlayEpisode,jdbcType=VARCHAR}, #{animePlayUrl,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.jack.anime.entity.AnimeTimetable">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into anime_timetable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="animeBid != null">
+        ANIME_BID,
+      </if>
+      <if test="animeId != null">
+        ANIME_ID,
+      </if>
+      <if test="animeName != null">
+        ANIME_NAME,
+      </if>
+      <if test="animeCover != null">
+        ANIME_COVER,
+      </if>
+      <if test="animeVerticalCover != null">
+        ANIME_VERTICAL_COVER,
+      </if>
+      <if test="animePlayDate != null">
+        ANIME_PLAY_DATE,
+      </if>
+      <if test="animePlayTime != null">
+        ANIME_PLAY_TIME,
+      </if>
+      <if test="animeOriginTime != null">
+        ANIME_ORIGIN_TIME,
+      </if>
+      <if test="animePlaySite != null">
+        ANIME_PLAY_SITE,
+      </if>
+      <if test="animeOriginStation != null">
+        ANIME_ORIGIN_STATION,
+      </if>
+      <if test="animePlayEpisode != null">
+        ANIME_PLAY_EPISODE,
+      </if>
+      <if test="animePlayUrl != null">
+        ANIME_PLAY_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="animeBid != null">
+        #{animeBid,jdbcType=INTEGER},
+      </if>
+      <if test="animeId != null">
+        #{animeId,jdbcType=BIGINT},
+      </if>
+      <if test="animeName != null">
+        #{animeName,jdbcType=VARCHAR},
+      </if>
+      <if test="animeCover != null">
+        #{animeCover,jdbcType=VARCHAR},
+      </if>
+      <if test="animeVerticalCover != null">
+        #{animeVerticalCover,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlayDate != null">
+        #{animePlayDate,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlayTime != null">
+        #{animePlayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="animeOriginTime != null">
+        #{animeOriginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlaySite != null">
+        #{animePlaySite,jdbcType=VARCHAR},
+      </if>
+      <if test="animeOriginStation != null">
+        #{animeOriginStation,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlayEpisode != null">
+        #{animePlayEpisode,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlayUrl != null">
+        #{animePlayUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.jack.anime.entity.AnimeTimetable">
+    update anime_timetable
+    <set>
+      <if test="animeBid != null">
+        ANIME_BID = #{animeBid,jdbcType=INTEGER},
+      </if>
+      <if test="animeId != null">
+        ANIME_ID = #{animeId,jdbcType=BIGINT},
+      </if>
+      <if test="animeName != null">
+        ANIME_NAME = #{animeName,jdbcType=VARCHAR},
+      </if>
+      <if test="animeCover != null">
+        ANIME_COVER = #{animeCover,jdbcType=VARCHAR},
+      </if>
+      <if test="animeVerticalCover != null">
+        ANIME_VERTICAL_COVER = #{animeVerticalCover,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlayDate != null">
+        ANIME_PLAY_DATE = #{animePlayDate,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlayTime != null">
+        ANIME_PLAY_TIME = #{animePlayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="animeOriginTime != null">
+        ANIME_ORIGIN_TIME = #{animeOriginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlaySite != null">
+        ANIME_PLAY_SITE = #{animePlaySite,jdbcType=VARCHAR},
+      </if>
+      <if test="animeOriginStation != null">
+        ANIME_ORIGIN_STATION = #{animeOriginStation,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlayEpisode != null">
+        ANIME_PLAY_EPISODE = #{animePlayEpisode,jdbcType=VARCHAR},
+      </if>
+      <if test="animePlayUrl != null">
+        ANIME_PLAY_URL = #{animePlayUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.jack.anime.entity.AnimeTimetable">
+    update anime_timetable
+    set ANIME_BID = #{animeBid,jdbcType=INTEGER},
+      ANIME_ID = #{animeId,jdbcType=BIGINT},
+      ANIME_NAME = #{animeName,jdbcType=VARCHAR},
+      ANIME_COVER = #{animeCover,jdbcType=VARCHAR},
+      ANIME_VERTICAL_COVER = #{animeVerticalCover,jdbcType=VARCHAR},
+      ANIME_PLAY_DATE = #{animePlayDate,jdbcType=VARCHAR},
+      ANIME_PLAY_TIME = #{animePlayTime,jdbcType=VARCHAR},
+      ANIME_ORIGIN_TIME = #{animeOriginTime,jdbcType=VARCHAR},
+      ANIME_PLAY_SITE = #{animePlaySite,jdbcType=VARCHAR},
+      ANIME_ORIGIN_STATION = #{animeOriginStation,jdbcType=VARCHAR},
+      ANIME_PLAY_EPISODE = #{animePlayEpisode,jdbcType=VARCHAR},
+      ANIME_PLAY_URL = #{animePlayUrl,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.jack.anime.entity.AnimeTimetable">
+    update anime_timetable
+    set ANIME_BID = #{animeBid,jdbcType=INTEGER},
+      ANIME_ID = #{animeId,jdbcType=BIGINT},
+      ANIME_NAME = #{animeName,jdbcType=VARCHAR},
+      ANIME_COVER = #{animeCover,jdbcType=VARCHAR},
+      ANIME_VERTICAL_COVER = #{animeVerticalCover,jdbcType=VARCHAR},
+      ANIME_PLAY_DATE = #{animePlayDate,jdbcType=VARCHAR},
+      ANIME_PLAY_TIME = #{animePlayTime,jdbcType=VARCHAR},
+      ANIME_ORIGIN_TIME = #{animeOriginTime,jdbcType=VARCHAR},
+      ANIME_PLAY_SITE = #{animePlaySite,jdbcType=VARCHAR},
+      ANIME_ORIGIN_STATION = #{animeOriginStation,jdbcType=VARCHAR},
+      ANIME_PLAY_EPISODE = #{animePlayEpisode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
