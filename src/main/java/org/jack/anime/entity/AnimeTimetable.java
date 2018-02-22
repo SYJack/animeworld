@@ -3,30 +3,69 @@ package org.jack.anime.entity;
 import java.io.Serializable;
 
 public class AnimeTimetable implements Serializable {
+    /**
+     * 
+     */
     private Integer id;
 
+    /**
+     * anitama动漫ID
+     */
     private Integer animeBid;
 
+    /**
+     * 动漫ID
+     */
     private Long animeId;
 
+    /**
+     * 动漫名称
+     */
     private String animeName;
 
+    /**
+     * 动漫封面图片链接
+     */
     private String animeCover;
 
+    /**
+     * 动漫图片链接
+     */
     private String animeVerticalCover;
 
+    /**
+     * 动漫播放日期
+     */
     private String animePlayDate;
 
+    /**
+     * 国内动漫播放时间
+     */
     private String animePlayTime;
 
+    /**
+     * 制作国家动漫播放时间
+     */
     private String animeOriginTime;
 
+    /**
+     * 国内动漫播放网站
+     */
     private String animePlaySite;
 
+    /**
+     * 制作国家动漫播放电视台
+     */
     private String animeOriginStation;
 
+    /**
+     * 动漫播放集数
+     */
     private String animePlayEpisode;
 
+    /**
+     * 国内动漫播放网站地址
+     */
     private String animePlayUrl;
 
     private static final long serialVersionUID = 1L;
@@ -134,4 +173,5 @@ public class AnimeTimetable implements Serializable {
     public void setAnimePlayUrl(String animePlayUrl) {
         this.animePlayUrl = animePlayUrl == null ? null : animePlayUrl.trim();
     }
+    
 }

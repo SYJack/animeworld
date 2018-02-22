@@ -1,10 +1,15 @@
 package org.jack.anime.dao;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 import org.jack.anime.entity.AnimeTimetable;
 import org.springframework.stereotype.Repository;
 
 @Repository("animeTimetableMapper")
 public interface AnimeTimetableMapper {
+	
     int deleteByPrimaryKey(Integer id);
 
     int insert(AnimeTimetable record);
@@ -19,5 +24,7 @@ public interface AnimeTimetableMapper {
 
     int updateByPrimaryKey(AnimeTimetable record);
     
-    long totalItem();
+    int totalItem();
+    
+    List<AnimeTimetable> getListpager(@Param(value = "params") Map<String,Object> params);
 }

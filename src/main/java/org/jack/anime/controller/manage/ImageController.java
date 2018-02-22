@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jack.anime.web;
+package org.jack.anime.controller.manage;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
