@@ -26,8 +26,73 @@
 	 	<%@include file="/WEB-INF/jsp/common/adminNav.jsp"%>
   	  </header>
   	  <main id="content">
-  		<div class="container">
-  			苟利国家生死以
+		      <div class="container">
+		      	<form class="col">
+			     </form>
+		      </div>
+		       <div class="container">
+	      		<table class="highlight bordered centered responsive-table">
+			        <thead>
+			          <tr>
+			              <th align="center" data-field="id">行号</th>
+			              <th align="center" data-field="name">名称</th>
+			              <th align="center" data-field="price">封面图片</th>
+			              <th align="center" data-field="id">动漫图片</th>
+			              <th align="center" data-field="name">播放日期</th>
+			              <th align="center" data-field="price">国内播放时间</th>
+			              <th align="center" data-field="id">制作国家播放时间</th>
+			              <th align="center" data-field="name">国内播放网站</th>
+			              <th align="center" data-field="price">制作国家播放电视台</th>
+			              <th align="center" data-field="price">国内播放网址</th>
+			              <th align="center" data-field="price">播放集数</th>
+			              <th align="center" data-field="price">操作</th>
+			          </tr>
+			        </thead>
+			
+			        <tbody>
+			          <tr>
+			          	<td>1</td>
+			            <td>龙王的工作！</td>
+			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/1ad2b2"></td>
+			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/907611"></td>
+			            <td>20180219</td>
+			            <td>22:30</td>
+			            <td>21:00</td>
+			            <td>bilibili</td>
+			            <td>AT-X</td>
+			            <td></td>
+			            <td>第7集</td>
+			            <td>第7集</td>
+			          </tr>
+			         <tr>
+			          	<td>2</td>
+			            <td>龙王的工作！</td>
+			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/1ad2b2"></td>
+			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/907611"></td>
+			            <td>20180219</td>
+			            <td>22:30</td>
+			            <td>21:00</td>
+			            <td>bilibili</td>
+			            <td>AT-X</td>
+			            <td></td>
+			            <td>第7集</td>
+			          </tr>
+			          <tr>
+			          	<td>3</td>
+			            <td>龙王的工作！</td>
+			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/1ad2b2"></td>
+			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/907611"></td>
+			            <td>20180219</td>
+			            <td>22:30</td>
+			            <td>21:00</td>
+			            <td>bilibili</td>
+			            <td>AT-X</td>
+			            <td></td>
+			            <td>第7集</td>
+			          </tr>
+			        </tbody>
+			      </table>
+		      </div>
   		</div>
   	   </main>
   	   <footer id="footer">

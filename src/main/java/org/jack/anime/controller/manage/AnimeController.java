@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class AnimeController {
 	
-	// 登录跳转
 	@RequestMapping(value = "/anime/schedule/list", method = { RequestMethod.GET })
 	public String animeScheduleList() {
-		System.out.println("BBB");
-		return "admin/image";
+		
+		
+		return "admin/animeSchedule";
 	}
 }

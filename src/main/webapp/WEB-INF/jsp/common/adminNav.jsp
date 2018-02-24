@@ -48,7 +48,7 @@
                      	 <a class="collapsible-header waves-effect waves-cyan"><i class="material-icons">video_library</i>番剧管理</a>
                          <div class="collapsible-body">
                              <ul>
-                                 <li><a href="${baseUrl}/anime/image">Full Screen</a>
+                                 <li><a href="${baseUrl}/anime/schedule/list">番剧日志</a>
                                  </li>
                                  <li><a href="#!">Horizontal Menu</a>
                                  </li>
