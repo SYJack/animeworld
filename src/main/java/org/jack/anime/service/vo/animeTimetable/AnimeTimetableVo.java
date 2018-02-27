@@ -1,8 +1,10 @@
 package org.jack.anime.service.vo.animeTimetable;
 
-import java.io.Serializable;
+import org.jack.anime.entity.BaseEntity;
 
-public class AnimeTimetableVo implements Serializable{
+public class AnimeTimetableVo extends BaseEntity{
+
+	private static final long serialVersionUID = 1L;
 
 	/**
      * 

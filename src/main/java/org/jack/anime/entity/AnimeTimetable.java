@@ -1,8 +1,7 @@
 package org.jack.anime.entity;
 
-import java.io.Serializable;
 
-public class AnimeTimetable implements Serializable {
+public class AnimeTimetable extends BaseEntity {
     /**
      * 
      */

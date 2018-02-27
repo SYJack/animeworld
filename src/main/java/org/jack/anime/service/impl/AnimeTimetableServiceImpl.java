@@ -17,9 +17,11 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.jack.anime.common.dataMapping.AutoMapper;
 import org.jack.anime.dao.AnimeTimetableMapper;
 import org.jack.anime.entity.AnimeTimetable;
+import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.AnimeTimetableService;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableDto;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
+import org.jack.anime.utils.tool.PageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ import com.github.pagehelper.PageInfo;
  * @author jack
  *
  */
-@Service("animeTimetableService")
+@Service("animeTimetableServiceImpl")
 public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AnimeTimetableServiceImpl.class);
@@ -66,13 +68,15 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 	}
 
 	@Override
-	public PageInfo<AnimeTimetableVo> getListpager(Map<String, Object> params, Integer startRow, Integer pageSize) {
+	public PageResult<AnimeTimetableVo> getListpager(Map<String, Object> params, Integer startRow, Integer pageSize) {
 		startRow = startRow == null ? 1 : startRow;
 		pageSize = pageSize == null ? 10 : pageSize;
 		PageHelper.startPage(startRow, pageSize);
 
 		List<AnimeTimetable> list = animeTimetableMapper.getListpager(params);
 
+		PageInfo<AnimeTimetable> page = new PageInfo<>(list);
+		
 		List<AnimeTimetableVo> result = new ArrayList<AnimeTimetableVo>();
 		if (list != null && list.size() > 0) {
 			for (AnimeTimetable animeTimetable : list) {
@@ -85,8 +89,8 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 				}
 			}
 		}
-		PageInfo<AnimeTimetableVo> page = new PageInfo<>(result);
-		return page;
+		PageResult<AnimeTimetableVo> pageResult = PageUtil.toPagedResult(result,page);
+		return pageResult;
 	}
 
 	@Override

@@ -50,63 +50,41 @@
 			        </thead>
 			
 			        <tbody>
-			          <tr>
-			          	<td>1</td>
-			            <td>龙王的工作！</td>
-			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/1ad2b2"></td>
-			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/907611"></td>
-			            <td>20180219</td>
-			            <td>22:30</td>
-			            <td>21:00</td>
-			            <td>bilibili</td>
-			            <td>AT-X</td>
-			            <td></td>
-			            <td>第7集</td>
-			            <td>第7集</td>
+			         <c:forEach var="item" items="${scheduleList}" varStatus="stus">
+			         	<tr>
+				          	<td>${stus.index + 1 }</td>
+				            <td>${item.animeName}</td>
+				            <td><img class="materialboxed" width="100" height="100" src="${item.animeCover}"></td>
+				            <td><img class="materialboxed" width="100" height="100" src="${item.animeVerticalCover}"></td>
+				            <td>${item.animePlayDate}</td>
+				            <td>${item.animePlayTime}</td>
+				            <td>${item.animeOriginTime}</td>
+				            <td>${item.animePlaySite}</td>
+				            <td>${item.animeOriginStation}</td>
+				            <td>${item.animePlayUrl}</td>
+				            <td>${item.animePlayEpisode}</td>
+				            <td></td>
 			          </tr>
-			         <tr>
-			          	<td>2</td>
-			            <td>龙王的工作！</td>
-			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/1ad2b2"></td>
-			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/907611"></td>
-			            <td>20180219</td>
-			            <td>22:30</td>
-			            <td>21:00</td>
-			            <td>bilibili</td>
-			            <td>AT-X</td>
-			            <td></td>
-			            <td>第7集</td>
-			          </tr>
-			          <tr>
-			          	<td>3</td>
-			            <td>龙王的工作！</td>
-			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/1ad2b2"></td>
-			            <td><img class="materialboxed" width="100" height="100" src="http://img.animetamashi.cn/guide/907611"></td>
-			            <td>20180219</td>
-			            <td>22:30</td>
-			            <td>21:00</td>
-			            <td>bilibili</td>
-			            <td>AT-X</td>
-			            <td></td>
-			            <td>第7集</td>
-			          </tr>
+			         </c:forEach>
 			        </tbody>
 			      </table>
 		      </div>
   		</div>
   	   </main>
   	   <footer id="footer">
-	  	   	<div class="container">
-	  	   		<ul class="pagination">
-				    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-				    <li class="active"><a href="#!">1</a></li>
-				    <li class="waves-effect"><a href="#!">2</a></li>
-				    <li class="waves-effect"><a href="#!">3</a></li>
-				    <li class="waves-effect"><a href="#!">4</a></li>
-				    <li class="waves-effect"><a href="#!">5</a></li>
-				    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-				 </ul>
-	  		</div>
+  	   		<c:if test="${totalpages>1}">
+  	   			<div class="container" >
+		  	   		<ul class="pagination" style="background: transparent">
+					    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+					    <li class="active"><a href="#!">1</a></li>
+					    <li class="waves-effect"><a href="#!">2</a></li>
+					    <li class="waves-effect"><a href="#!">3</a></li>
+					    <li class="waves-effect"><a href="#!">4</a></li>
+					    <li class="waves-effect"><a href="#!">5</a></li>
+					    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+					 </ul>
+		  		</div>
+  	   		</c:if>
 	    </footer>
       <script type="text/javascript" src="${baseResPath}/materialize/js/jquery-3.1.1.min.js"></script>
       <script type="text/javascript" src="${baseResPath}/materialize/js/materialize.min.js"></script>

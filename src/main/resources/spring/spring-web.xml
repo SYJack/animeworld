@@ -24,10 +24,12 @@
 	 <mvc:default-servlet-handler/>
 	 
 	 <!--避免IE执行AJAX时，返回JSON出现下载文件 -->  
-    <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+    <bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
         <property name="supportedMediaTypes">  
             <list>  
-                <value>text/html;charset=UTF-8</value>  
+                <value>text/html;charset=UTF-8</value>
+                <value>text/json;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>  
             </list>  
         </property>  
     </bean>  
@@ -35,7 +37,7 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
         <property name="messageConverters">  
             <list>  
-                <ref bean="mappingJacksonHttpMessageConverter" /> <!-- JSON转换器 -->  
+                <ref bean="mappingJackson2HttpMessageConverter" /> <!-- JSON转换器 -->  
             </list>  
         </property>  
     </bean>  

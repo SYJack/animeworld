@@ -5,6 +5,7 @@ package org.jack.anime.service.api;
 
 import java.util.Map;
 
+import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableDto;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
 
@@ -56,6 +57,6 @@ public interface AnimeTimetableService {
 	 * @param pageSize 每页的条数
 	 * @return
 	 */
-	public PageInfo<AnimeTimetableVo> getListpager(Map<String, Object> params,Integer startRow, Integer pageSize);
+	public PageResult<AnimeTimetableVo> getListpager(Map<String, Object> params,Integer startRow, Integer pageSize);
 
 }
