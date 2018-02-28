@@ -18,13 +18,13 @@ public class PageResult<T> extends BaseEntity {
 	
 	private List<T> dataList;// 数据
 
-	private long pageNo;// 当前页
+	private Integer pageNo;// 当前页
 
-	private long pageSize;// 条数
+	private Integer pageSize;// 条数
 
-	private long total;// 总条数
+	private Long total;// 总条数
 
-	private long pages;// 总页面数目
+	private Integer pages;// 总页面数目
 
 	public List<T> getDataList() {
 		return dataList;
@@ -34,42 +34,36 @@ public class PageResult<T> extends BaseEntity {
 		this.dataList = dataList;
 	}
 
-	public long getPageNo() {
+	public Integer getPageNo() {
 		return pageNo;
 	}
 
-	public void setPageNo(long pageNo) {
+	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
 	}
 
-	public long getPageSize() {
+	public Integer getPageSize() {
 		return pageSize;
 	}
 
-	public void setPageSize(long pageSize) {
+	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
 	}
 
-	public long getTotal() {
+	public Long getTotal() {
 		return total;
 	}
 
-	public void setTotal(long total) {
+	public void setTotal(Long total) {
 		this.total = total;
 	}
 
-	public long getPages() {
+	public Integer getPages() {
 		return pages;
 	}
 
-	public void setPages(long pages) {
+	public void setPages(Integer pages) {
 		this.pages = pages;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
 
 }

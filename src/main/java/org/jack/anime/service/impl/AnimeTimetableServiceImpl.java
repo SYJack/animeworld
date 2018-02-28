@@ -75,7 +75,7 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 
 		List<AnimeTimetable> list = animeTimetableMapper.getListpager(params);
 
-		PageInfo<AnimeTimetable> page = new PageInfo<>(list);
+		PageInfo<AnimeTimetable> pageInfo = new PageInfo<>(list);
 		
 		List<AnimeTimetableVo> result = new ArrayList<AnimeTimetableVo>();
 		if (list != null && list.size() > 0) {
@@ -89,7 +89,12 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 				}
 			}
 		}
-		PageResult<AnimeTimetableVo> pageResult = PageUtil.toPagedResult(result,page);
+		PageResult<AnimeTimetableVo> pageResult = new PageResult<AnimeTimetableVo>(); 
+		pageResult.setPageNo(pageInfo.getPageNum());  
+		pageResult.setPageSize(pageInfo.getPageSize());  
+		pageResult.setDataList(result);  
+		pageResult.setTotal(pageInfo.getTotal());  
+		pageResult.setPages(pageInfo.getPages());  
 		return pageResult;
 	}
 
