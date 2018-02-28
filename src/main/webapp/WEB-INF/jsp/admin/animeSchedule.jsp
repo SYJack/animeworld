@@ -123,7 +123,7 @@
 	      <p>是否删除选中的动漫?</p>
 	    </div>
 	    <div class="modal-footer">
-	      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">删除</a>
+	      <a href="${baseUrl}/anime/schedule/del?animeId=1" class="modal-action modal-close waves-effect waves-green btn-flat">删除</a>
 	      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">取消</a>
 	    </div>
 	  </div>
@@ -142,7 +142,8 @@
 			$('#modifymodal').modal({
 				ready: function(modal, trigger) { 
 					// Callback for Modal open. Modal and trigger parameters available.
-			        console.log(modal, trigger);
+					
+					 
 			      },
 			    complete: function() {
 			    } // Callback for Modal close
@@ -154,11 +155,11 @@
 			    starting_top: '2%', // Starting topstyle attribute
 			    ending_top: '5%', // Ending top style attribute
 				ready: function(modal, trigger) { 
-			        console.log(modal, trigger);
+					var id = $(trigger).data('id')
 			     },
 			    complete: function() {
 			    	$.ajax({
- 							type :  'post',
+ 							type :'post',
  					        url : '',
  					        dataType : 'json',
  					        success :  function(json){

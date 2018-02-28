@@ -67,9 +67,11 @@ public class AnimeController extends BaseController{
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/anime/schedule/del", method = { RequestMethod.POST })
 	public ModelAndView deleteAnimeSchedule(HttpServletRequest request){
 		try {
 			String id = request.getParameter("animeId");
+			System.out.println(id);
 		} catch (Exception e) {
 		}
 		return null;
