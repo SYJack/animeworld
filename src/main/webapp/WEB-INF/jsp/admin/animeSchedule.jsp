@@ -123,8 +123,9 @@
 	      <p>是否删除选中的动漫?</p>
 	    </div>
 	    <div class="modal-footer">
-	      <a href="${baseUrl}/anime/schedule/del?animeId=1" class="modal-action modal-close waves-effect waves-green btn-flat">删除</a>
-	      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">取消</a>
+	      <input type="hidden" name="delAnimeId" value="">
+	      <a id="delAnimeId" class="modal-action modal-close waves-effect waves-green btn-flat">删除</a>
+	      <a class="modal-action modal-close waves-effect waves-green btn-flat">取消</a>
 	    </div>
 	  </div>
       <script type="text/javascript" src="${baseResPath}/materialize/js/jquery-3.1.1.min.js"></script>
@@ -155,23 +156,30 @@
 			    starting_top: '2%', // Starting topstyle attribute
 			    ending_top: '5%', // Ending top style attribute
 				ready: function(modal, trigger) { 
-					var id = $(trigger).data('id')
+					$("input[name='delAnimeId']").val($(trigger).data('id'));
 			     },
 			    complete: function() {
-			    	$.ajax({
- 							type :'post',
- 					        url : '',
- 					        dataType : 'json',
- 					        success :  function(json){
- 					        	if(!json.success){
- 					        		return;
- 					        	}
- 					        	if(json.msg != ''){
- 					    		}
- 							}
- 					   }); 
 			    }
 			});
+			
+			$('#delAnimeId').click(function() {
+				var id = $("input[name='delAnimeId']").val()
+				$.ajax({
+						type :'post',
+				        url : '${baseUrl}/anime/schedule/del?animeId='+id,
+				        dataType : 'json',
+				        success :  function(json){
+				        	console.log(json)
+				        	if(!json.success){
+				        		Materialize.toast(json.data,1000)
+				        		return;
+				        	}else{
+				        		Materialize.toast(json.data,1000)
+				        		return;
+				        	}
+						}
+				   });
+			})
 		});
 	</script> 
 </html>

@@ -10,9 +10,11 @@ import org.apache.commons.lang.StringUtils;
 import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.AnimeTimetableService;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
+import org.jack.anime.service.vo.animeTimetable.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -67,13 +69,18 @@ public class AnimeController extends BaseController{
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/anime/schedule/del", method = { RequestMethod.POST })
-	public ModelAndView deleteAnimeSchedule(HttpServletRequest request){
+	@RequestMapping(value = "/anime/schedule/del", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
+	@ResponseBody
+	public Result<String> deleteAnimeSchedule(HttpServletRequest request){
 		try {
 			String id = request.getParameter("animeId");
-			System.out.println(id);
+			if(StringUtils.isEmpty(id)){
+				return new Result<>(false, "id不能为空!");
+			}
+			animeTimetableServiceimpl.delete(Integer.valueOf(id));
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return null;
+		return new Result<>(true, "删除成功!");
 	}
 }
