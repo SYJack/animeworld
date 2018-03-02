@@ -141,8 +141,6 @@
 			$('#modifymodal').modal({
 				ready: function(modal, trigger) { 
 					// Callback for Modal open. Modal and trigger parameters available.
-					
-					 
 			      },
 			    complete: function() {
 			    } // Callback for Modal close
@@ -157,6 +155,7 @@
 					$("input[name='delAnimeId']").val($(trigger).data('id'));
 			     },
 			    complete: function() {
+			    	
 			    }
 			});
 			
@@ -167,17 +166,28 @@
 				        url : '${baseUrl}/anime/schedule/del?animeId='+id,
 				        dataType : 'json',
 				        success :  function(json){
-				        	console.log(json)
 				        	if(!json.success){
 				        		Materialize.toast(json.data,1000)
-				        		return;
+				        		return
 				        	}else{
 				        		Materialize.toast(json.data,1000)
-				        		return;
+				        		refresh()
+				        		return
 				        	}
 						}
 				   });
 			})
+			function refresh(){
+				console.log("AAA")
+				$.ajax({
+					type :'get',
+			        url : '${baseUrl}/anime/schedule/list?pagenum=1',
+			        dataType : 'json',
+			        success :  function(json){
+			        	console.log(json)
+					}
+			   });
+			}
 		});
 	</script> 
 </html>
