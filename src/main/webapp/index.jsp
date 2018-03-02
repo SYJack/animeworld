@@ -6,46 +6,156 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <link type="text/css" rel="stylesheet" href="${baseResPath}/materialize/css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="${baseResPath}/css/style.css" media="screen,projection">
+	  <title>开始使用layui</title>
+	  <link rel="stylesheet" href="${baseResPath}/layui/css/layui.css" media="screen,projection">
+	  <link type="text/css" rel="stylesheet" href="${baseResPath}/css/style.css" media="screen,projection">
       <link type="text/css" rel="stylesheet" href="${baseResPath}/love2d/waifu.css" media="screen,projection">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	</head>
 
-     <body>
-     <header id="header" class="page-topbar">
-     	<nav class="light-blue lighten-1" role="navigation">
-      	<a href="#" data-activates="nav-mobile" class="button-collapse top-nav waves-effect waves-light circle"><i class="material-icons">menu</i></a>
-	    <div class="nav-wrapper container">
-	      <ul class="right hide-on-med-and-down">
-	        <li><a href="#">导航链接</a></li>
-	      </ul>
-	    </div>
-	 	</nav>
-	 	<%@include file="/WEB-INF/jsp/common/adminNav.jsp"%>
-  	  </header>
-  	  <main id="content">
-  		<div class="container">
-  			苟利国家生死以
-  		</div>
-  	   </main>
-  	   <footer id="footer">
-	  	   	<div class="container">
-	  		</div>
-	    </footer>
-      <script type="text/javascript" src="${baseResPath}/materialize/js/jquery-3.1.1.min.js"></script>
-      <script type="text/javascript" src="${baseResPath}/materialize/js/materialize.min.js"></script>
+     <body class="layui-layout-body">
+		<div class="layui-layout layui-layout-admin">
+		  <div class="layui-header">
+		    <div class="layui-logo">layui 后台布局</div>
+		    <!-- 头部区域（可配合layui已有的水平导航） -->
+		    <ul class="layui-nav layui-layout-left">
+		      <li class="layui-nav-item"><a href="">控制台</a></li>
+		      <li class="layui-nav-item"><a href="">商品管理</a></li>
+		      <li class="layui-nav-item"><a href="">用户</a></li>
+		      <li class="layui-nav-item">
+		        <a href="javascript:;">其它系统</a>
+		        <dl class="layui-nav-child">
+		          <dd><a href="">邮件管理</a></dd>
+		          <dd><a href="">消息管理</a></dd>
+		          <dd><a href="">授权管理</a></dd>
+		        </dl>
+		      </li>
+		    </ul>
+		    <ul class="layui-nav layui-layout-right">
+		      <li class="layui-nav-item">
+		        <a href="javascript:;">
+		          <img src="${baseResPath}/images/avatar.jpg" class="layui-nav-img">
+		         	椎名真白
+		        </a>
+		        <dl class="layui-nav-child">
+		          <dd><a href="">基本资料</a></dd>
+		          <dd><a href="">安全设置</a></dd>
+		        </dl>
+		      </li>
+		      <li class="layui-nav-item"><a href="">退了</a></li>
+		    </ul>
+		  </div>
+		  
+		  <div class="layui-side layui-bg-black">
+		    <div class="layui-side-scroll">
+		      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+		      <ul id="sidebar_Navigation" class="layui-nav layui-nav-tree"  lay-filter="">
+		        <li class="layui-nav-item layui-nav-itemed">
+		          <a href="javascript:;">图片管理</a>
+		          <dl class="layui-nav-child">
+		            <dd><a href="javascript:;" data-url="">列表一</a></dd>
+		            <dd><a href="javascript:;" data-url="">列表二</a></dd>
+		            <dd><a href="javascript:;" data-url="">列表三</a></dd>
+		            <dd><a href="" data-url="">超链接</a></dd>
+		          </dl>
+		        </li>
+		        <li class="layui-nav-item">
+		          <a href="javascript:;">文章管理</a>
+		          <dl class="layui-nav-child">
+		            <dd><a href="javascript:;" data-url="">列表一</a></dd>
+		            <dd><a href="javascript:;" data-url="">列表二</a></dd>
+		            <dd><a href="">超链接</a></dd>
+		          </dl>
+		        </li>
+		        <li class="layui-nav-item">
+		        	<a href="javascript:;">番剧管理</a>
+		        	<dl class="layui-nav-child">
+			            <dd><a href="javascript:;" data-url="${baseUrl}/anime/schedule/list">番剧日志</a></dd>
+			            <dd><a href="javascript:;" data-url="">列表二</a></dd>
+		          	</dl>
+		        </li>
+		        <li class="layui-nav-item"><a href="javascript:;" data-url="">管理员管理</a></li>
+		        <li class="layui-nav-item"><a href="javascript:;" data-url="">系统管理</a></li>
+		      </ul>
+		    </div>
+		  </div>
+		  
+		  
+		  <div class="layui-body">
+		    <!-- 内容主体区域 -->
+		    <div>
+		        <div class="layui-tab layui-tab-brief" lay-allowClose="true"  lay-filter="contentTab">
+					 <ul class="layui-tab-title">
+						<li>我的桌面</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item layui-show">
+							<iframe src='./pages/welcome.html' frameborder="none" scrolling="auto" style="width: 100%; height: 100%;"></iframe>
+						</div>
+					</div>
+				</div>      
+		    </div>
+		  </div>
+		  
+		  <div class="layui-footer">
+		    <!-- 底部固定区域 -->
+		    © layui.com - 底部固定区域
+		  </div>
+		</div>
+	  <script type="text/javascript" src="${baseResPath}/materialize/js/jquery-3.1.1.min.js"></script>
+	  <script type="text/javascript" src="${baseResPath}/layui/layui.js"></script>
       <script type="text/javascript" src="${baseResPath}/love2d/autoload.js"></script>
+      <script>
+		layui.define(['layer', 'element'], function(exports){
+		  var element = layui.element;
+		  var layer = layui.layer;
+		    /* element.tabAdd('contentTab', {
+		        title: "<i class='fa fa-home'></i>&nbsp;首页"
+		        ,content:"<iframe scrolling='no'  rameborder='0' src='main'></iframe>" //支持传入html
+		        ,id: "777"
+		    });
+		    FrameWH(); //计算框架高度
+		    element.tabChange("contentTab",777); */
+		    $('#sidebar_Navigation li a').each(function(index,el){
+		    	$(el).click(function(){
+		    		if($(this).data('url')){
+		    			var url=$(this).data("url");
+		    			var title=$(this).html();
+		    			
+		    			var flag=false;
+				    	$("#contentTab2 li").each(function(k,v){
+		                    if($(v).attr("lay-id")==eval(index+1)){
+		                        flag=true;
+		                    }
+		                });
+		                if(flag){
+		                    element.tabChange("contentTab",index+1);
+		                }else{
+		                    //判断layID 是否存在
+		                    setTimeout(function(){
+		                        element.tabAdd('contentTab', {
+		                            title: title
+		                            ,content:"<iframe scrolling='no' rameborder='0' src="+url+"></iframe>" //支持传入html
+		                            ,id: index+1
+		                        });
+		                        element.tabChange("contentTab",index+1);
+		                        FrameWH(); //计算框架高度
+		                    },500)
+		                }
+		    		}
+		    	});
+		    });
+		    function FrameWH() {
+				var h = $(window).height() - 164;
+				$("iframe").css("height", h + "px");
+			}
+			$(window).resize(function() {
+				FrameWH();
+			});
+		  
+		});
+		
+	  </script> 
     </body>
-	<script>
-		$(function(){
-			$(".button-collapse").sideNav();
-			$(".meuns").on("click", function(){
-			$(".top-nav .page-title").html($(this).html());
-			content_load($("main"), $(this).attr("data-href"));
-		});
-		});
-	</script> 
 </html>
       

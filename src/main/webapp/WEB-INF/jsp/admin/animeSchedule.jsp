@@ -9,7 +9,6 @@
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="${baseResPath}/materialize/css/materialize.min.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="${baseResPath}/css/style.css" media="screen,projection">
-      <link type="text/css" rel="stylesheet" href="${baseResPath}/love2d/waifu.css" media="screen,projection">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
@@ -130,7 +129,6 @@
 	  </div>
       <script type="text/javascript" src="${baseResPath}/materialize/js/jquery-3.1.1.min.js"></script>
       <script type="text/javascript" src="${baseResPath}/materialize/js/materialize.min.js"></script>
-      <script type="text/javascript" src="${baseResPath}/love2d/autoload.js"></script>
     </body>
 	<script>
 		$(function(){
