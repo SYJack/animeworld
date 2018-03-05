@@ -70,7 +70,7 @@
 		        <li class="layui-nav-item">
 		        	<a href="javascript:;">番剧管理</a>
 		        	<dl class="layui-nav-child">
-			            <dd><a href="javascript:;" data-url="${baseUrl}/anime/schedule/list">番剧日志</a></dd>
+			            <dd><a href="javascript:;" data-url="${baseUrl}/admin/animeSchedule">番剧日志</a></dd>
 			            <dd><a href="javascript:;" data-url="">列表二</a></dd>
 		          	</dl>
 		        </li>
@@ -86,12 +86,8 @@
 		    <div>
 		        <div class="layui-tab layui-tab-brief" lay-allowClose="true"  lay-filter="contentTab">
 					 <ul class="layui-tab-title">
-						<li>我的桌面</li>
 					</ul>
 					<div class="layui-tab-content">
-						<div class="layui-tab-item layui-show">
-							<iframe src='./pages/welcome.html' frameborder="none" scrolling="auto" style="width: 100%; height: 100%;"></iframe>
-						</div>
 					</div>
 				</div>      
 		    </div>
@@ -109,13 +105,12 @@
 		layui.define(['layer', 'element'], function(exports){
 		  var element = layui.element;
 		  var layer = layui.layer;
-		    /* element.tabAdd('contentTab', {
+		    element.tabAdd('contentTab', {
 		        title: "<i class='fa fa-home'></i>&nbsp;首页"
-		        ,content:"<iframe scrolling='no'  rameborder='0' src='main'></iframe>" //支持传入html
+		        ,content:"<iframe class='iframe' src='main'></iframe>" //支持传入html
 		        ,id: "777"
 		    });
-		    FrameWH(); //计算框架高度
-		    element.tabChange("contentTab",777); */
+		    element.tabChange("contentTab",777);
 		    $('#sidebar_Navigation li a').each(function(index,el){
 		    	$(el).click(function(){
 		    		if($(this).data('url')){
@@ -135,23 +130,15 @@
 		                    setTimeout(function(){
 		                        element.tabAdd('contentTab', {
 		                            title: title
-		                            ,content:"<iframe scrolling='no' rameborder='0' src="+url+"></iframe>" //支持传入html
+		                            ,content:"<iframe class='iframe' src="+url+"></iframe>" //支持传入html
 		                            ,id: index+1
 		                        });
 		                        element.tabChange("contentTab",index+1);
-		                        FrameWH(); //计算框架高度
 		                    },500)
 		                }
 		    		}
 		    	});
 		    });
-		    function FrameWH() {
-				var h = $(window).height() - 164;
-				$("iframe").css("height", h + "px");
-			}
-			$(window).resize(function() {
-				FrameWH();
-			});
 		  
 		});
 		

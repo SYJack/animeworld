@@ -5,33 +5,16 @@
 <jsp:include page="/WEB-INF/jsp/common/domain.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
-    <head>
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <link type="text/css" rel="stylesheet" href="${baseResPath}/materialize/css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="${baseResPath}/css/style.css" media="screen,projection">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-
      <body>
-     <header id="header" class="page-topbar">
-     	<nav class="light-blue lighten-1" role="navigation">
-      	<a href="#" data-activates="nav-mobile" class="button-collapse top-nav waves-effect waves-light circle"><i class="material-icons">menu</i></a>
-	    <div class="nav-wrapper container">
-	      <ul class="right hide-on-med-and-down">
-	        <li><a href="#">导航链接</a></li>
-	      </ul>
-	    </div>
-	 	</nav>
-	 	<%@include file="/WEB-INF/jsp/common/adminNav.jsp"%>
-  	  </header>
-  	  <main id="content">
-		      <div class="container">
-		      	<form class="col">
-			     </form>
-		      </div>
-		       <div class="valign-wrapper">
-	      		<table class="highlight bordered centered responsive-table">
-			        <thead>
+     <head>
+	  <title>开始使用layui</title>
+	  <link rel="stylesheet" href="${baseResPath}/layui/css/layui.css" media="screen,projection">
+	  <link type="text/css" rel="stylesheet" href="${baseResPath}/css/style.css" media="screen,projection">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	  <script type="text/javascript" src="${baseResPath}/layui/layui.js"></script>
+	</head>
+	      		<table id="animeTable" class="layui-table" lay-filter="animetab">
+			        <%-- <thead>
 			          <tr>
 			              <th class="valign">行号</th>
 			              <th class="valign">动漫基本信息</th>
@@ -58,7 +41,7 @@
 				            	<p>制作国家播放时间:${item.animeOriginTime}</p>
 				            	<p>国内播放网站:${item.animePlaySite}</p>
 				            	<p>制作国家播放电视台:${item.animeOriginStation}</p>
-				            	<%-- <p>国内播放网址:${item.animePlayUrl}</p> --%>
+				            	<p>国内播放网址:${item.animePlayUrl}</p>
 				            	<p>播放集数:${item.animePlayEpisode}</p>
 				            </td>
 				            <td class="valign">
@@ -71,12 +54,9 @@
 				            </td>
 			          </tr>
 			         </c:forEach>
-			        </tbody>
+			        </tbody> --%>
 			      </table>
-		      </div>
-  		</div>
-  	   </main>
-  	   <footer id="footer">
+  	   <%-- <footer id="footer">
   	   		<c:if test="${totalpages>1}">
   	   			<div class="right-align" style="background: transparent">
 		  	   		<ul class="pagination" style="background: transparent">
@@ -102,36 +82,58 @@
 					 </ul>
 		  		</div>
   	   		</c:if>
-	    </footer>
-	    
-	  <!-- Modal Structure -->
-	  <div id="modifymodal" class="modal modal-fixed-footer">
-	    <div class="modal-content">
-	      <h5>模态标题</h5>
-	      <p>一堆文本</p>
-	    </div>
-	    <div class="modal-footer">
-	      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">保存</a>
-	      <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">取消</a>
-	    </div>
-	  </div>
-	  
-	  <div id="deletetemodal" class="modal">
-	    <div class="modal-content">
-	      <h5>确认信息</h5>
-	      <p>是否删除选中的动漫?</p>
-	    </div>
-	    <div class="modal-footer">
-	      <input type="hidden" name="delAnimeId" value="">
-	      <a id="delAnimeId" class="modal-action modal-close waves-effect waves-green btn-flat">删除</a>
-	      <a class="modal-action modal-close waves-effect waves-green btn-flat">取消</a>
-	    </div>
-	  </div>
-      <script type="text/javascript" src="${baseResPath}/materialize/js/jquery-3.1.1.min.js"></script>
-      <script type="text/javascript" src="${baseResPath}/materialize/js/materialize.min.js"></script>
+	    </footer> --%>
     </body>
+    <script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+	</script>
 	<script>
-		$(function(){
+		layui.use(['layer','table','form'], function(){
+			var table = layui.table;
+			var layer=layui.layer;
+			var form =layui.form;
+			var $=layui.jquery;
+			
+			table.render({
+			    elem: '#animeTable'
+			    ,url:'${baseUrl}/anime/schedule/list'
+			    ,request: {
+	    		   pageName: 'pageNumber', //页码的参数名称，默认：page
+	    		   limitName: 'limit' //每页数据量的参数名，默认：limit
+			    } 
+			    ,limits:[5,10,15]
+			    ,cols: [[
+			      {type: 'checkbox',width:"5%",}
+			      ,{field:'animeName', title:'名称',width:"10%",align:"center",unresize: true, sort: true}
+			      ,{field:'animeCover', title:'封面',width:"10%",align:"center",event: 'imageEvent' , unresize: true, sort: true,templet:'<div style="height:50px;"><img style="cursor:pointer" class="fmimage"  src="../resource/upload/images/{{d.blog_coverimage}}"></div>'}
+			      ,{field:'animeVerticalCover', title:'动漫图片',width:"10%",align:"center",}
+			      ,{field:'animePlayDate', title: '播放日期',width:"10%",align:"center", sort: true}
+			      ,{field:'animePlayTime', title:'国内播放时间',width:"10%",align:"center",}
+			      ,{field:'animeOriginTime', title:'制作国家播放时间',width:"8%",align:"center",}
+			      ,{field:'animePlaySite', title:'国内播放网站',width:"8%",align:"center", }
+			      ,{field:'animeOriginStation', title:'制作国家播放电视台', width:"8%", align:"center",}
+			      ,{field:'animePlayEpisode', title:'播放集数', width:"8%", align:"center",}
+			      ,{field:'animePlayUrl', title:'国内播放网址', width:"8%", align:"center",}
+			      ,{title:'操作', align:'center',width:"21%",align:"center", toolbar: '#barDemo',}
+			    ]]
+			    ,page: true
+			  });
+			  
+			 //监听工具条
+		  table.on('tool(animetab)', function(obj){
+		    var data = obj.data;
+		     if(obj.event === 'del'){
+		      layer.confirm('真的删除行么', function(index){
+		        obj.del();
+		        layer.close(index);
+		      });
+		    } else if(obj.event === 'edit'){
+		      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+		    }
+		  });
+		});
+		/* $(function(){
 			$(".button-collapse").sideNav();
 			$(".meuns").on("click", function(){
 				$(".top-nav .page-title").html($(this).html());
@@ -188,6 +190,6 @@
 					}
 			   });
 			}
-		});
+		}); */
 	</script> 
 </html>

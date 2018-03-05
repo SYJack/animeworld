@@ -5,12 +5,15 @@ package org.jack.anime.controller.manage;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.AnimeTimetableService;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
 import org.jack.anime.service.vo.animeTimetable.Result;
+import org.jack.anime.utils.constant.HttpConstants;
+import org.jack.anime.utils.tool.PageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +30,7 @@ public class AnimeController extends BaseController{
 	@Resource(name="animeTimetableServiceImpl")
 	private AnimeTimetableService animeTimetableServiceimpl;
 	
-	@RequestMapping(value = "/anime/schedule/list", method = { RequestMethod.GET })
+/*	@RequestMapping(value = "/anime/schedule/list", method = { RequestMethod.GET })
 	@ResponseBody
 	public ModelAndView animeScheduleList(HttpServletRequest request) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -66,6 +69,31 @@ public class AnimeController extends BaseController{
 			e.printStackTrace();
 		}
 		return modelAndView;
+	}*/
+	
+	@RequestMapping(value = "/anime/schedule/list", method = { RequestMethod.GET })
+	@ResponseBody
+	public PageUtil<AnimeTimetableVo> animeScheduleList(HttpServletRequest request) {
+		PageUtil<AnimeTimetableVo> pageUtil = new PageUtil<AnimeTimetableVo>();
+		try {
+			String page = request.getParameter("pageNumber");
+			String limit = request.getParameter("limit");
+			System.out.println(page);
+			Integer pagenum;
+	        if (StringUtils.isEmpty(page)) {
+	            pagenum = 1;
+	        } else {
+	            pagenum = Integer.parseInt(page);
+	        }
+			PageResult<AnimeTimetableVo> pageResult = animeTimetableServiceimpl.getListpager(null, pagenum, Integer.parseInt(limit));
+			pageUtil.setMsg("返回成功");
+			pageUtil.setCode(0);
+			pageUtil.setCount(pageResult.getTotal());
+			pageUtil.setData(pageResult.getDataList());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageUtil;
 	}
 	
 	@RequestMapping(value = "/anime/schedule/del", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
