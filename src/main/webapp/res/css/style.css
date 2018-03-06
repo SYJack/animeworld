@@ -26,7 +26,7 @@ main {
 header, main, footer {
       padding-left: 300px;
 }
-
+/*iframe样式*/
 .iframe{
 	width: 100%;
 	height: 100%;
@@ -39,4 +39,47 @@ header, main, footer {
   header, main, footer {
     padding-left: 0;
   }
+ 
+ /**表格搜索框样式*/
+.search-input {
+	width: 150px;
+	display: inline-block;
+	height: 36px;
+	vertical-align: middle;
+	padding: 3px 6px;
+}
+
+.layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
+	height: 34px;
+	line-height: 34px;
+}
+
+.search-btn {
+	padding: 0 8px;
+}
+
+.toolbar {
+	color: #333333;
+}
+
+.toolbar .layui-form-select input {
+	height: 35px;
+	line-height: 35px;
+	width: 150px;
+	overflow: hidden;
+}
+
+.toolbar .layui-form-select {
+	display: inline-block;
+} 
+  
+/*表单弹窗样式*/
+.modal-form {
+	padding-top: 30px;
+	padding-right: 45px;
+}
+
+.modal-form-footer {
+	text-align: right;
+}
 }

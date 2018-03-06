@@ -13,80 +13,92 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	  <script type="text/javascript" src="${baseResPath}/layui/layui.js"></script>
 	</head>
-	      		<table id="animeTable" class="layui-table" lay-filter="animetab">
-			        <%-- <thead>
-			          <tr>
-			              <th class="valign">行号</th>
-			              <th class="valign">动漫基本信息</th>
-			              <th class="valign">动漫图片信息</th>
-			              <th class="valign">动漫播放信息</th>
-			              <th class="valign">操作</th>
-			          </tr>
-			        </thead>
-			
-			        <tbody>
-			         <c:forEach var="item" items="${scheduleList}" varStatus="stus">
-			         	<tr data-id="${item.id }">
-				          	<td class="valign">${stus.index + 1 }</td>
-				            <td class="valign">
-				            	<p>名称:${item.animeName}</p>
-				            </td>
-				            <td class="valign">
-				            	<p class="left-align">封面图片:<img class="materialboxed" width="100" height="100" src="${item.animeCover}"></p>
-				            	<p class="left-align">动漫图片:<img class="materialboxed" width="100" height="100" src="${item.animeVerticalCover}"></p>
-				            </td>
-				            <td class="valign">
-				            	<p>播放日期:${item.animePlayDate}</p>
-				            	<p>国内播放时间:${item.animePlayTime}</p>
-				            	<p>制作国家播放时间:${item.animeOriginTime}</p>
-				            	<p>国内播放网站:${item.animePlaySite}</p>
-				            	<p>制作国家播放电视台:${item.animeOriginStation}</p>
-				            	<p>国内播放网址:${item.animePlayUrl}</p>
-				            	<p>播放集数:${item.animePlayEpisode}</p>
-				            </td>
-				            <td class="valign">
-				            	<p>
-				            		<a href="#modifymodal" class="modal-trigger waves-effect waves-light btn" title="编辑"><i class="tiny material-icons left">mode_edit</i>编辑</a>
-				            	</p>
-				            	<p>
-					            	<a href="#deletetemodal" data-id="${item.id }" class="modal-trigger waves-effect waves-light btn" title="删除"><i class="tiny material-icons left">delete</i>删除</a>
-				            	</p>
-				            </td>
-			          </tr>
-			         </c:forEach>
-			        </tbody> --%>
-			      </table>
-  	   <%-- <footer id="footer">
-  	   		<c:if test="${totalpages>1}">
-  	   			<div class="right-align" style="background: transparent">
-		  	   		<ul class="pagination" style="background: transparent">
-		  	   			<li class="waves-effect"><a href="${baseUrl}/anime/schedule/list?pagenum=1">首页</a></li>
-					    <li class="waves-effect"><a href="${baseUrl}/anime/schedule/list?pagenum=${pageNum-1}"><i class="material-icons">chevron_left</i></a></li>
-					    <c:forEach var="pageIndex" begin="${startpage}" end="${endpage}">
-                            <c:choose>
-                                <c:when test="${pageNum == pageIndex}">
-                                    <li class="active"><a href="#!"> ${pageIndex} </a></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="waves-effect">
-                                        <a href="${baseUrl}/anime/schedule/list?pagenum=${pageIndex}">${pageIndex}</a>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-					    <c:if test="${pageNum != totalpages}">
-					    	<li class="waves-effect"><a href="${baseUrl}/anime/schedule/list?pagenum=${pageNum+1}"><i class="material-icons">chevron_right</i></a></li>
-					    </c:if>
-					    <li class="waves-effect"><a href="${baseUrl}/anime/schedule/list?pagenum=${totalpages}">末页</a></li>
-					    <li class="disabled"><a>共${totalpages}页</a></li>
-					 </ul>
-		  		</div>
-  	   		</c:if>
-	    </footer> --%>
+	<div>
+		<div class="demoTable">
+		  搜索ID：
+		  <div class="layui-inline">
+		    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+		  </div>
+		  <button class="layui-btn" data-type="reload">搜索</button>
+		</div>
+		
+		<table id="animeTable" class="layui-table" lay-filter="animetab"></table>
+	</div>
     </body>
     <script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+	</script>
+	
+		<!-- 表单弹窗 -->
+	<script type="text/html" id="addModel">
+	<form id="editForm" class="layui-form modal-form" action="">
+		<input name="id" type="hidden" value=""/>
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+ 			<div class="layui-input-block">
+				<input name="animeName" placeholder="请输入名称" type="text" class="layui-input"  lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">封面</label>
+ 			<div class="layui-input-block">
+				<input name="animeCover" placeholder="请上传封面" type="text" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">动漫图片</label>
+ 			<div class="layui-input-block">
+				<input name="animeVerticalCover" placeholder="请上传动漫图片" type="text" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">播放日期</label>
+ 			<div class="layui-input-block">
+				<input name="animePlayDate" placeholder="请输入播放日期" type="text" class="layui-input"  />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">国内播放时间</label>
+ 			<div class="layui-input-block">
+				<input name="animePlayTime" placeholder="请输入国内播放时间" type="text" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">制作国家播放时间</label>
+ 			<div class="layui-input-block">
+				<input name="animeOriginTime" placeholder="请输入制作国家播放时间" type="text" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">国内播放网站</label>
+ 			<div class="layui-input-block">
+				<input name="animePlaySite" placeholder="请输入国内播放网站" type="text" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">制作国家播放电视台</label>
+ 			<div class="layui-input-block">
+				<input name="animeOriginStation" placeholder="请输入制作国家播放电视台" type="text" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">播放集数</label>
+ 			<div class="layui-input-block">
+				<input name="animePlayEpisode" placeholder="请输入播放集数" type="text" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">国内播放网址</label>
+ 			<div class="layui-input-block">
+				<input name="animePlayUrl" placeholder="请输入国内播放网址" type="text" class="layui-input" />
+			</div>
+		</div>
+		<div class="layui-form-item modal-form-footer">
+			<button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
+			<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+		</div>
+	</form>
 	</script>
 	<script>
 		layui.use(['layer','table','form'], function(){
@@ -106,7 +118,7 @@
 			    ,cols: [[
 			      {type: 'checkbox',width:"5%",}
 			      ,{field:'animeName', title:'名称',width:"10%",align:"center",unresize: true, sort: true}
-			      ,{field:'animeCover', title:'封面',width:"10%",align:"center",event: 'imageEvent' , unresize: true, sort: true,templet:'<div style="height:50px;"><img style="cursor:pointer" class="fmimage"  src="../resource/upload/images/{{d.blog_coverimage}}"></div>'}
+			      ,{field:'animeCover', title:'封面',width:"10%",align:"center",event: 'imageEvent' , unresize: true,templet:'<div><img title="点击看原图" width="50px" height="50px" style="cursor:pointer" src="{{d.animeCover}}"></div>'}
 			      ,{field:'animeVerticalCover', title:'动漫图片',width:"10%",align:"center",}
 			      ,{field:'animePlayDate', title: '播放日期',width:"10%",align:"center", sort: true}
 			      ,{field:'animePlayTime', title:'国内播放时间',width:"10%",align:"center",}
@@ -124,15 +136,109 @@
 		  table.on('tool(animetab)', function(obj){
 		    var data = obj.data;
 		     if(obj.event === 'del'){
-		      layer.confirm('真的删除行么', function(index){
-		        obj.del();
-		        layer.close(index);
+		      layer.confirm('确认删除？', function(index){
+		      	layer.close(index);
+				layer.load(2);
+		      	$.ajax({
+						type :'post',
+				        url : '${baseUrl}/anime/schedule/del?animeId='+data.id,
+				        dataType : 'json',
+				        success :  function(json){
+				        	layer.closeAll('loading');
+				        	if(!json.success){
+				        		layer.alert(json.data)
+				        		return
+				        	}else{
+				        		obj.del();
+				        		layer.close(index);
+				        		layer.alert(json.data)
+				        		return
+				        	}
+						}
+				   });
 		      });
 		    } else if(obj.event === 'edit'){
-		      layer.alert('编辑行：<br>'+ JSON.stringify(data))
-		    }
+		      /* layer.alert('编辑行：<br>'+ JSON.stringify(data)) */
+		      	showEditModel(data)
+		    }else if(obj.event === 'imageEvent'){
+		    	var flag = true;
+		    	if(flag){
+			         flag = false;
+			         $(this).attr("width","") ;
+			         $(this).attr("height","");
+			     }else{
+			         flag = true;
+			         $(this).attr("width","50px") ;
+			         $(this).attr("height","50px") ;
+			     }
+	            /* layer.open({
+	                type: 1,
+	                title: false,
+	                closeBtn: 0,
+	                area: '516px',
+	                skin: 'layui-layer-nobg', //没有背景色
+	                shadeClose: true,
+	                content: '<div><img src="'+data.animeCover+'"><div>'
+			     }); */
+			}
 		  });
+		
+		//表单提交事件
+		form.on('submit(btnSubmit)', function(data) {
+			data.field._method = $("#editForm").attr("method");
+			layer.load(2);
+		    $.post("${baseUrl}/anime/schedule/modify", data.field, function(json){
+				layer.closeAll('loading');
+				if(!json.success){
+					layer.msg(json.data)
+					return
+				}else{
+					layer.closeAll('page');
+					table.reload('animeTable');
+					layer.msg(json.data)
+					return
+				}
+			}, "JSON");
+			return false;
 		});
+		  
+		  //显示表单弹窗
+		function showEditModel(data){
+			var index =layer.open({
+	                title : data==null ? "添加动漫播放信息" :"修改动漫播放信息",
+	                type : 1,
+	                maxmin: true,
+	                content : $("#addModel").html(),
+	                success : function(layer,index){
+	                    setTimeout(function(){
+	                        layer.tips('这里是关闭窗口', '.layui-layer-setwin .layui-layer-close', {
+	                            tips: 3
+	                        });
+	                    },500)
+	                }
+	            });
+	         $("#editForm")[0].reset();
+			 $("#editForm").attr("method","POST");
+			 if(data!=null){
+			 	$("#editForm input[name=id]").val(data.id);
+				$("#editForm input[name=animeName]").val(data.animeName);
+				$("#editForm input[name=animeCover]").val(data.animeCover);
+				$("#editForm input[name=animeVerticalCover]").val(data.animeVerticalCover);
+				$("#editForm input[name=animePlayDate]").val(data.animePlayDate);
+				$("#editForm input[name=animePlayTime]").val(data.animePlayTime);
+				$("#editForm input[name=animeOriginTime]").val(data.animeOriginTime);
+				$("#editForm input[name=animePlaySite]").val(data.animePlaySite);
+				$("#editForm input[name=animeOriginStation]").val(data.animeOriginStation);
+				$("#editForm input[name=animePlayEpisode]").val(data.animePlayEpisode);
+				$("#editForm input[name=animePlayUrl]").val(data.animePlayUrl);
+			}
+           	 layer.full(index);
+           	 $("#btnCancel").click(function(){
+				layer.closeAll('page');
+			});
+		}
+	});
+		
 		/* $(function(){
 			$(".button-collapse").sideNav();
 			$(".meuns").on("click", function(){

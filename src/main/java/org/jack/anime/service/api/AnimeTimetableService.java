@@ -33,7 +33,7 @@ public interface AnimeTimetableService {
 	 * @param dto
 	 * @return
 	 */
-	public Integer modify(AnimeTimetableDto dto);
+	public Boolean modify(AnimeTimetableDto dto);
 	
 	
 	/**

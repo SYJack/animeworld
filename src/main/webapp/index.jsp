@@ -98,7 +98,7 @@
 		    © layui.com - 底部固定区域
 		  </div>
 		</div>
-	  <script type="text/javascript" src="${baseResPath}/materialize/js/jquery-3.1.1.min.js"></script>
+	  <script type="text/javascript" src="${baseResPath}/js/jquery-3.1.1.min.js"></script>
 	  <script type="text/javascript" src="${baseResPath}/layui/layui.js"></script>
       <script type="text/javascript" src="${baseResPath}/love2d/autoload.js"></script>
       <script>

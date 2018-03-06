@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.AnimeTimetableService;
+import org.jack.anime.service.vo.animeTimetable.AnimeTimetableDto;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
 import org.jack.anime.service.vo.animeTimetable.Result;
 import org.jack.anime.utils.constant.HttpConstants;
@@ -109,5 +110,27 @@ public class AnimeController extends BaseController{
 			e.printStackTrace();
 		}
 		return new Result<>(true, "删除成功!");
+	}
+	
+	@RequestMapping(value = "/anime/schedule/modify", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
+	@ResponseBody
+	public Result<String> modifyAnimeSchedule(AnimeTimetableDto dto){
+		try {
+			Boolean ret = null;
+			if (dto == null) {
+				return new Result<>(false, "参数为空!");
+			}
+			if(dto.getId() == null){
+				return new Result<>(false, "id不能为空!");
+			}
+			ret = animeTimetableServiceimpl.modify(dto);
+			if(!ret){
+				return new Result<>(false, "修改失败!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result<>(false, e.getMessage());
+		}
+		return new Result<>(true, "保存成功!");
 	}
 }

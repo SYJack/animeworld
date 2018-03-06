@@ -59,12 +59,32 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 	}
 
 	@Override
-	public Integer modify(AnimeTimetableDto dto) {
-		Set<ConstraintViolation<AnimeTimetableDto>> set = this.validator.validate(dto, AnimeTimetableDto.Save.class);
+	public Boolean modify(AnimeTimetableDto dto) {
+		Set<ConstraintViolation<AnimeTimetableDto>> set = this.validator.validate(dto, AnimeTimetableDto.Modify.class);
 		for (ConstraintViolation<AnimeTimetableDto> error : set) {
 			throw new RuntimeException(error.getMessage());
 		}
-		return null;
+		if(dto == null){
+			logger.error("modify:参数对象为空");
+			throw new RuntimeException("参数对象为空");
+		}
+		
+		AnimeTimetableVo po = this.getById(dto.getId());
+		
+		if(po == null){
+			logger.error("modify:动漫时间表信息未持久化");
+			throw new RuntimeException("动漫时间表信息未持久化");
+		}
+		
+		try {
+			AnimeTimetable animeTimetable = AnimeTimetable.class.newInstance();
+			AutoMapper.mapping(dto,animeTimetable);
+			animeTimetableMapper.updateByPrimaryKeySelective(animeTimetable);
+		} catch (Exception e ) {
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
+		}
+		return Boolean.TRUE;
 	}
 
 	@Override
