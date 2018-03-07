@@ -15,11 +15,12 @@
 	</head>
 	<div>
 		<div class="demoTable">
-		  搜索ID：
+		  输入动漫名称：
 		  <div class="layui-inline">
-		    <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+		    <input class="layui-input" type="text"  id="searchValue" autocomplete="off">
 		  </div>
-		  <button class="layui-btn" data-type="reload">搜索</button>
+		  <button id="searchBtn" class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
+		  <button id="addBtn" class="layui-btn"><i class="layui-icon">&#xe654;</i>添加</button>
 		</div>
 		
 		<table id="animeTable" class="layui-table" lay-filter="animetab"></table>
@@ -30,10 +31,19 @@
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
 	</script>
 	
+	<script type="text/html" id="showAnimeCover">
+  		<span class="layer-photos-demo" id="animeCover_{{d.id}}"><img title="点击看原图" style="width: 40px" style="cursor:pointer" layer-src="{{ d.animeCover }}" src="{{d.animeCover}}" lay-event="imageEvent"><span>
+	</script>
+	
+	<script type="text/html" id="showAnimeVerticalCover">
+  		<span class="layer-photos-demo" id="animeVerticalCover_{{d.id}}"><img title="点击看原图" style="width: 40px" style="cursor:pointer" layer-src="{{ d.animeVerticalCover }}" src="{{d.animeVerticalCover}}" lay-event="imageEvent"><span>
+	</script>
+	
 		<!-- 表单弹窗 -->
 	<script type="text/html" id="addModel">
 	<form id="editForm" class="layui-form modal-form" action="">
 		<input name="id" type="hidden" value=""/>
+		<input name="action" type="hidden" value=""/>
 		<div class="layui-form-item">
 			<label class="layui-form-label">名称</label>
  			<div class="layui-input-block">
@@ -41,17 +51,32 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">封面</label>
- 			<div class="layui-input-block">
-				<input name="animeCover" placeholder="请上传封面" type="text" class="layui-input" />
-			</div>
-		</div>
+        	<label class="layui-form-label">封面</label>
+        	<div class="layui-input-block">
+                <input type="hidden" class="layui-input" name="animeCover" value="" >
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="animeCover_showPic_upload">上传显示图片</button>
+                    <div class="layui-upload-list pro-pic">
+                        <img class="layui-upload-img" name="animeCover" src="" >
+                        <p id="animeCover_showPic_retry"></p>
+                    </div>
+                </div>
+        	</div>
+   		 </div>
+
 		<div class="layui-form-item">
-			<label class="layui-form-label">动漫图片</label>
- 			<div class="layui-input-block">
-				<input name="animeVerticalCover" placeholder="请上传动漫图片" type="text" class="layui-input" />
-			</div>
-		</div>
+        	<label class="layui-form-label">动漫图片</label>
+        	<div class="layui-input-block">
+                <input type="hidden" class="layui-input" name="animeVerticalCover" value="" >
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="animeVerticalCover_showPic_upload">上传显示图片</button>
+                    <div class="layui-upload-list pro-pic">
+                        <img class="layui-upload-img" name="animeVerticalCover" src="" >
+                        <p id="animeVerticalCover_showPic_retry"></p>
+                    </div>
+                </div>
+        	</div>
+   		 </div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">播放日期</label>
  			<div class="layui-input-block">
@@ -101,12 +126,14 @@
 	</form>
 	</script>
 	<script>
-		layui.use(['layer','table','form'], function(){
-			var table = layui.table;
-			var layer=layui.layer;
-			var form =layui.form;
-			var $=layui.jquery;
+		layui.use(['layer','jquery','table','form','upload'], function(){
+			var table = layui.table,
+			 layer=layui.layer,
+			 form =layui.form,
+			 $=layui.jquery,
+			 upload = layui.upload;
 			
+	        
 			table.render({
 			    elem: '#animeTable'
 			    ,url:'${baseUrl}/anime/schedule/list'
@@ -118,8 +145,8 @@
 			    ,cols: [[
 			      {type: 'checkbox',width:"5%",}
 			      ,{field:'animeName', title:'名称',width:"10%",align:"center",unresize: true, sort: true}
-			      ,{field:'animeCover', title:'封面',width:"10%",align:"center",event: 'imageEvent' , unresize: true,templet:'<div><img title="点击看原图" width="50px" height="50px" style="cursor:pointer" src="{{d.animeCover}}"></div>'}
-			      ,{field:'animeVerticalCover', title:'动漫图片',width:"10%",align:"center",}
+			      ,{field:'animeCover', title:'封面',width:"10%",align:"center", unresize: true,templet:'#showAnimeCover'}
+			      ,{field:'animeVerticalCover', title:'动漫图片',width:"10%",align:"center",templet:'#showAnimeVerticalCover'}
 			      ,{field:'animePlayDate', title: '播放日期',width:"10%",align:"center", sort: true}
 			      ,{field:'animePlayTime', title:'国内播放时间',width:"10%",align:"center",}
 			      ,{field:'animeOriginTime', title:'制作国家播放时间',width:"8%",align:"center",}
@@ -141,8 +168,9 @@
 				layer.load(2);
 		      	$.ajax({
 						type :'post',
-				        url : '${baseUrl}/anime/schedule/del?animeId='+data.id,
+				        url : '${baseUrl}/anime/schedule/del',
 				        dataType : 'json',
+				        data :{id:data.id},
 				        success :  function(json){
 				        	layer.closeAll('loading');
 				        	if(!json.success){
@@ -161,47 +189,63 @@
 		      /* layer.alert('编辑行：<br>'+ JSON.stringify(data)) */
 		      	showEditModel(data)
 		    }else if(obj.event === 'imageEvent'){
-		    	var flag = true;
-		    	if(flag){
-			         flag = false;
-			         $(this).attr("width","") ;
-			         $(this).attr("height","");
-			     }else{
-			         flag = true;
-			         $(this).attr("width","50px") ;
-			         $(this).attr("height","50px") ;
-			     }
-	            /* layer.open({
-	                type: 1,
-	                title: false,
-	                closeBtn: 0,
-	                area: '516px',
-	                skin: 'layui-layer-nobg', //没有背景色
-	                shadeClose: true,
-	                content: '<div><img src="'+data.animeCover+'"><div>'
-			     }); */
+		    	layer.photos({
+                    photos: '#animeCover_'+data.id,
+                    anim: 5
+                });
 			}
 		  });
+		 
+		//搜索按钮点击事件
+		$("#searchBtn").click(function(){
+			var value = $("#searchValue").val();
+			table.reload('animeTable', {  
+       		 where: {
+       		 	key: {
+	            	searchValue: value
+	          	}
+	          }
+       		});
+		});
 		
 		//表单提交事件
 		form.on('submit(btnSubmit)', function(data) {
 			data.field._method = $("#editForm").attr("method");
+			var action = $("#editForm input[name=action]").attr("value");
 			layer.load(2);
-		    $.post("${baseUrl}/anime/schedule/modify", data.field, function(json){
-				layer.closeAll('loading');
-				if(!json.success){
-					layer.msg(json.data)
-					return
-				}else{
-					layer.closeAll('page');
-					table.reload('animeTable');
-					layer.msg(json.data)
-					return
-				}
-			}, "JSON");
+			if(action === "ADD"){
+				$.post("${baseUrl}/anime/schedule/add", data.field, function(json){
+					layer.closeAll('loading');
+					if(!json.success){
+						layer.msg(json.data)
+						return
+					}else{
+						layer.closeAll('page');
+						table.reload('animeTable');
+						layer.msg(json.data)
+						return
+					}
+				}, "JSON");
+			}else if(action === "MODIFY"){
+				$.post("${baseUrl}/anime/schedule/modify", data.field, function(json){
+					layer.closeAll('loading');
+					if(!json.success){
+						layer.msg(json.data)
+						return
+					}else{
+						layer.closeAll('page');
+						table.reload('animeTable');
+						layer.msg(json.data)
+						return
+					}
+				}, "JSON");
+			}
 			return false;
 		});
-		  
+		 //添加按钮点击事件
+		$("#addBtn").click(function(){
+			showEditModel(null);
+		});
 		  //显示表单弹窗
 		function showEditModel(data){
 			var index =layer.open({
@@ -211,7 +255,7 @@
 	                content : $("#addModel").html(),
 	                success : function(layer,index){
 	                    setTimeout(function(){
-	                        layer.tips('这里是关闭窗口', '.layui-layer-setwin .layui-layer-close', {
+	                        layui.layer.tips('这里是关闭窗口', '.layui-layer-setwin .layui-layer-close', {
 	                            tips: 3
 	                        });
 	                    },500)
@@ -219,11 +263,15 @@
 	            });
 	         $("#editForm")[0].reset();
 			 $("#editForm").attr("method","POST");
+			 $("#editForm input[name=action]").val("ADD");
 			 if(data!=null){
 			 	$("#editForm input[name=id]").val(data.id);
+			 	$("#editForm input[name=action]").val("MODIFY");
 				$("#editForm input[name=animeName]").val(data.animeName);
 				$("#editForm input[name=animeCover]").val(data.animeCover);
-				$("#editForm input[name=animeVerticalCover]").val(data.animeVerticalCover);
+				$("#editForm img[name=animeCover]").attr("src",data.animeCover);
+				$("#editForm input[name=animeVerticalCover]").val(data.animeCover);
+				$("#editForm img[name=animeVerticalCover]").attr("src",data.animeVerticalCover);
 				$("#editForm input[name=animePlayDate]").val(data.animePlayDate);
 				$("#editForm input[name=animePlayTime]").val(data.animePlayTime);
 				$("#editForm input[name=animeOriginTime]").val(data.animeOriginTime);
@@ -237,65 +285,39 @@
 				layer.closeAll('page');
 			});
 		}
-	});
 		
-		/* $(function(){
-			$(".button-collapse").sideNav();
-			$(".meuns").on("click", function(){
-				$(".top-nav .page-title").html($(this).html());
-				content_load($("main"), $(this).attr("data-href"));
-			});
-			
-			$('#modifymodal').modal({
-				ready: function(modal, trigger) { 
-					// Callback for Modal open. Modal and trigger parameters available.
-			      },
-			    complete: function() {
-			    } // Callback for Modal close
-			});
-			
-			$('#deletetemodal').modal({
-				in_duration: 150, // Transition in duration
-			    out_duration: 100, // Transition out duration
-			    starting_top: '2%', // Starting topstyle attribute
-			    ending_top: '5%', // Ending top style attribute
-				ready: function(modal, trigger) { 
-					$("input[name='delAnimeId']").val($(trigger).data('id'));
-			     },
-			    complete: function() {
-			    	
-			    }
-			});
-			
-			$('#delAnimeId').click(function() {
-				var id = $("input[name='delAnimeId']").val()
-				$.ajax({
-						type :'post',
-				        url : '${baseUrl}/anime/schedule/del?animeId='+id,
-				        dataType : 'json',
-				        success :  function(json){
-				        	if(!json.success){
-				        		Materialize.toast(json.data,1000)
-				        		return
-				        	}else{
-				        		Materialize.toast(json.data,1000)
-				        		refresh()
-				        		return
-				        	}
-						}
-				   });
-			})
-			function refresh(){
-				console.log("AAA")
-				$.ajax({
-					type :'get',
-			        url : '${baseUrl}/anime/schedule/list?pagenum=1',
-			        dataType : 'json',
-			        success :  function(json){
-			        	console.log(json)
-					}
-			   });
-			}
-		}); */
+		//普通图片上传
+        var upload_showPic = upload.render({
+            elem: '#animeCover_showPic_upload',
+            url: '${base}/file/upload/',
+            field:'test',
+            before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $("#editForm img[name=animeCover]").attr("src",result);//图片链接（base64）
+                });
+                imageIndex = layer.load(2, {
+                    shade: [0.3, '#333']
+                });
+            },
+            done: function(res){
+                layer.close(imageIndex);
+                //如果上传失败
+                if(res.success == false){
+                    return layer.msg('上传失败');
+                }
+                $("#editForm input[name=animeCover]").val(res.data.url);
+            },
+            error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#animeCover_showPic_retry');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    upload_showPic.upload();
+                });
+            }
+        });
+		
+	});
 	</script> 
 </html>

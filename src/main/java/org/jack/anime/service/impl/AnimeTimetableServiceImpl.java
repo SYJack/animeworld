@@ -55,7 +55,21 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 		for (ConstraintViolation<AnimeTimetableDto> error : set) {
 			throw new RuntimeException(error.getMessage());
 		}
-		return null;
+		Integer result = null;
+		if(dto == null){
+			logger.error("modify:参数对象为空");
+			throw new RuntimeException("参数对象为空");
+		}
+		try {
+			AnimeTimetable animeTimetable = AnimeTimetable.class.newInstance();
+			AutoMapper.mapping(dto,animeTimetable);
+			result = animeTimetableMapper.insertSelective(animeTimetable);
+		} catch (Exception e ) {
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
+		}
+		
+		return result;
 	}
 
 	@Override

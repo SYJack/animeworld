@@ -82,4 +82,13 @@ header, main, footer {
 .modal-form-footer {
 	text-align: right;
 }
+/*图片上传样式  */
+.layui-upload div .pro-pic {
+    width: 192px;
+    height: 192px;
+    border: #ccc 1px solid;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
 }

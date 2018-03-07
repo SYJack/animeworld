@@ -5,7 +5,6 @@ package org.jack.anime.controller.manage;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.jack.anime.entity.PageResult;
@@ -13,13 +12,11 @@ import org.jack.anime.service.api.AnimeTimetableService;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableDto;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
 import org.jack.anime.service.vo.animeTimetable.Result;
-import org.jack.anime.utils.constant.HttpConstants;
 import org.jack.anime.utils.tool.PageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author jack
@@ -99,17 +96,35 @@ public class AnimeController extends BaseController{
 	
 	@RequestMapping(value = "/anime/schedule/del", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
 	@ResponseBody
-	public Result<String> deleteAnimeSchedule(HttpServletRequest request){
+	public Result<String> deleteAnimeSchedule(Integer id){
 		try {
-			String id = request.getParameter("animeId");
-			if(StringUtils.isEmpty(id)){
+			if(id == null){
 				return new Result<>(false, "id不能为空!");
 			}
-			animeTimetableServiceimpl.delete(Integer.valueOf(id));
+			animeTimetableServiceimpl.delete(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new Result<>(true, "删除成功!");
+	}
+	
+	@RequestMapping(value = "/anime/schedule/add", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
+	@ResponseBody
+	public Result<String> addAnimeSchedule(AnimeTimetableDto dto){
+		try {
+			Integer ret = null;
+			if (dto == null) {
+				return new Result<>(false, "参数为空!");
+			}
+			ret = animeTimetableServiceimpl.save(dto);
+			if(ret == null){
+				return new Result<>(false, "添加失败!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result<>(false, e.getMessage());
+		}
+		return new Result<>(true, "保存成功!");
 	}
 	
 	@RequestMapping(value = "/anime/schedule/modify", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
