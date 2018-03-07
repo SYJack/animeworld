@@ -119,7 +119,7 @@
 				<input name="animePlayUrl" placeholder="请输入国内播放网址" type="text" class="layui-input" />
 			</div>
 		</div>
-		<div class="layui-form-item modal-form-footer">
+		<div class="layui-form-item modal-form-footer" style="float:right;">
 			<button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
 			<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
 		</div>
@@ -199,6 +199,7 @@
 		//搜索按钮点击事件
 		$("#searchBtn").click(function(){
 			var value = $("#searchValue").val();
+			console.log(value)
 			table.reload('animeTable', {  
        		 where: {
        		 	key: {
@@ -207,6 +208,7 @@
 	          }
        		});
 		});
+		
 		
 		//表单提交事件
 		form.on('submit(btnSubmit)', function(data) {
@@ -248,7 +250,7 @@
 		});
 		  //显示表单弹窗
 		function showEditModel(data){
-			var index =layer.open({
+			var index =layui.layer.open({
 	                title : data==null ? "添加动漫播放信息" :"修改动漫播放信息",
 	                type : 1,
 	                maxmin: true,
@@ -280,43 +282,46 @@
 				$("#editForm input[name=animePlayEpisode]").val(data.animePlayEpisode);
 				$("#editForm input[name=animePlayUrl]").val(data.animePlayUrl);
 			}
-           	 layer.full(index);
+			 layui.layer.full(index);
+           	$(window).on("resize",function(){
+                layui.layer.full(index);
+            })
+           	 //普通图片上传
+             var upload_showPic = layui.upload.render({
+                 elem: '#animeCover_showPic_upload',
+                 url: '${base}/file/upload/',
+                 field:'test',
+                 before: function(obj){
+                     //预读本地文件示例，不支持ie8
+                     obj.preview(function(index, file, result){
+                         $("#editForm img[name=animeCover]").attr("src",result);//图片链接（base64）
+                     });
+                     imageIndex = layer.load(2, {
+                         shade: [0.3, '#333']
+                     });
+                 },
+                 done: function(res){
+                     layer.close(imageIndex);
+                     //如果上传失败
+                     if(res.success == false){
+                         return layer.msg('上传失败');
+                     }
+                     $("#editForm input[name=animeCover]").val(res.data.url);
+                 },
+                 error: function(){
+                     //演示失败状态，并实现重传
+                     var demoText = $('#animeCover_showPic_retry');
+                     demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                     demoText.find('.demo-reload').on('click', function(){
+                         upload_showPic.upload();
+                     });
+                 }
+             });
+           
            	 $("#btnCancel").click(function(){
-				layer.closeAll('page');
+           		layui.layer.closeAll('page');
 			});
 		}
-		
-		//普通图片上传
-        var upload_showPic = upload.render({
-            elem: '#animeCover_showPic_upload',
-            url: '${base}/file/upload/',
-            field:'test',
-            before: function(obj){
-                //预读本地文件示例，不支持ie8
-                obj.preview(function(index, file, result){
-                    $("#editForm img[name=animeCover]").attr("src",result);//图片链接（base64）
-                });
-                imageIndex = layer.load(2, {
-                    shade: [0.3, '#333']
-                });
-            },
-            done: function(res){
-                layer.close(imageIndex);
-                //如果上传失败
-                if(res.success == false){
-                    return layer.msg('上传失败');
-                }
-                $("#editForm input[name=animeCover]").val(res.data.url);
-            },
-            error: function(){
-                //演示失败状态，并实现重传
-                var demoText = $('#animeCover_showPic_retry');
-                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-                demoText.find('.demo-reload').on('click', function(){
-                    upload_showPic.upload();
-                });
-            }
-        });
 		
 	});
 	</script> 
