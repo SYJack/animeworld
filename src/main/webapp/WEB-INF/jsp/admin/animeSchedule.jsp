@@ -289,8 +289,8 @@
            	 //普通图片上传
              var upload_showPic = layui.upload.render({
                  elem: '#animeCover_showPic_upload',
-                 url: '${base}/file/upload/',
-                 field:'test',
+                 url: '${baseUrl}/file/uploadPic?directory=PORTRAIT',
+                 field:'photo',
                  before: function(obj){
                      //预读本地文件示例，不支持ie8
                      obj.preview(function(index, file, result){
@@ -300,13 +300,13 @@
                          shade: [0.3, '#333']
                      });
                  },
-                 done: function(res){
+                 done: function(json){
                      layer.close(imageIndex);
                      //如果上传失败
-                     if(res.success == false){
-                         return layer.msg('上传失败');
+                     if(!json.success){
+                         return layer.msg(json.data);
                      }
-                     $("#editForm input[name=animeCover]").val(res.data.url);
+                     $("#editForm input[name=animeCover]").val(json.data);
                  },
                  error: function(){
                      //演示失败状态，并实现重传

@@ -104,6 +104,7 @@ public class AnimeController extends BaseController{
 			animeTimetableServiceimpl.delete(id);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new Result<>(false, e.getMessage());
 		}
 		return new Result<>(true, "删除成功!");
 	}
