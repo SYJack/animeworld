@@ -6,14 +6,21 @@ package org.jack.anime.controller.manage;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+import org.jack.anime.service.vo.animeTimetable.Result;
 import org.jack.anime.utils.tool.VerifyCodeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author jack
@@ -46,5 +53,47 @@ public class LoginController extends BaseController {
 		BufferedImage bufferedImage = VerifyCodeUtil.generateImageCode(verifyCode, 116, 36, 5, true, new Color(249,205,173), null, null);
 		//写给浏览器
 		ImageIO.write(bufferedImage, "JPEG", response.getOutputStream());
+	}
+	
+	@PostMapping("/admin/loginmain")
+	@ResponseBody
+	public Result<Map<String, Object>> loginMain(HttpServletRequest request) {
+		
+		Map<String,Object> map = new HashMap<>();
+		
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String code = request.getParameter("code");
+		
+		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
+			map.put("msg", "用户名或者密码不能为空");
+			return new Result<Map<String,Object>>(false, map);
+		}
+		if(StringUtils.isEmpty(code)){
+			map.put("msg", "验证码不能为空");
+			return new Result<Map<String,Object>>(false, map);
+		}
+		HttpSession session = request.getSession();
+		if(session == null){
+			map.put("msg", "session超时");
+			return new Result<Map<String,Object>>(false, map);
+		}
+		String trueCode =  (String)session.getAttribute("validateCode");
+		if(StringUtils.isEmpty(trueCode)){
+			map.put("msg", "验证码超时");
+			return new Result<Map<String,Object>>(false, map);
+		}
+		if(StringUtils.isEmpty(code) || !trueCode.toLowerCase().equals(code.toLowerCase())){
+			map.put("msg", "验证码错误");
+			return new Result<Map<String,Object>>(false, map);
+		}else{
+			
+			
+		}
+		return null;
+	}
+	@GetMapping("index")
+	public String showView(HttpServletRequest request){
+		return "admin/index";
 	}
 }

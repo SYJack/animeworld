@@ -47,16 +47,14 @@
 		         	var username = $("input[name='username']").val();
 		         	var password = $("input[name='password']").val();
 		         	var code = $("input[name='validateCode']").val();
-		         	$.post("${baseUrl}/anime/schedule/add", data.field, function(json){
+		         	$.post("${baseUrl}/admin/loginmain", {username:username,password:password,code:code}, function(json){
+		         		console.log(json)
 						layer.closeAll('loading');
 						if(!json.success){
-							layer.msg(json.data)
+							layer.msg(json.data.msg)
 							return
 						}else{
-							layer.closeAll('page');
-							table.reload('animeTable');
-							layer.msg(json.data)
-							return
+							location.href = '${baseUrl}/index';
 						}
 					}, "JSON");
 		           return false;
