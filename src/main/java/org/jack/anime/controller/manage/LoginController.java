@@ -20,6 +20,7 @@ import org.jack.anime.utils.tool.VerifyCodeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -27,18 +28,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
+@RequestMapping("/admin")
 public class LoginController extends BaseController {
 
-	@GetMapping("login")
+	@GetMapping("/login")
 	public String login(HttpServletRequest request) {
 		super.logger.info("跳到这边的路径为:"+request.getRequestURI());
-		return "admin/login";
+		return "/admin/login";
 	}
 	
 	/**
 	 * 获取验证码图片和文本(验证码文本会保存在HttpSession中)
 	 */
-	@GetMapping("/admin/getCaptcha")
+	@GetMapping("/getCaptcha")
 	public void genCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		//设置页面不缓存
 		response.setHeader("Pragma", "no-cache");
@@ -55,7 +57,7 @@ public class LoginController extends BaseController {
 		ImageIO.write(bufferedImage, "JPEG", response.getOutputStream());
 	}
 	
-	@PostMapping("/admin/loginmain")
+	@PostMapping("/loginmain")
 	@ResponseBody
 	public Result<Map<String, Object>> loginMain(HttpServletRequest request) {
 		
@@ -90,10 +92,11 @@ public class LoginController extends BaseController {
 			
 			
 		}
-		return null;
+		map.put("msg", "登录成功");
+		return new Result<Map<String,Object>>(true, map);
 	}
-	@GetMapping("index")
+	@GetMapping("/index")
 	public String showView(HttpServletRequest request){
-		return "admin/index";
+		return "/admin/index";
 	}
 }

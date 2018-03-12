@@ -100,7 +100,7 @@
 		</div>
 	  <script type="text/javascript" src="${baseResPath}/js/jquery-3.1.1.min.js"></script>
 	  <script type="text/javascript" src="${baseResPath}/layui/layui.js"></script>
-      <script type="text/javascript" src="${baseResPath}/love2d/autoload.js"></script>
+      <%-- <script type="text/javascript" src="${baseResPath}/love2d/autoload.js"></script> --%>
       <script>
 		layui.define(['layer', 'element'], function(exports){
 		  var element = layui.element;
@@ -111,6 +111,27 @@
 		        ,id: "777"
 		    });
 		    element.tabChange("contentTab",777);
+		    
+		     // 加载 CSS
+			$("<link>").attr({href: "${baseResPath}/love2d/waifu.css", rel: "stylesheet", type: "text/css"}).appendTo('head');
+			// 插入 DIV
+			$('.layui-footer').append('<div class="waifu"><div class="waifu-tips"></div><canvas id="live2d" width="280" height="250" class="live2d"></canvas><div class="waifu-tool"><span class="fui-home"></span> <span class="fui-chat"></span> <span class="fui-eye"></span> <span class="fui-user"></span> <span class="fui-photo"></span> <span class="fui-info-circle"></span> <span class="fui-cross"></span></div></div>');
+			// 加载 JS
+			$.ajax({
+				url: '${baseResPath}/love2d/live2d.js',
+				dataType:"script",
+				cache: true,
+				async: false
+			});
+			$.ajax({
+				url: '${baseResPath}/love2d/waifu-tips.js',
+				dataType:"script",
+				cache: true,
+				async: false
+			});
+			
+			// 初始化看板娘，会自动加载指定目录下的 waifu-tips.json
+			initModel('${baseResPath}/love2d/');
 		    $('#sidebar_Navigation li a').each(function(index,el){
 		    	$(el).click(function(){
 		    		if($(this).data('url')){

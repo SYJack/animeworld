@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author jack
  *
  */
-@Controller
 public class PageController extends BaseController{
 	@RequestMapping("{path}")
 	public String pathJump(@PathVariable("path") String path) {

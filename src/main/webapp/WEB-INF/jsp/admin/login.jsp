@@ -54,7 +54,8 @@
 							layer.msg(json.data.msg)
 							return
 						}else{
-							location.href = '${baseUrl}/index';
+							layer.msg(json.data.msg)
+							location.href = '${baseUrl}/admin/index';
 						}
 					}, "JSON");
 		           return false;

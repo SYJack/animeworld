@@ -136,7 +136,7 @@
 	        
 			table.render({
 			    elem: '#animeTable'
-			    ,url:'${baseUrl}/anime/schedule/list'
+			    ,url:'${baseUrl}/admin/anime/schedule/list'
 			    ,request: {
 	    		   pageName: 'pageNumber', //页码的参数名称，默认：page
 	    		   limitName: 'limit' //每页数据量的参数名，默认：limit
@@ -168,7 +168,7 @@
 				layer.load(2);
 		      	$.ajax({
 						type :'post',
-				        url : '${baseUrl}/anime/schedule/del',
+				        url : '${baseUrl}/admin/anime/schedule/del',
 				        dataType : 'json',
 				        data :{id:data.id},
 				        success :  function(json){
@@ -216,7 +216,7 @@
 			var action = $("#editForm input[name=action]").attr("value");
 			layer.load(2);
 			if(action === "ADD"){
-				$.post("${baseUrl}/anime/schedule/add", data.field, function(json){
+				$.post("${baseUrl}/admin/anime/schedule/add", data.field, function(json){
 					layer.closeAll('loading');
 					if(!json.success){
 						layer.msg(json.data)
@@ -229,7 +229,7 @@
 					}
 				}, "JSON");
 			}else if(action === "MODIFY"){
-				$.post("${baseUrl}/anime/schedule/modify", data.field, function(json){
+				$.post("${baseUrl}/admin/anime/schedule/modify", data.field, function(json){
 					layer.closeAll('loading');
 					if(!json.success){
 						layer.msg(json.data)

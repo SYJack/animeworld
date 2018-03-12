@@ -14,6 +14,7 @@ import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
 import org.jack.anime.service.vo.animeTimetable.Result;
 import org.jack.anime.utils.tool.PageUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
+@RequestMapping("/admin")
 public class AnimeController extends BaseController{
 	
 	@Resource(name="animeTimetableServiceImpl")
@@ -68,6 +70,12 @@ public class AnimeController extends BaseController{
 		}
 		return modelAndView;
 	}*/
+	
+	@RequestMapping(value="/animeSchedule", method = { RequestMethod.GET })
+    public String adminPath(HttpServletRequest request) throws Exception {
+		return "admin/animeSchedule";
+	}
+	
 	
 	@RequestMapping(value = "/anime/schedule/list", method = { RequestMethod.GET })
 	@ResponseBody
