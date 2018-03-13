@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jack.anime.dao.AnimeUserMapper">
+  <resultMap id="BaseResultMap" type="org.jack.anime.entity.AnimeUser">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="PORTRAIT_URL" jdbcType="VARCHAR" property="portraitUrl" />
+    <result column="LOGINNAME" jdbcType="VARCHAR" property="loginname" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="nickname" />
+    <result column="PASSWD" jdbcType="VARCHAR" property="passwd" />
+    <result column="GENDER" jdbcType="SMALLINT" property="gender" />
+    <result column="STATUS" jdbcType="SMALLINT" property="status" />
+    <result column="CREATE_TIMESTAMP" jdbcType="BIGINT" property="createTimestamp" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, MOBILE, PORTRAIT_URL, LOGINNAME, NICKNAME, PASSWD, GENDER, STATUS, CREATE_TIMESTAMP, 
+    EMAIL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anime_user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="totalItem" resultType="java.lang.Integer">
+  	select count(1) from anime_user
+  </select>
+  
+  <select id="getListpager" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from anime_user
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from anime_user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.jack.anime.entity.AnimeUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into anime_user (MOBILE, PORTRAIT_URL, LOGINNAME, 
+      NICKNAME, PASSWD, GENDER, 
+      STATUS, CREATE_TIMESTAMP, EMAIL
+      )
+    values (#{mobile,jdbcType=VARCHAR}, #{portraitUrl,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{gender,jdbcType=SMALLINT}, 
+      #{status,jdbcType=SMALLINT}, #{createTimestamp,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.jack.anime.entity.AnimeUser">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into anime_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="portraitUrl != null">
+        PORTRAIT_URL,
+      </if>
+      <if test="loginname != null">
+        LOGINNAME,
+      </if>
+      <if test="nickname != null">
+        NICKNAME,
+      </if>
+      <if test="passwd != null">
+        PASSWD,
+      </if>
+      <if test="gender != null">
+        GENDER,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createTimestamp != null">
+        CREATE_TIMESTAMP,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitUrl != null">
+        #{portraitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null">
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createTimestamp != null">
+        #{createTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.jack.anime.entity.AnimeUser">
+    update anime_user
+    <set>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="portraitUrl != null">
+        PORTRAIT_URL = #{portraitUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null">
+        LOGINNAME = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        NICKNAME = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        PASSWD = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        GENDER = #{gender,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createTimestamp != null">
+        CREATE_TIMESTAMP = #{createTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.jack.anime.entity.AnimeUser">
+    update anime_user
+    set MOBILE = #{mobile,jdbcType=VARCHAR},
+      PORTRAIT_URL = #{portraitUrl,jdbcType=VARCHAR},
+      LOGINNAME = #{loginname,jdbcType=VARCHAR},
+      NICKNAME = #{nickname,jdbcType=VARCHAR},
+      PASSWD = #{passwd,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=SMALLINT},
+      STATUS = #{status,jdbcType=SMALLINT},
+      CREATE_TIMESTAMP = #{createTimestamp,jdbcType=BIGINT},
+      EMAIL = #{email,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

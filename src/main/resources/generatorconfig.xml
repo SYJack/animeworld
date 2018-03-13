@@ -61,7 +61,31 @@
         <!-- 列出要生成代码的所有表，这里配置的是不生成Example文件 -->
         <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample   
                        是否生成 example类   --> 
-        <table schema="test" tableName="anime_timetable" domainObjectName="AnimeTimetable"
+        <!-- <table schema="test" tableName="anime_timetable" domainObjectName="AnimeTimetable"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table> -->
+        
+         <table schema="test" tableName="anime_user" domainObjectName="AnimeUser"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table>
+        
+        <table schema="test" tableName="anime_role" domainObjectName="AnimeRole"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table>
+        
+        <table schema="test" tableName="anime_manager" domainObjectName="AnimeManager"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">
