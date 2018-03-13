@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.jack.anime.service.vo.animeTimetable.Result;
+import org.jack.anime.service.vo.Result;
 import org.jack.anime.utils.tool.VerifyCodeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

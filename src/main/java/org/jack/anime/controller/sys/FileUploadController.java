@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 
 
 
+
 import org.apache.commons.lang.StringUtils;
-import org.jack.anime.service.vo.animeTimetable.Result;
+import org.jack.anime.service.vo.Result;
 import org.jack.anime.utils.constant.FileDirectory;
 import org.jack.anime.utils.tool.DateUtil;
 import org.jack.anime.utils.tool.OSSClientUtil;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.jack.anime.service.vo.animeTimetable;
+package org.jack.anime.service.vo;
 
 /**
  * 
