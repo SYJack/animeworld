@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-	  <title>开始使用layui</title>
+	  <title>动漫世界管理系统</title>
 	  <link rel="stylesheet" href="${baseResPath}/layui/css/layui.css" media="screen,projection">
 	  <link type="text/css" rel="stylesheet" href="${baseResPath}/css/style.css" media="screen,projection">
       <link type="text/css" rel="stylesheet" href="${baseResPath}/love2d/waifu.css" media="screen,projection">
@@ -74,7 +74,14 @@
 			            <dd><a href="javascript:;" data-url="">列表二</a></dd>
 		          	</dl>
 		        </li>
-		        <li class="layui-nav-item"><a href="javascript:;" data-url="">管理员管理</a></li>
+		        <li class="layui-nav-item">
+		        	<a href="javascript:;">权限管理</a>
+		        	<dl class="layui-nav-child">
+			            <dd><a href="javascript:;" data-url="${baseUrl}/admin/sysUserList">系统用户管理</a></dd>
+			            <dd><a href="javascript:;" data-url="${baseUrl}/admin/sysManagerList">系统管理员管理</a></dd>
+			            <dd><a href="javascript:;" data-url="${baseUrl}/admin/sysRoleList">系统角色管理</a></dd>
+		          	</dl>
+		        </li>
 		        <li class="layui-nav-item"><a href="javascript:;" data-url="">系统管理</a></li>
 		      </ul>
 		    </div>

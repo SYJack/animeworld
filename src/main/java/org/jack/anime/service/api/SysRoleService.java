@@ -7,6 +7,6 @@ package org.jack.anime.service.api;
  * @author jack
  *
  */
-public interface AnimeManagerService {
+public interface SysRoleService {
 
 }

@@ -7,7 +7,7 @@
 <html>
      <body>
      <head>
-	  <title>开始使用layui</title>
+	  <title>动漫世界管理系统</title>
 	  <link rel="stylesheet" href="${baseResPath}/layui/css/layui.css" media="screen,projection">
 	  <link type="text/css" rel="stylesheet" href="${baseResPath}/css/style.css" media="screen,projection">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

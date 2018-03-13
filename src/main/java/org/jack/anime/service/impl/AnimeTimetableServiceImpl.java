@@ -21,7 +21,6 @@ import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.AnimeTimetableService;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableDto;
 import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
-import org.jack.anime.utils.tool.PageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
