@@ -38,11 +38,13 @@ public class SysUserListController extends BaseController {
 	        } else {
 	            pagenum = Integer.parseInt(page);
 	        }*/
+			
 			PageResult<AnimeUserVo> pageResult = sysUserServiceImpl.getListpager(null, page, limit);
 			pageUtil.setMsg("返回成功");
 			pageUtil.setCode(0);
 			pageUtil.setCount(pageResult.getTotal());
 			pageUtil.setData(pageResult.getDataList());
+			http://blog.csdn.net/yf275908654/article/details/50171607
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
