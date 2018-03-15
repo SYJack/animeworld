@@ -60,9 +60,9 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 			throw new RuntimeException("参数对象为空");
 		}
 		try {
-			AnimeTimetable animeTimetable = AnimeTimetable.class.newInstance();
-			AutoMapper.mapping(dto,animeTimetable);
-			result = animeTimetableMapper.insertSelective(animeTimetable);
+			AnimeTimetable po = AnimeTimetable.class.newInstance();
+			AutoMapper.mapping(dto,po);
+			result = animeTimetableMapper.insertSelective(po);
 		} catch (Exception e ) {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
@@ -82,17 +82,17 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 			throw new RuntimeException("参数对象为空");
 		}
 		
-		AnimeTimetableVo po = this.getById(dto.getId());
+		AnimeTimetableVo vo = this.getById(dto.getId());
 		
-		if(po == null){
+		if(vo == null){
 			logger.error("modify:动漫时间表信息未持久化");
 			throw new RuntimeException("动漫时间表信息未持久化");
 		}
 		
 		try {
-			AnimeTimetable animeTimetable = AnimeTimetable.class.newInstance();
-			AutoMapper.mapping(dto,animeTimetable);
-			animeTimetableMapper.updateByPrimaryKeySelective(animeTimetable);
+			AnimeTimetable po = AnimeTimetable.class.newInstance();
+			AutoMapper.mapping(dto,po);
+			animeTimetableMapper.updateByPrimaryKeySelective(po);
 		} catch (Exception e ) {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
@@ -112,10 +112,10 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 		
 		List<AnimeTimetableVo> result = new ArrayList<AnimeTimetableVo>();
 		if (list != null && list.size() > 0) {
-			for (AnimeTimetable animeTimetable : list) {
+			for (AnimeTimetable po : list) {
 				try {
 					AnimeTimetableVo vo = AnimeTimetableVo.class.newInstance();
-					AutoMapper.mapping(animeTimetable, vo);
+					AutoMapper.mapping(po, vo);
 					result.add(vo);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -133,7 +133,7 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 
 	@Override
 	public AnimeTimetableVo getById(Integer id) {
-		AnimeTimetableVo ret = null;
+		AnimeTimetableVo vo = null;
 		if (id == null) {
 			return null;
 		}
@@ -142,12 +142,12 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 			return null;
 		}
 		try {
-			ret = AnimeTimetableVo.class.newInstance();
-			BeanUtils.copyProperties(ret, po);
+			vo = AnimeTimetableVo.class.newInstance();
+			BeanUtils.copyProperties(vo, po);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ret;
+		return vo;
 	}
 
 	@Override

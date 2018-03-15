@@ -22,7 +22,7 @@ public class SysUserListController extends BaseController {
 	@Resource(name="sysUserServiceImpl")
 	private SysUserService sysUserServiceImpl;
 	
-	@RequestMapping(value = "/anime/schedule/list", method = { RequestMethod.GET })
+	@RequestMapping(value = "/anime/sysuser/list", method = { RequestMethod.GET })
 	@ResponseBody
 	public PageUtil<AnimeUserVo> getUserList(@RequestParam(value = "page",defaultValue = "1")Integer page,
            									@RequestParam(value = "limit",defaultValue = "10")Integer limit,
@@ -44,7 +44,6 @@ public class SysUserListController extends BaseController {
 			pageUtil.setCode(0);
 			pageUtil.setCount(pageResult.getTotal());
 			pageUtil.setData(pageResult.getDataList());
-			http://blog.csdn.net/yf275908654/article/details/50171607
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

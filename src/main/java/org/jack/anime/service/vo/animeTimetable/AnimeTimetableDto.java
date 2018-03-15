@@ -8,6 +8,11 @@ import javax.validation.constraints.Null;
 
 public class AnimeTimetableDto implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5343230345157201312L;
+
 	public interface Save {
 	}
 

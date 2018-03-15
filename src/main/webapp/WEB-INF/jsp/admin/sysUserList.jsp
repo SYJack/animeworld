@@ -126,7 +126,7 @@
 			 
 			 table.render({
 			    elem: '#sysUserTable'
-			    ,url:'${baseUrl}/admin/anime/schedule/list'
+			    ,url:'${baseUrl}/admin/anime/sysuser/list'
 			    ,request: {
 	    		   pageName: 'pageNumber', //页码的参数名称，默认：page
 	    		   limitName: 'limit' //每页数据量的参数名，默认：limit
