@@ -30,6 +30,9 @@
   	<a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
   	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
 </script>
+<script type="text/html" id="showPortraitCover">
+  		<span class="layer-photos-demo" id="portraitCover_{{d.id}}"><img title="点击看原图" style="width: 40px" style="cursor:pointer" layer-src="{{ d.portraitUrl }}" src="{{d.portraitUrl}}" lay-event="imageEvent"><span>
+</script>
 <!-- 表单弹窗 -->
 	<script type="text/html" id="addModel">
 	<form id="editForm" class="layui-form modal-form" action="">
@@ -134,20 +137,54 @@
 			    ,limits:[5,10,15]
 			    ,cols: [[
 			      {type: 'checkbox',width:"5%",}
-			      ,{field:'animeName', title:'名称',width:"10%",align:"center",unresize: true, sort: true}
-			      ,{field:'animeCover', title:'封面',width:"10%",align:"center", unresize: true,templet:'#showAnimeCover'}
-			      ,{field:'animeVerticalCover', title:'动漫图片',width:"10%",align:"center",templet:'#showAnimeVerticalCover'}
-			      ,{field:'animePlayDate', title: '播放日期',width:"10%",align:"center", sort: true}
-			      ,{field:'animePlayTime', title:'国内播放时间',width:"10%",align:"center",}
-			      ,{field:'animeOriginTime', title:'制作国家播放时间',width:"8%",align:"center",}
-			      ,{field:'animePlaySite', title:'国内播放网站',width:"8%",align:"center", }
-			      ,{field:'animeOriginStation', title:'制作国家播放电视台', width:"8%", align:"center",}
-			      ,{field:'animePlayEpisode', title:'播放集数', width:"8%", align:"center",}
-			      ,{field:'animePlayUrl', title:'国内播放网址', width:"8%", align:"center",}
+			      ,{field:'loginname', title:'登录名称',width:"10%",align:"center",unresize: true}
+			      ,{field:'portraitUrl', title:'头像',width:"10%",align:"center", unresize: true,templet:'#showPortraitCover'}
+			      ,{field:'mobile', title:'手机号码',width:"10%",align:"center"}
+			      ,{field:'nickname', title: '昵称',width:"10%",align:"center"}
+			      ,{field:'gender', title:'性别',width:"10%",align:"center",}
+			      ,{field:'status', title:'状态',width:"8%",align:"center",}
+			      ,{field:'email', title:'邮箱',width:"8%",align:"center", }
+			      ,{field:'createTimestamp', title:'创建时间戳', width:"8%", align:"center",sort: true}
 			      ,{title:'操作', align:'center',width:"21%",align:"center", toolbar: '#barDemo',}
 			    ]]
 			    ,page: true
 			  });
+			  //监听工具条
+		  table.on('tool(sysUsertab)', function(obj){
+		    var data = obj.data;
+		     if(obj.event === 'del'){
+		      layer.confirm('确认删除？', function(index){
+		      	layer.close(index);
+				layer.load(2);
+		      	$.ajax({
+						type :'post',
+				        url : '${baseUrl}/admin/sysuser/del',
+				        dataType : 'json',
+				        data :{id:data.id},
+				        success :  function(json){
+				        	layer.closeAll('loading');
+				        	if(!json.success){
+				        		layer.alert(json.data)
+				        		return
+				        	}else{
+				        		obj.del();
+				        		layer.close(index);
+				        		layer.alert(json.data)
+				        		return
+				        	}
+						}
+				   });
+		      });
+		    } else if(obj.event === 'edit'){
+		      /* layer.alert('编辑行：<br>'+ JSON.stringify(data)) */
+		      	showEditModel(data)
+		    }else if(obj.event === 'imageEvent'){
+		    	layer.photos({
+                    photos: '#portraitCover_'+data.id,
+                    anim: 5
+                });
+			}
+		  });
 		});
 	</script> 
 </html>

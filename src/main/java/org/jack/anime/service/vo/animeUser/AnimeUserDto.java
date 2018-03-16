@@ -6,8 +6,14 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jack.anime.entity.BaseEntity;
 
-public class AnimeUserDto {
+public class AnimeUserDto extends BaseEntity{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6421650394739474801L;
 
 	public interface Save {
 	}
@@ -33,8 +39,6 @@ public class AnimeUserDto {
     private String passwd;
 
     private Short gender;
-
-    private Short status;
 
     private Long createTimestamp;
 
@@ -95,14 +99,6 @@ public class AnimeUserDto {
 
 	public void setGender(Short gender) {
 		this.gender = gender;
-	}
-
-	public Short getStatus() {
-		return status;
-	}
-
-	public void setStatus(Short status) {
-		this.status = status;
 	}
 
 	public Long getCreateTimestamp() {

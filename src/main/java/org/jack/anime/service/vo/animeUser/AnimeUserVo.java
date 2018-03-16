@@ -1,7 +1,14 @@
 package org.jack.anime.service.vo.animeUser;
 
-public class AnimeUserVo {
+import org.jack.anime.entity.BaseEntity;
+
+public class AnimeUserVo extends BaseEntity{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -36735382749878038L;
+
 	private Integer id;
 
     private String mobile;

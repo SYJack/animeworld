@@ -3,10 +3,9 @@ package org.jack.anime.controller.manage;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.SysUserService;
-import org.jack.anime.service.vo.animeTimetable.AnimeTimetableVo;
+import org.jack.anime.service.vo.Result;
 import org.jack.anime.service.vo.animeUser.AnimeUserVo;
 import org.jack.anime.utils.tool.PageUtil;
 import org.springframework.stereotype.Controller;
@@ -21,6 +20,11 @@ public class SysUserListController extends BaseController {
 	
 	@Resource(name="sysUserServiceImpl")
 	private SysUserService sysUserServiceImpl;
+	
+	@RequestMapping(value="/sysUserList", method = { RequestMethod.GET })
+    public String sysUser(HttpServletRequest request) throws Exception {
+		return "admin/sysUserList";
+	}
 	
 	@RequestMapping(value = "/anime/sysuser/list", method = { RequestMethod.GET })
 	@ResponseBody
@@ -48,5 +52,20 @@ public class SysUserListController extends BaseController {
 			e.printStackTrace();
 		}
 		return pageUtil;
+	}
+	
+	@RequestMapping(value = "/anime/sysuser/del", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
+	@ResponseBody
+	public Result<String> deleteAnimeSchedule(Integer id){
+		try {
+			if(id == null){
+				return new Result<>(false, "id不能为空!");
+			}
+			sysUserServiceImpl.delete(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result<>(false, e.getMessage());
+		}
+		return new Result<>(true, "删除成功!");
 	}
 }
