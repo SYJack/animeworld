@@ -185,6 +185,80 @@
                 });
 			}
 		  });
+		//显示表单弹窗
+			function showEditModel(data){
+				var index =layui.layer.open({
+		                title : data==null ? "添加系统用户信息" :"修改系统用户信息",
+		                type : 1,
+		                maxmin: true,
+		                content : $("#addModel").html(),
+		                success : function(layer,index){
+		                    setTimeout(function(){
+		                        layui.layer.tips('这里是关闭窗口', '.layui-layer-setwin .layui-layer-close', {
+		                            tips: 3
+		                        });
+		                    },500)
+		                }
+		            });
+		         $("#editForm")[0].reset();
+				 $("#editForm").attr("method","POST");
+				 $("#editForm input[name=action]").val("ADD");
+				 if(data!=null){
+				 	$("#editForm input[name=id]").val(data.id);
+				 	$("#editForm input[name=action]").val("MODIFY");
+					$("#editForm input[name=animeName]").val(data.animeName);
+					$("#editForm input[name=animeCover]").val(data.animeCover);
+					$("#editForm img[name=animeCover]").attr("src",data.animeCover);
+					$("#editForm input[name=animeVerticalCover]").val(data.animeCover);
+					$("#editForm img[name=animeVerticalCover]").attr("src",data.animeVerticalCover);
+					$("#editForm input[name=animePlayDate]").val(data.animePlayDate);
+					$("#editForm input[name=animePlayTime]").val(data.animePlayTime);
+					$("#editForm input[name=animeOriginTime]").val(data.animeOriginTime);
+					$("#editForm input[name=animePlaySite]").val(data.animePlaySite);
+					$("#editForm input[name=animeOriginStation]").val(data.animeOriginStation);
+					$("#editForm input[name=animePlayEpisode]").val(data.animePlayEpisode);
+					$("#editForm input[name=animePlayUrl]").val(data.animePlayUrl);
+				}
+				 layui.layer.full(index);
+	           	$(window).on("resize",function(){
+	                layui.layer.full(index);
+	            })
+	           	 //普通图片上传
+	             var upload_showPic = layui.upload.render({
+	                 elem: '#animeCover_showPic_upload',
+	                 url: '${baseUrl}/file/uploadPic?directory=PORTRAIT',
+	                 field:'photo',
+	                 before: function(obj){
+	                     //预读本地文件示例，不支持ie8
+	                     obj.preview(function(index, file, result){
+	                         $("#editForm img[name=animeCover]").attr("src",result);//图片链接（base64）
+	                     });
+	                     imageIndex = layer.load(2, {
+	                         shade: [0.3, '#333']
+	                     });
+	                 },
+	                 done: function(json){
+	                     layer.close(imageIndex);
+	                     //如果上传失败
+	                     if(!json.success){
+	                         return layer.msg(json.data);
+	                     }
+	                     $("#editForm input[name=animeCover]").val(json.data);
+	                 },
+	                 error: function(){
+	                     //演示失败状态，并实现重传
+	                     var demoText = $('#animeCover_showPic_retry');
+	                     demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+	                     demoText.find('.demo-reload').on('click', function(){
+	                         upload_showPic.upload();
+	                     });
+	                 }
+	             });
+	           
+	           	 $("#btnCancel").click(function(){
+	           		layui.layer.closeAll('page');
+				});
+			}
 		});
 	</script> 
 </html>

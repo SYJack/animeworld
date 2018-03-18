@@ -28,8 +28,8 @@ public class SysUserListController extends BaseController {
 	
 	@RequestMapping(value = "/anime/sysuser/list", method = { RequestMethod.GET })
 	@ResponseBody
-	public PageUtil<AnimeUserVo> getUserList(@RequestParam(value = "page",defaultValue = "1")Integer page,
-           									@RequestParam(value = "limit",defaultValue = "10")Integer limit,
+	public PageUtil<AnimeUserVo> getUserList(@RequestParam(value = "pageName",defaultValue = "1")Integer page,
+           									@RequestParam(value = "limitName",defaultValue = "10")Integer limit,
            									HttpServletRequest request) {
 		PageUtil<AnimeUserVo> pageUtil = new PageUtil<AnimeUserVo>();
 		try {
