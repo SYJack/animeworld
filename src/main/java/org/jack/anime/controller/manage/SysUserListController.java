@@ -9,11 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.SysUserService;
 import org.jack.anime.service.vo.Result;
+import org.jack.anime.service.vo.animeTimetable.AnimeTimetableDto;
+import org.jack.anime.service.vo.animeUser.AnimeUserDto;
 import org.jack.anime.service.vo.animeUser.AnimeUserVo;
 import org.jack.anime.utils.tool.PageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,11 +79,30 @@ public class SysUserListController extends BaseController {
 	
 	@GetMapping("/sysuser/edit")
 	public String sysUserEdit(Integer id,Model model){
-		if(id==null){
-			
-		}
 		AnimeUserVo	vo = sysUserServiceImpl.getById(id);
 		model.addAttribute("currentUser",vo);
 		return "admin/sysUserEdit";
+	}
+	
+	@RequestMapping(value = "/sysuser/modify", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
+	@ResponseBody
+	public Result<String> modifySysUser(@RequestBody AnimeUserDto dto){
+		try {
+			Boolean ret = null;
+			if (dto == null) {
+				return new Result<>(false, "参数为空!");
+			}
+			if(dto.getId() == null){
+				return new Result<>(false, "id不能为空!");
+			}
+			ret = sysUserServiceImpl.modify(dto);
+			if(!ret){
+				return new Result<>(false, "修改失败!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result<>(false, e.getMessage());
+		}
+		return new Result<>(true, "保存成功!");
 	}
 }

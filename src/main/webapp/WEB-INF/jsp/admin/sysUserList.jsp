@@ -98,7 +98,7 @@
                     content : "${baseUrl}/admin/sysuser/edit?id="+data.id,
                     success : function(layer, index){
                         setTimeout(function(){
-                            layer.tips('点击此处返回用户列表', '.layui-layer-setwin .layui-layer-close', {
+                        	layui.layer.tips('点击此处返回用户列表', '.layui-layer-setwin .layui-layer-close', {
                                 tips: 3
                             });
                         },500);
@@ -106,12 +106,12 @@
                 });
                 //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
                 $(window).resize(function(){
-                    layer.full(editIndex);
+                	layui.layer.full(editIndex);
                 });
-                layer.full(editIndex);
+                layui.layer.full(editIndex);
 		      }
 		    }else if(obj.event === 'imageEvent'){
-		    	layer.photos({
+		    	layui.layer.photos({
                     photos: '#portraitCover_'+data.id,
                     anim: 5
                 });

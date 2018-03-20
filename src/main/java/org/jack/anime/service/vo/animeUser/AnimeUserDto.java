@@ -34,9 +34,9 @@ public class AnimeUserDto extends BaseEntity{
     private String loginname;
 
     private String nickname;
-
-    @NotEmpty(message = "密码不能为空", groups = { Save.class, Modify.class})
-    private String passwd;
+    
+    @NotNull(message ="状态不能为空",groups = {Modify.class ,Save.class})
+    private Short status;
 
     private Short gender;
 
@@ -85,14 +85,6 @@ public class AnimeUserDto extends BaseEntity{
 		this.nickname = nickname;
 	}
 
-	public String getPasswd() {
-		return passwd;
-	}
-
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
-	}
-
 	public Short getGender() {
 		return gender;
 	}
@@ -116,6 +108,13 @@ public class AnimeUserDto extends BaseEntity{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-    
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
+	}
     
 }
