@@ -52,7 +52,7 @@
 		    <label class="layui-form-label">开通</label>
 		    <div class="layui-input-block">
 		      <input type="radio" <c:if test="${currentUser.status == 1}">checked</c:if> name="status" value="1" title="启用" >
-		      <input type="radio" <c:if test="${currentUser.status == 0}">checked</c:if> name="status" value="-1" title="冻结" >
+		      <input type="radio" <c:if test="${currentUser.status == -1}">checked</c:if> name="status" value="-1" title="冻结" >
 		    </div>
 		</div>
 		<div class="layui-form-item">
