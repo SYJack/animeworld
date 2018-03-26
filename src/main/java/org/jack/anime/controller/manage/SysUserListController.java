@@ -1,15 +1,11 @@
 package org.jack.anime.controller.manage;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.SysUserService;
 import org.jack.anime.service.vo.Result;
-import org.jack.anime.service.vo.animeTimetable.AnimeTimetableDto;
 import org.jack.anime.service.vo.animeUser.AnimeUserDto;
 import org.jack.anime.service.vo.animeUser.AnimeUserVo;
 import org.jack.anime.utils.tool.PageUtil;
@@ -41,16 +37,6 @@ public class SysUserListController extends BaseController {
            									HttpServletRequest request) {
 		PageUtil<AnimeUserVo> pageUtil = new PageUtil<AnimeUserVo>();
 		try {
-		/*	String page = request.getParameter("pageNumber");
-			String limit = request.getParameter("limit");
-			System.out.println(page);
-			Integer pagenum;
-	        if (StringUtils.isEmpty(page)) {
-	            pagenum = 1;
-	        } else {
-	            pagenum = Integer.parseInt(page);
-	        }*/
-			
 			PageResult<AnimeUserVo> pageResult = sysUserServiceImpl.getListpager(null, page, limit);
 			pageUtil.setMsg("返回成功");
 			pageUtil.setCode(0);
@@ -77,7 +63,7 @@ public class SysUserListController extends BaseController {
 		return new Result<>(true, "删除成功!");
 	}
 	
-	@GetMapping("/sysuser/edit")
+	@GetMapping("/sysuser/modify")
 	public String sysUserEdit(Integer id,Model model){
 		AnimeUserVo	vo = sysUserServiceImpl.getById(id);
 		model.addAttribute("currentUser",vo);
@@ -86,7 +72,7 @@ public class SysUserListController extends BaseController {
 	
 	@RequestMapping(value = "/sysuser/modify", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
 	@ResponseBody
-	public Result<String> modifySysUser(@RequestBody AnimeUserDto dto){
+	public Result<String> sysUserEdit(@RequestBody AnimeUserDto dto){
 		try {
 			Boolean ret = null;
 			if (dto == null) {
@@ -99,10 +85,36 @@ public class SysUserListController extends BaseController {
 			if(!ret){
 				return new Result<>(false, "修改失败!");
 			}
+			return new Result<>(true, "保存成功!");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Result<>(false, e.getMessage());
 		}
-		return new Result<>(true, "保存成功!");
+	}
+	
+	@GetMapping("/sysuser/add")
+	public String sysUserAdd(Integer id,Model model){
+		AnimeUserVo	vo = sysUserServiceImpl.getById(id);
+		model.addAttribute("currentUser",vo);
+		return "admin/sysUserAdd";
+	}
+	
+	@RequestMapping(value = "/sysuser/add", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
+	@ResponseBody
+	public Result<String> sysUserAdd(@RequestBody AnimeUserDto dto){
+		try {
+			Integer ret = null;
+			if (dto == null) {
+				return new Result<>(false, "参数为空!");
+			}
+			ret = sysUserServiceImpl.save(dto);
+			if(ret == null){
+				return new Result<>(false, "添加失败!");
+			}
+			return new Result<>(true, "保存成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result<>(false, e.getMessage());
+		}
 	}
 }

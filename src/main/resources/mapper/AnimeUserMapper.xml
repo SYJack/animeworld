@@ -24,6 +24,27 @@
     where ID = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectCountByOneParam" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    count(1)
+    from anime_user
+    <where>
+    	<choose>
+    		<when test="loginName!=null">
+    			and LOGINNAME = #{param,jdbcType=STRING}
+    		</when>
+    		<when test="mobile!=null">
+    			and MOBILE = #{param,jdbcType=STRING}
+    		</when>
+    		<when test="email!=null">
+    			and EMAIL = #{param,jdbcType=STRING}
+    		</when>
+    		<otherwise>  
+            </otherwise>
+    	</choose>
+    </where>
+  </select>
+  
   <select id="totalItem" resultType="java.lang.Integer">
   	select count(1) from anime_user
   </select>

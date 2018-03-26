@@ -89,7 +89,7 @@
                 success:function(json){
                     layer.close(loadIndex);
                     if(json.success){
-                        parent.layer.msg("用户编辑成功！",{time:1500},function(){
+                        parent.layer.msg(json.data,{time:1500},function(){
                             parent.location.reload();
                         });
                     }else{

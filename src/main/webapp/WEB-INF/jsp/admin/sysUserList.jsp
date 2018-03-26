@@ -19,8 +19,8 @@
 		  <div class="layui-inline">
 		    <input class="layui-input" type="text"  id="searchValue" autocomplete="off">
 		  </div>
-		  <button id="searchBtn" class="layui-btn" data-type="reload"><i class="layui-icon">&#xe615;</i>搜索</button>
-		  <button id="addBtn" class="layui-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+		  <button  class="layui-btn" data-type="searchUser"><i class="layui-icon">&#xe615;</i>搜索</button>
+		  <button id="addUser" class="layui-btn" data-type="addUser"><i class="layui-icon">&#xe654;</i>添加</button>
 		</div>
 		
 		<table id="sysUserTable" class="layui-table" lay-filter="sysUsertab"></table>
@@ -33,6 +33,9 @@
 <script type="text/html" id="showPortraitCover">
   		<span class="layer-photos-demo" id="portraitCover_{{d.id}}"><img title="点击看原图" style="width: 40px" style="cursor:pointer" layer-src="{{ d.portraitUrl }}" src="{{d.portraitUrl}}" lay-event="imageEvent"><span>
 </script>
+<script type="text/html" id="gender">
+        
+    </script>
 	<script>
 		layui.use(['layer','jquery','table','form','upload'], function(){
 			var table = layui.table,
@@ -55,7 +58,7 @@
 			      ,{field:'portraitUrl', title:'头像',width:"10%",align:"center", unresize: true,templet:'#showPortraitCover'}
 			      ,{field:'mobile', title:'手机号码',width:"10%",align:"center"}
 			      ,{field:'nickname', title: '昵称',width:"10%",align:"center"}
-			      ,{field:'gender', title:'性别',width:"10%",align:"center",}
+			      ,{field:'gender', title:'性别',width:"10%",align:"center",templet:'#gender'}
 			      ,{field:'status', title:'状态',width:"8%",align:"center",}
 			      ,{field:'email', title:'邮箱',width:"8%",align:"center", }
 			      ,{field:'createTimestamp', title:'创建时间戳', width:"8%", align:"center",sort: true}
@@ -91,11 +94,10 @@
 		      });
 		    } else if(obj.event === 'edit'){
 		      /* layer.alert('编辑行：<br>'+ JSON.stringify(data)) */
-		      if(obj.event === 'edit'){
                 var editIndex = layer.open({
                     title : "编辑系统用户",
                     type : 2,
-                    content : "${baseUrl}/admin/sysuser/edit?id="+data.id,
+                    content : "${baseUrl}/admin/sysuser/modify?id="+data.id,
                     success : function(layer, index){
                         setTimeout(function(){
                         	layui.layer.tips('点击此处返回用户列表', '.layui-layer-setwin .layui-layer-close', {
@@ -109,7 +111,6 @@
                 	layui.layer.full(editIndex);
                 });
                 layui.layer.full(editIndex);
-		      }
 		    }else if(obj.event === 'imageEvent'){
 		    	layui.layer.photos({
                     photos: '#portraitCover_'+data.id,
@@ -117,7 +118,34 @@
                 });
 			}
 		     return false;
-		    });
+		 });
+		//功能按钮
+	        var active={
+        		 addUser : function(){
+                     var addIndex = layer.open({
+                         title : "添加系统会员",
+                         type : 2,
+                         content : "${baseUrl}/admin/sysuser/add",
+                         success : function(layer, index){
+                             setTimeout(function(){
+                            	 layui.layer.tips('点击此处返回会员列表', '.layui-layer-setwin .layui-layer-close', {
+                                     tips: 3
+                                 });
+                             },500);
+                         }
+                     });
+                     //改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+                     $(window).resize(function(){
+                    	 layui.layer.full(addIndex);
+                     });
+                     layui.layer.full(addIndex);
+                 },
+			};
+		
+	        $('.demoTable .layui-btn').on('click', function(){
+	            var type = $(this).data('type');
+	            active[type] ? active[type].call(this) : '';
+	        });
 	 });
 	</script> 
 </html>

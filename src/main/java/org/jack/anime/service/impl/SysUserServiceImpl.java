@@ -50,8 +50,20 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		Integer result = null;
 		if(dto == null){
-			logger.error("modify:参数对象为空");
+			logger.error("save:参数对象为空");
 			throw new RuntimeException("参数对象为空");
+		}
+		if(dto.getLoginname()!=null && animeUserMapper.selectCountByOneParam(dto.getLoginname())>0){
+			logger.error("save:登录名称已经存在");
+			throw new RuntimeException("登录名称已经存在");
+		}
+		if(dto.getMobile()!=null && animeUserMapper.selectCountByOneParam(dto.getMobile())>0){
+			logger.error("save:手机已经被绑定");
+			throw new RuntimeException("手机已经被绑定");
+		}
+		if(dto.getEmail()!=null && animeUserMapper.selectCountByOneParam(dto.getEmail())>0){
+			logger.error("save:该邮箱已被使用");
+			throw new RuntimeException("该邮箱已被使用");
 		}
 		try {
 			AnimeUser po = AnimeUser.class.newInstance();
