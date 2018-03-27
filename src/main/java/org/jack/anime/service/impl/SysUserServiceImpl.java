@@ -1,6 +1,7 @@
 package org.jack.anime.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -48,22 +49,35 @@ public class SysUserServiceImpl implements SysUserService {
 		for (ConstraintViolation<AnimeUserDto> error : set) {
 			throw new RuntimeException(error.getMessage());
 		}
+		Map<String, Object> map =new HashMap<String, Object>();
 		Integer result = null;
 		if(dto == null){
 			logger.error("save:参数对象为空");
 			throw new RuntimeException("参数对象为空");
 		}
-		if(dto.getLoginname()!=null && animeUserMapper.selectCountByOneParam(dto.getLoginname())>0){
-			logger.error("save:登录名称已经存在");
-			throw new RuntimeException("登录名称已经存在");
+		if(dto.getLoginname()!=null){
+			map.put("loginName", dto.getLoginname());
+			if(animeUserMapper.selectCountByOneParam(map)>0){
+				logger.error("save:登录名称已经存在");
+				throw new RuntimeException("登录名称已经存在");
+			}
+			map.clear();
 		}
-		if(dto.getMobile()!=null && animeUserMapper.selectCountByOneParam(dto.getMobile())>0){
-			logger.error("save:手机已经被绑定");
-			throw new RuntimeException("手机已经被绑定");
+		if(dto.getMobile()!=null){
+			map.put("mobile", dto.getMobile());
+			if(animeUserMapper.selectCountByOneParam(map)>0){
+				logger.error("save:手机已经被绑定");
+				throw new RuntimeException("手机已经被绑定");
+			}
+			map.clear();
 		}
-		if(dto.getEmail()!=null && animeUserMapper.selectCountByOneParam(dto.getEmail())>0){
-			logger.error("save:该邮箱已被使用");
-			throw new RuntimeException("该邮箱已被使用");
+		if(dto.getEmail()!=null){
+			map.put("email", dto.getEmail());
+			if(animeUserMapper.selectCountByOneParam(map)>0){
+				logger.error("save:该邮箱已被使用");
+				throw new RuntimeException("该邮箱已被使用");
+			}
+			map.clear();
 		}
 		try {
 			AnimeUser po = AnimeUser.class.newInstance();

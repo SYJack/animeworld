@@ -24,20 +24,20 @@
     where ID = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="selectCountByOneParam" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectCountByOneParam" parameterType="java.util.Map" resultType="java.lang.Integer">
     select 
     count(1)
     from anime_user
     <where>
     	<choose>
-    		<when test="loginName!=null">
-    			and LOGINNAME = #{param,jdbcType=STRING}
+    		<when test="map.mobile!=null">
+    			and MOBILE = #{map.mobile,jdbcType=VARCHAR}
     		</when>
-    		<when test="mobile!=null">
-    			and MOBILE = #{param,jdbcType=STRING}
+    		<when test="map.email!=null">
+    			and EMAIL = #{map.email,jdbcType=VARCHAR}
     		</when>
-    		<when test="email!=null">
-    			and EMAIL = #{param,jdbcType=STRING}
+    		<when test="map.loginName!=null">
+    			and LOGINNAME = #{map.loginName,jdbcType=VARCHAR}
     		</when>
     		<otherwise>  
             </otherwise>
@@ -53,6 +53,18 @@
   	select 
     <include refid="Base_Column_List" />
     from anime_user
+    <where>
+    	<choose>
+    		<when test="params.gender!=null">
+    			and GENDER = #{params.gender,jdbcType=INTEGER}
+    		</when>
+    		<when test="params.status!=null">
+    			and STATUS = #{params.status,jdbcType=INTEGER}
+    		</when>
+    		<otherwise>  
+            </otherwise>
+    	</choose>
+    </where>
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

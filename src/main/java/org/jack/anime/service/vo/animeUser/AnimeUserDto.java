@@ -25,7 +25,7 @@ public class AnimeUserDto extends BaseEntity{
 	@Null(message= "id必须为空",groups = {Save.class})
 	private Integer id;
 
-	@Pattern(regexp = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$",message="手机号格式不正确")
+	@Pattern(regexp = "^((13[0-9])|(15[^4,\\D])|(18[0-9])|(147))\\d{8}$",message="手机号格式不正确")
     private String mobile;
 
     private String portraitUrl;
@@ -42,7 +42,7 @@ public class AnimeUserDto extends BaseEntity{
 
     private Long createTimestamp;
 
-    @Email(message="{email.format.error}")
+    @Email(regexp="(?:\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,3}$)",message="{email.format.error}")
     private String email;
 
 	public Integer getId() {

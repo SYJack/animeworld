@@ -17,7 +17,7 @@ public interface AnimeUserMapper {
 
     AnimeUser selectByPrimaryKey(Integer id);
     
-    int selectCountByOneParam(@Param(value = "mobile") String mobile);
+    int selectCountByOneParam(@Param("map") Map<String,Object> map);
 
     int updateByPrimaryKeySelective(AnimeUser record);
 
@@ -25,6 +25,6 @@ public interface AnimeUserMapper {
     
     int totalItem();
     
-    List<AnimeUser> getListpager(@Param(value = "param") Map<String,Object> params);
+    List<AnimeUser> getListpager(@Param("params") Map<String,Object> params);
     
 }
