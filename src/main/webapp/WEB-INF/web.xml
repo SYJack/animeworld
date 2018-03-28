@@ -11,6 +11,7 @@
         <welcome-file>/WEB-INF/jsp/login.jsp</welcome-file>  
     </welcome-file-list>  
 	<!-- 配置DispatcherServlet -->
+	 <!-- 添加对springmvc的支持 -->
 	<servlet>
 		<servlet-name>animeworld</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -25,8 +26,14 @@
 		<load-on-startup>1</load-on-startup>  
         <async-supported>true</async-supported>
 	</servlet>
+	<servlet-mapping>  
+        <servlet-name>animeworld</servlet-name>  
+        <!-- 对所有请求进行拦截 -->  
+        <url-pattern>/</url-pattern>  
+    </servlet-mapping> 
 	
 	 <!--加载spring容器-->
+	 <!-- Spring监听器 -->
 	<context-param>
 	    <param-name>contextConfigLocation</param-name>
 	    <param-value>classpath:spring/applicationContext-*.xml</param-value>
@@ -34,14 +41,8 @@
 	 <listener>
     	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
  	 </listener>
- 	 
-	<servlet-mapping>  
-        <servlet-name>animeworld</servlet-name>  
-        <!-- 对所有请求进行拦截 -->  
-        <url-pattern>/</url-pattern>  
-    </servlet-mapping> 
 
-	<!-- 配置过滤器-->
+	 <!-- post乱码处理 -->
 	<filter>
 		<filter-name>encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

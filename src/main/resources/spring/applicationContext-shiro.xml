@@ -18,7 +18,9 @@
 	<bean id="authRealm" class="org.jack.anime.realm.AuthRealm" />
 
 	<!-- 定义缓存管理器 -->
-	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/> 
+	</bean>
 
 	<bean id="sessionManager"
 		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
@@ -38,6 +40,15 @@
 		<!-- 会话管理 -->
 		<property name="sessionManager" ref="sessionManager" />
 	</bean>
+	
+	
+	 <!-- 凭证匹配器 -->
+    <bean id="credentialsMatcher" class="org.jack.anime.utils.interceptor.RetryLimitHashedCredentialsMatcher">
+        <constructor-arg ref="cacheManager" />
+        <property name="hashAlgorithmName" value="md5" />
+        <property name="hashIterations" value="2" />
+        <property name="storedCredentialsHexEncoded" value="true" />
+    </bean>
 
 	<!-- Shiro主过滤器本身功能十分强大,其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行 -->
 	<!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->
