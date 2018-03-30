@@ -52,6 +52,8 @@
 						layer.closeAll('loading');
 						if(!json.success){
 							layer.msg(json.data.msg)
+							 /* $("#login_validateCodeId")[0].src="${baseUrl}/admin/getCaptcha?t= "+Math.random(); */
+							 $("#login_validateCodeId").attr("src","${baseUrl}/admin/getCaptcha?t="+Math.random());
 							return
 						}else{
 							layer.msg(json.data.msg)

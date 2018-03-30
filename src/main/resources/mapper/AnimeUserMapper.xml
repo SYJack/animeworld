@@ -8,13 +8,14 @@
     <result column="LOGINNAME" jdbcType="VARCHAR" property="loginname" />
     <result column="NICKNAME" jdbcType="VARCHAR" property="nickname" />
     <result column="PASSWD" jdbcType="VARCHAR" property="passwd" />
+    <result column="SALT" jdbcType="VARCHAR" property="salt" />
     <result column="GENDER" jdbcType="SMALLINT" property="gender" />
     <result column="STATUS" jdbcType="SMALLINT" property="status" />
     <result column="CREATE_TIMESTAMP" jdbcType="BIGINT" property="createTimestamp" />
     <result column="EMAIL" jdbcType="VARCHAR" property="email" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, MOBILE, PORTRAIT_URL, LOGINNAME, NICKNAME, PASSWD, GENDER, STATUS, CREATE_TIMESTAMP, 
+    ID, MOBILE, PORTRAIT_URL, LOGINNAME, NICKNAME, PASSWD, SALT, GENDER, STATUS, CREATE_TIMESTAMP, 
     EMAIL
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -24,9 +25,9 @@
     where ID = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="selectCountByOneParam" parameterType="java.util.Map" resultType="java.lang.Integer">
+  <select id="selectCountByOneParam" parameterType="java.util.Map" resultMap="BaseResultMap">
     select 
-    count(1)
+    <include refid="Base_Column_List" />
     from anime_user
     <where>
     	<choose>
@@ -76,11 +77,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into anime_user (MOBILE, PORTRAIT_URL, LOGINNAME, 
-      NICKNAME, PASSWD, GENDER, 
+      NICKNAME, PASSWD,SALT, GENDER, 
       STATUS, CREATE_TIMESTAMP, EMAIL
       )
     values (#{mobile,jdbcType=VARCHAR}, #{portraitUrl,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{gender,jdbcType=SMALLINT}, 
+      #{nickname,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR},#{salt,jdbcType=VARCHAR}, #{gender,jdbcType=SMALLINT}, 
       #{status,jdbcType=SMALLINT}, #{createTimestamp,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}
       )
   </insert>
@@ -104,6 +105,9 @@
       </if>
       <if test="passwd != null">
         PASSWD,
+      </if>
+      <if test="salt != null">
+        SALT,
       </if>
       <if test="gender != null">
         GENDER,
@@ -133,6 +137,9 @@
       </if>
       <if test="passwd != null">
         #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
         #{gender,jdbcType=SMALLINT},
@@ -166,6 +173,9 @@
       <if test="passwd != null">
         PASSWD = #{passwd,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null">
+        SALT,
+      </if>
       <if test="gender != null">
         GENDER = #{gender,jdbcType=SMALLINT},
       </if>
@@ -188,6 +198,7 @@
       LOGINNAME = #{loginname,jdbcType=VARCHAR},
       NICKNAME = #{nickname,jdbcType=VARCHAR},
       PASSWD = #{passwd,jdbcType=VARCHAR},
+      SALT = #{salt,jdbcType=VARCHAR},
       GENDER = #{gender,jdbcType=SMALLINT},
       STATUS = #{status,jdbcType=SMALLINT},
       CREATE_TIMESTAMP = #{createTimestamp,jdbcType=BIGINT},

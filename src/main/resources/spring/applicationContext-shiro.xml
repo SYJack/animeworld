@@ -74,6 +74,20 @@
 				/main**=authc
 				/user/info**=authc
 				/admin/listUser**=authc,perms[admin:manage] -->
+				/admin/login=anon
+				/admin/loginmain=anon
+				/admin/getCaptcha=anon
+				/admin/logout = logout
+				
+                # 配置静态资源可以匿名访问
+                /res/css/** = anon
+                /res/js/** = anon
+                /res/images/** = anon
+                /res/fonts/** = anon
+                /res/layui/** = anon
+                /res/love2d/** = anon
+                
+                /** = authc
 			</value>
 		</property>
 	</bean>

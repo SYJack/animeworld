@@ -19,6 +19,9 @@ import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.SysUserService;
 import org.jack.anime.service.vo.animeUser.AnimeUserDto;
 import org.jack.anime.service.vo.animeUser.AnimeUserVo;
+import org.jack.anime.utils.constant.Constants;
+import org.jack.anime.utils.tool.Digests;
+import org.jack.anime.utils.tool.Encodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -57,7 +60,7 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		if(dto.getLoginname()!=null){
 			map.put("loginName", dto.getLoginname());
-			if(animeUserMapper.selectCountByOneParam(map)>0){
+			if(animeUserMapper.selectCountByOneParam(map)!=null){
 				logger.error("save:登录名称已经存在");
 				throw new RuntimeException("登录名称已经存在");
 			}
@@ -65,7 +68,7 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		if(dto.getMobile()!=null){
 			map.put("mobile", dto.getMobile());
-			if(animeUserMapper.selectCountByOneParam(map)>0){
+			if(animeUserMapper.selectCountByOneParam(map)!=null){
 				logger.error("save:手机已经被绑定");
 				throw new RuntimeException("手机已经被绑定");
 			}
@@ -73,13 +76,18 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		if(dto.getEmail()!=null){
 			map.put("email", dto.getEmail());
-			if(animeUserMapper.selectCountByOneParam(map)>0){
+			if(animeUserMapper.selectCountByOneParam(map)!=null){
 				logger.error("save:该邮箱已被使用");
 				throw new RuntimeException("该邮箱已被使用");
 			}
 			map.clear();
 		}
 		try {
+			byte[] salt = Digests.generateSalt(Constants.SALT_SIZE);
+			dto.setSalt(Encodes.encodeHex(salt));
+			byte[] hashPassword = Digests.sha1(dto.getPasswd().getBytes(), salt, Constants.HASH_INTERATIONS);
+			dto.setPasswd(Encodes.encodeHex(hashPassword));
+			
 			AnimeUser po = AnimeUser.class.newInstance();
 			AutoMapper.mapping(dto,po);
 			result = animeUserMapper.insertSelective(po);

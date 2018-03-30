@@ -13,6 +13,8 @@ public class AnimeUser extends BaseEntity {
     private String nickname;
 
     private String passwd;
+    
+    private String salt;
 
     private Short gender;
 
@@ -68,9 +70,18 @@ public class AnimeUser extends BaseEntity {
         return passwd;
     }
 
-    public void setPasswd(String passwd) {
+
+	public void setPasswd(String passwd) {
         this.passwd = passwd == null ? null : passwd.trim();
     }
+	
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
 
     public Short getGender() {
         return gender;
@@ -103,4 +114,5 @@ public class AnimeUser extends BaseEntity {
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
     }
+    
 }

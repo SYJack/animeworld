@@ -17,7 +17,7 @@ public interface AnimeUserMapper {
 
     AnimeUser selectByPrimaryKey(Integer id);
     
-    int selectCountByOneParam(@Param("map") Map<String,Object> map);
+    AnimeUser selectCountByOneParam(@Param("map") Map<String,Object> map);
 
     int updateByPrimaryKeySelective(AnimeUser record);
 

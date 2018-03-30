@@ -33,11 +33,12 @@ public class ServiceTest extends BaseTest {
 //		System.out.println(vo);
 		
 		AnimeUserDto dto = new AnimeUserDto();
-		dto.setEmail("1101939669");
+		dto.setEmail("1101939661@qq.com");
 		dto.setGender(Short.valueOf("1"));
-		dto.setLoginname("jack");
-		dto.setMobile("1830019759");
-		dto.setStatus(Short.valueOf("1"));
+		dto.setLoginname("神田空太");
+		dto.setMobile("18300197593");
+		dto.setStatus(Short.valueOf("0"));
+		dto.setPasswd("123456");
 		sysUserServiceImpl.save(dto);
 		
 	}

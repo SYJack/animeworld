@@ -44,6 +44,11 @@ public class AnimeUserDto extends BaseEntity{
 
     @Email(regexp="(?:\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,3}$)",message="{email.format.error}")
     private String email;
+    
+    @NotEmpty(message = "密码不能为空", groups = { Save.class})
+    private String passwd;
+    
+    private String salt;
 
 	public Integer getId() {
 		return id;
@@ -116,5 +121,22 @@ public class AnimeUserDto extends BaseEntity{
 	public void setStatus(Short status) {
 		this.status = status;
 	}
+
+	public String getPasswd() {
+		return passwd;
+	}
+
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
     
+	
 }
