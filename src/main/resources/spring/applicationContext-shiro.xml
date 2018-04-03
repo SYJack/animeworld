@@ -15,7 +15,9 @@
 	default-lazy-init="true">
 
 	<!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的ShiroDbRealm.java -->
-	<bean id="authRealm" class="org.jack.anime.realm.AuthRealm" />
+	<bean id="authRealm" class="org.jack.anime.realm.AuthRealm">
+		<property name="credentialsMatcher" ref="credentialsMatcher" /> 
+	</bean>
 
 	<!-- 定义缓存管理器 -->
 	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
@@ -45,8 +47,10 @@
 	 <!-- 凭证匹配器 -->
     <bean id="credentialsMatcher" class="org.jack.anime.utils.interceptor.RetryLimitHashedCredentialsMatcher">
         <constructor-arg ref="cacheManager" />
-        <property name="hashAlgorithmName" value="md5" />
-        <property name="hashIterations" value="2" />
+        <!-- 加密算法 -->
+        <property name="hashAlgorithmName" value="SHA-1" />
+        <!-- 生成Hash值的迭代次数  -->
+        <property name="hashIterations" value="1024" />
         <property name="storedCredentialsHexEncoded" value="true" />
     </bean>
 

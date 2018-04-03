@@ -36,7 +36,4 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         }
         return match;
 	}
-
-
-    
 }
