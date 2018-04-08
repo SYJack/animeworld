@@ -19,7 +19,7 @@ CREATE TABLE `ANIME_MANAGER` (
   `NAME` varchar(100) DEFAULT NULL COMMENT '姓名',
   `EMAIL` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `STATUS` smallint(6) DEFAULT NULL COMMENT '状态: -1冻结, 1正常',
-  `ROLE_ID` int(20) DEFAULT NULL COMMENT '角色ID',
+  `ROLE_ID` varchar(100) DEFAULT NULL COMMENT '角色ID形式(|xxx||xxx||xxx|)',
   `LOGIN_ID` varchar(20) DEFAULT NULL COMMENT '登录名',
   `USER_PASSWD` varchar(100) DEFAULT NULL COMMENT '登录密码',
   `CUSTOMER_ID` int(20) DEFAULT NULL COMMENT '用户ID',
@@ -30,7 +30,14 @@ CREATE TABLE `ANIME_MANAGER` (
 CREATE TABLE `ANIME_ROLE` (
   `ID` int(20) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(30) DEFAULT NULL COMMENT '角色名称',
-  `POPEDOM_JSON` longtext COMMENT '权限json,格式为{"模块代号":""操作代号","模块代号":""操作代号,操作代号"},如,{"001":"001,002","002":"003"}',
+  `TYPE` varchar(10) DEFAULT NULL COMMENT '角色类型',
+  `PERMISSION_ID` varchar(100) DEFAULT NULL COMMENT '权限id类型(|xxx||xxx||xxx|)',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `ANIME_PERMISSION` (
+  `ID` int(20) NOT NULL AUTO_INCREMENT,
+  `URL` varchar(256) DEFAULT NULL COMMENT 'url地址',
+  `NAME` varchar(64) DEFAULT NULL COMMENT 'url描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

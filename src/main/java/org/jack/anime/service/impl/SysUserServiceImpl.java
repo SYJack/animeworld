@@ -1,6 +1,7 @@
 package org.jack.anime.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +88,8 @@ public class SysUserServiceImpl implements SysUserService {
 			dto.setSalt(Encodes.encodeHex(salt));
 			byte[] hashPassword = Digests.sha1(dto.getPasswd().getBytes(), salt, Constants.HASH_INTERATIONS);
 			dto.setPasswd(Encodes.encodeHex(hashPassword));
+			
+			dto.setCreateTimestamp(new Date().getTime());
 			
 			AnimeUser po = AnimeUser.class.newInstance();
 			AutoMapper.mapping(dto,po);
