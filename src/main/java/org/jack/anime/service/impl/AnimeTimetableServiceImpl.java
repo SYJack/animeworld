@@ -152,9 +152,12 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 
 	@Override
 	public Boolean delete(Integer id) {
+		if(id == null)
+			return Boolean.FALSE;
 		AnimeTimetable po = animeTimetableMapper.selectByPrimaryKey(id);
 		if (po == null) {
-			return Boolean.TRUE;
+			logger.error("delete:数据未持久化");
+			throw new RuntimeException("数据未持久化");
 		}
 		animeTimetableMapper.deleteByPrimaryKey(id);
 		return Boolean.TRUE;

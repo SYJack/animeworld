@@ -148,9 +148,12 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Override
 	public Boolean delete(Integer id) {
+		if(id == null)
+			return Boolean.FALSE;
 		AnimeUser po = animeUserMapper.selectByPrimaryKey(id);
 		if (po == null) {
-			return Boolean.TRUE;
+			logger.error("delete:数据未持久化");
+			throw new RuntimeException("数据未持久化");
 		}
 		animeUserMapper.deleteByPrimaryKey(id);
 		return Boolean.TRUE;
