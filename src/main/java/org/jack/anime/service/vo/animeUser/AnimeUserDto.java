@@ -45,7 +45,7 @@ public class AnimeUserDto extends BaseEntity{
     @Email(regexp="(?:\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,3}$)",message="{email.format.error}")
     private String email;
     
-    @NotEmpty(message = "密码不能为空", groups = { Save.class})
+    @NotEmpty(message = "密码不能为空", groups = { Save.class,Modify.class})
     private String passwd;
     
     private String salt;

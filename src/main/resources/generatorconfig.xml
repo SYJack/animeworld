@@ -69,21 +69,21 @@
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table> -->
         
-         <table schema="test" tableName="anime_user" domainObjectName="AnimeUser"
+        <!--  <table schema="test" tableName="anime_user" domainObjectName="AnimeUser"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
-        </table>
+        </table> -->
         
-        <table schema="test" tableName="anime_role" domainObjectName="AnimeRole"
+        <!--  <table schema="test" tableName="anime_role" domainObjectName="AnimeRole"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
-        </table>
+        </table> -->
         
         <table schema="test" tableName="anime_manager" domainObjectName="AnimeManager"
             enableCountByExample="false" enableUpdateByExample="false"
@@ -92,5 +92,13 @@
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
+       <!--  
+        <table schema="test" tableName="anime_permission" domainObjectName="AnimePermission"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table> -->
     </context>
 </generatorConfiguration>

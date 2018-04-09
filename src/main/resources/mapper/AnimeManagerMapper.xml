@@ -3,6 +3,219 @@
 <mapper namespace="org.jack.anime.dao.AnimeManagerMapper">
   <resultMap id="BaseResultMap" type="org.jack.anime.entity.AnimeManager">
     <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="ROLE_ID" jdbcType="INTEGER" property="roleId" />
+    <result column="CUSTOMER_ID" jdbcType="INTEGER" property="customerId" />
+    <result column="STATUS" jdbcType="SMALLINT" property="status" />
+    <result column="CREATE_TIMESTAMP" jdbcType="BIGINT" property="createTimestamp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ROLE_ID, CUSTOMER_ID, STATUS, CREATE_TIMESTAMP
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anime_manager
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from anime_manager
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.jack.anime.entity.AnimeManager">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into anime_manager (ROLE_ID, CUSTOMER_ID, STATUS, 
+      CREATE_TIMESTAMP)
+    values (#{roleId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{status,jdbcType=SMALLINT}, 
+      #{createTimestamp,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.jack.anime.entity.AnimeManager">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into anime_manager
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="customerId != null">
+        CUSTOMER_ID,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createTimestamp != null">
+        CREATE_TIMESTAMP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createTimestamp != null">
+        #{createTimestamp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.jack.anime.entity.AnimeManager">
+    update anime_manager
+    <set>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null">
+        CUSTOMER_ID = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createTimestamp != null">
+        CREATE_TIMESTAMP = #{createTimestamp,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.jack.anime.entity.AnimeManager">
+    update anime_manager
+    set ROLE_ID = #{roleId,jdbcType=INTEGER},
+      CUSTOMER_ID = #{customerId,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=SMALLINT},
+      CREATE_TIMESTAMP = #{createTimestamp,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="org.jack.anime.entity.AnimeManager">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="STATUS" jdbcType="SMALLINT" property="status" />
+    <result column="ROLE_ID" jdbcType="INTEGER" property="roleId" />
+    <result column="LOGIN_ID" jdbcType="VARCHAR" property="loginId" />
+    <result column="USER_PASSWD" jdbcType="VARCHAR" property="userPasswd" />
+    <result column="CUSTOMER_ID" jdbcType="INTEGER" property="customerId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, EMAIL, STATUS, ROLE_ID, LOGIN_ID, USER_PASSWD, CUSTOMER_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anime_manager
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from anime_manager
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.jack.anime.entity.AnimeManager">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into anime_manager (NAME, EMAIL, STATUS, 
+      ROLE_ID, LOGIN_ID, USER_PASSWD, 
+      CUSTOMER_ID)
+    values (#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
+      #{roleId,jdbcType=INTEGER}, #{loginId,jdbcType=VARCHAR}, #{userPasswd,jdbcType=VARCHAR}, 
+      #{customerId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.jack.anime.entity.AnimeManager">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into anime_manager
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="loginId != null">
+        LOGIN_ID,
+      </if>
+      <if test="userPasswd != null">
+        USER_PASSWD,
+      </if>
+      <if test="customerId != null">
+        CUSTOMER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="loginId != null">
+        #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPasswd != null">
+        #{userPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.jack.anime.entity.AnimeManager">
+    update anime_manager
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="loginId != null">
+        LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="userPasswd != null">
+        USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null">
+        CUSTOMER_ID = #{customerId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.jack.anime.entity.AnimeManager">
+    update anime_manager
+    set NAME = #{name,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=SMALLINT},
+      ROLE_ID = #{roleId,jdbcType=INTEGER},
+      LOGIN_ID = #{loginId,jdbcType=VARCHAR},
+      USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
+      CUSTOMER_ID = #{customerId,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="org.jack.anime.entity.AnimeManager">
+    <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
     <result column="EMAIL" jdbcType="VARCHAR" property="email" />
     <result column="STATUS" jdbcType="SMALLINT" property="status" />

@@ -1,14 +1,19 @@
 package org.jack.anime.entity;
 
+import java.io.Serializable;
 
-public class AnimeRole extends BaseEntity {
+public class AnimePermission implements Serializable {
     private Integer id;
 
     private String name;
 
+    private String url;
+
+    private String code;
+
     private String description;
 
-    private String permissionId;
+    private Short status;
 
     private static final long serialVersionUID = 1L;
 
@@ -28,6 +33,22 @@ public class AnimeRole extends BaseEntity {
         this.name = name == null ? null : name.trim();
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
+    }
+
     public String getDescription() {
         return description;
     }
@@ -36,11 +57,11 @@ public class AnimeRole extends BaseEntity {
         this.description = description == null ? null : description.trim();
     }
 
-    public String getPermissionId() {
-        return permissionId;
+    public Short getStatus() {
+        return status;
     }
 
-    public void setPermissionId(String permissionId) {
-        this.permissionId = permissionId == null ? null : permissionId.trim();
+    public void setStatus(Short status) {
+        this.status = status;
     }
 }
