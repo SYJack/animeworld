@@ -35,7 +35,7 @@ import com.github.pagehelper.PageInfo;
 @Service("sysManagerServiceImpl")
 public class SysManagerServiceImpl implements SysManagerService {
 
-	private static final Logger logger = LoggerFactory.getLogger(SysUserServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(SysManagerServiceImpl.class);
 
 	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 

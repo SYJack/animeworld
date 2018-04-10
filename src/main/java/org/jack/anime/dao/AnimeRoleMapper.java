@@ -24,5 +24,5 @@ public interface AnimeRoleMapper {
     
     int totalItem();
     
-    List<AnimeUser> getListpager(@Param("params")Map<String,Object> params);
+    List<AnimeRole> getListpager(@Param("params")Map<String,Object> params);
 }

@@ -24,5 +24,5 @@ public interface AnimePermissionMapper {
     
     int totalItem();
     
-    List<AnimeUser> getListpager(@Param("params")Map<String,Object> params);
+    List<AnimePermission> getListpager(@Param("params")Map<String,Object> params);
 }

@@ -5,8 +5,6 @@ import javax.validation.constraints.Null;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jack.anime.entity.BaseEntity;
-import org.jack.anime.service.vo.animeUser.AnimeUserDto.Modify;
-import org.jack.anime.service.vo.animeUser.AnimeUserDto.Save;
 
 public class AnimeRoleDto extends BaseEntity{
 
@@ -14,6 +12,12 @@ public class AnimeRoleDto extends BaseEntity{
 	 * 
 	 */
 	private static final long serialVersionUID = 8386887952752625656L;
+	
+	public interface Save {
+	}
+
+	public interface Modify {
+	}
 	
 	@NotNull(message ="id不能为空",groups = {Modify.class})
 	@Null(message= "id必须为空",groups = {Save.class})
