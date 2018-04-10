@@ -40,7 +40,7 @@ public class AnimeTimetableServiceImpl implements AnimeTimetableService {
 	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 	@Resource(name = "animeTimetableMapper")
-	AnimeTimetableMapper animeTimetableMapper;
+	private AnimeTimetableMapper animeTimetableMapper;
 
 	@Override
 	public Integer countAnime() {

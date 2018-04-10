@@ -1,7 +1,14 @@
 package org.jack.anime.dao;
 
-import org.jack.anime.entity.AnimeRole;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+import org.jack.anime.entity.AnimeRole;
+import org.jack.anime.entity.AnimeUser;
+import org.springframework.stereotype.Repository;
+
+@Repository("animeRoleMapper")
 public interface AnimeRoleMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +21,8 @@ public interface AnimeRoleMapper {
     int updateByPrimaryKeySelective(AnimeRole record);
 
     int updateByPrimaryKey(AnimeRole record);
+    
+    int totalItem();
+    
+    List<AnimeUser> getListpager(@Param("params")Map<String,Object> params);
 }

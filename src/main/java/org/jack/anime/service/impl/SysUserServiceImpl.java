@@ -39,7 +39,7 @@ public class SysUserServiceImpl implements SysUserService {
 	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 	@Resource(name = "animeUserMapper")
-	AnimeUserMapper animeUserMapper;
+	private AnimeUserMapper animeUserMapper;
 	
 	@Override
 	public Integer countAnime() {
@@ -112,17 +112,40 @@ public class SysUserServiceImpl implements SysUserService {
 			logger.error("modify:参数对象为空");
 			throw new RuntimeException("参数对象为空");
 		}
-		
+		Map<String, Object> map =new HashMap<String, Object>();
 		AnimeUserVo vo = this.getById(dto.getId());
-		
 		if(vo == null){
 			logger.error("modify:系统用户信息未持久化");
 			throw new RuntimeException("系统用户信息未持久化");
 		}
+		if(dto.getLoginname()!=null){
+			map.put("loginName", dto.getLoginname());
+			if(animeUserMapper.selectCountByOneParam(map)!=null){
+				logger.error("save:登录名称已经存在");
+				throw new RuntimeException("登录名称已经存在");
+			}
+			map.clear();
+		}
+		if(dto.getMobile()!=null){
+			map.put("mobile", dto.getMobile());
+			if(animeUserMapper.selectCountByOneParam(map)!=null){
+				logger.error("save:手机已经被绑定");
+				throw new RuntimeException("手机已经被绑定");
+			}
+			map.clear();
+		}
+		if(dto.getEmail()!=null){
+			map.put("email", dto.getEmail());
+			if(animeUserMapper.selectCountByOneParam(map)!=null){
+				logger.error("save:该邮箱已被使用");
+				throw new RuntimeException("该邮箱已被使用");
+			}
+			map.clear();
+		}
 		try {
-			AnimeUser animeUser = AnimeUser.class.newInstance();
-			AutoMapper.mapping(dto,animeUser);
-			animeUserMapper.updateByPrimaryKeySelective(animeUser);
+			AnimeUser po = AnimeUser.class.newInstance();
+			AutoMapper.mapping(dto,po);
+			animeUserMapper.updateByPrimaryKeySelective(po);
 			return Boolean.TRUE;
 		} catch (Exception e ) {
 			e.printStackTrace();

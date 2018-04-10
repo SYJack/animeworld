@@ -31,13 +31,13 @@
     from anime_user
     <where>
     	<choose>
-    		<when test="map.mobile!=null">
+    		<when test="map!=null and map.mobile!=null">
     			and MOBILE = #{map.mobile,jdbcType=VARCHAR}
     		</when>
-    		<when test="map.email!=null">
+    		<when test="map!=null and map.email!=null">
     			and EMAIL = #{map.email,jdbcType=VARCHAR}
     		</when>
-    		<when test="map.loginName!=null">
+    		<when test="map!=null and map.loginName!=null">
     			and LOGINNAME = #{map.loginName,jdbcType=VARCHAR}
     		</when>
     		<otherwise>  
@@ -56,10 +56,10 @@
     from anime_user
     <where>
     	<choose>
-    		<when test="params.gender!=null">
+    		<when test="params!=null and params.gender!=null">
     			and GENDER = #{params.gender,jdbcType=INTEGER}
     		</when>
-    		<when test="params.status!=null">
+    		<when test="params!=null and params.status!=null">
     			and STATUS = #{params.status,jdbcType=INTEGER}
     		</when>
     		<otherwise>  

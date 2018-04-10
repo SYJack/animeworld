@@ -16,6 +16,26 @@
     from anime_role
     where ID = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="totalItem" resultType="java.lang.Integer">
+  	select count(1) from anime_role
+  </select>
+  
+  <select id="getListpager" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from anime_role
+    <where>
+    	<choose>
+    		<when test="params!=null and params.name!=null">
+    			and NAME = #{params.name,jdbcType=VARCHAR}
+    		</when>
+    		<otherwise>  
+            </otherwise>
+    	</choose>
+    </where>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from anime_role
     where ID = #{id,jdbcType=INTEGER}
@@ -77,252 +97,6 @@
     set NAME = #{name,jdbcType=VARCHAR},
       DESCRIPTION = #{description,jdbcType=VARCHAR},
       PERMISSION_ID = #{permissionId,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="org.jack.anime.entity.AnimeRole">
-    <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="NAME" jdbcType="VARCHAR" property="name" />
-    <result column="TYPE" jdbcType="VARCHAR" property="type" />
-    <result column="PERMISSION_ID" jdbcType="VARCHAR" property="permissionId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    ID, NAME, TYPE, PERMISSION_ID
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from anime_role
-    where ID = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anime_role
-    where ID = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.jack.anime.entity.AnimeRole">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anime_role (NAME, TYPE, PERMISSION_ID
-      )
-    values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="org.jack.anime.entity.AnimeRole">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anime_role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        NAME,
-      </if>
-      <if test="type != null">
-        TYPE,
-      </if>
-      <if test="permissionId != null">
-        PERMISSION_ID,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionId != null">
-        #{permissionId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.jack.anime.entity.AnimeRole">
-    update anime_role
-    <set>
-      <if test="name != null">
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        TYPE = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionId != null">
-        PERMISSION_ID = #{permissionId,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.jack.anime.entity.AnimeRole">
-    update anime_role
-    set NAME = #{name,jdbcType=VARCHAR},
-      TYPE = #{type,jdbcType=VARCHAR},
-      PERMISSION_ID = #{permissionId,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="org.jack.anime.entity.AnimeRole">
-    <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="NAME" jdbcType="VARCHAR" property="name" />
-    <result column="TYPE" jdbcType="VARCHAR" property="type" />
-    <result column="PERMISSION_ID" jdbcType="VARCHAR" property="permissionId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    ID, NAME, TYPE, PERMISSION_ID
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from anime_role
-    where ID = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anime_role
-    where ID = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.jack.anime.entity.AnimeRole">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anime_role (NAME, TYPE, PERMISSION_ID
-      )
-    values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="org.jack.anime.entity.AnimeRole">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anime_role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        NAME,
-      </if>
-      <if test="type != null">
-        TYPE,
-      </if>
-      <if test="permissionId != null">
-        PERMISSION_ID,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionId != null">
-        #{permissionId,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.jack.anime.entity.AnimeRole">
-    update anime_role
-    <set>
-      <if test="name != null">
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        TYPE = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="permissionId != null">
-        PERMISSION_ID = #{permissionId,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.jack.anime.entity.AnimeRole">
-    update anime_role
-    set NAME = #{name,jdbcType=VARCHAR},
-      TYPE = #{type,jdbcType=VARCHAR},
-      PERMISSION_ID = #{permissionId,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="org.jack.anime.entity.AnimeRole">
-    <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="NAME" jdbcType="VARCHAR" property="name" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.jack.anime.entity.AnimeRole">
-    <result column="POPEDOM_JSON" jdbcType="LONGVARCHAR" property="popedomJson" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    ID, NAME
-  </sql>
-  <sql id="Blob_Column_List">
-    POPEDOM_JSON
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from anime_role
-    where ID = #{id,jdbcType=INTEGER}
-  </select>
-  
-  <select id="totalItem" resultType="java.lang.Integer">
-  	select count(1) from anime_role
-  </select>
-  
-  <select id="getListpager" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
-  	select 
-    <include refid="Base_Column_List" />
-     ,
-    <include refid="Blob_Column_List" />
-    from anime_role
-  </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from anime_role
-    where ID = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.jack.anime.entity.AnimeRole">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anime_role (NAME, POPEDOM_JSON)
-    values (#{name,jdbcType=VARCHAR}, #{popedomJson,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="org.jack.anime.entity.AnimeRole">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into anime_role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        NAME,
-      </if>
-      <if test="popedomJson != null">
-        POPEDOM_JSON,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="popedomJson != null">
-        #{popedomJson,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.jack.anime.entity.AnimeRole">
-    update anime_role
-    <set>
-      <if test="name != null">
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="popedomJson != null">
-        POPEDOM_JSON = #{popedomJson,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.jack.anime.entity.AnimeRole">
-    update anime_role
-    set NAME = #{name,jdbcType=VARCHAR},
-      POPEDOM_JSON = #{popedomJson,jdbcType=LONGVARCHAR}
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.jack.anime.entity.AnimeRole">
-    update anime_role
-    set NAME = #{name,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
