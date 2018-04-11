@@ -1,7 +1,6 @@
 package org.jack.anime.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,14 +14,13 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.jack.anime.common.dataMapping.AutoMapper;
 import org.jack.anime.dao.AnimePermissionMapper;
 import org.jack.anime.dao.AnimeRoleMapper;
+import org.jack.anime.entity.AnimePermission;
 import org.jack.anime.entity.AnimeRole;
-import org.jack.anime.entity.AnimeUser;
 import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.SysRoleService;
 import org.jack.anime.service.vo.animeRole.AnimeRoleDto;
 import org.jack.anime.service.vo.animeRole.AnimeRoleVo;
-import org.jack.anime.service.vo.animeUser.AnimeUserDto;
-import org.jack.anime.service.vo.animeUser.AnimeUserVo;
+import org.jack.anime.utils.tool.StringTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -40,6 +38,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Resource(name = "animeRoleMapper")
 	private AnimeRoleMapper animeRoleMapper;
 	
+	@Resource(name = "animePermissionMapper")
+	private AnimePermissionMapper animePermissionMapper;
+	
 	@Override
 	public Integer countRole() {
 		Integer result = (Integer) animeRoleMapper.totalItem();
@@ -52,19 +53,63 @@ public class SysRoleServiceImpl implements SysRoleService {
 		for (ConstraintViolation<AnimeRoleDto> error : set) {
 			throw new RuntimeException(error.getMessage());
 		}
-		Map<String, Object> map =new HashMap<String, Object>();
 		Integer result = null;
 		if(dto == null){
 			logger.error("save:参数对象为空");
 			throw new RuntimeException("参数对象为空");
 		}
-		return null;
+		List<String> permissionIdLs= StringTool.split(dto.getPermissionId(), "|");
+		for (String id : permissionIdLs) {
+			AnimePermission animePermission = animePermissionMapper.selectByPrimaryKey(Integer.valueOf(id));
+			if(animePermission == null){
+				logger.error("save:权限不存在");
+				throw new RuntimeException("权限不存在");
+			}
+		}
+		try {
+			AnimeRole po = AnimeRole.class.newInstance();
+			AutoMapper.mapping(dto,po);
+			result = animeRoleMapper.insertSelective(po);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
+		}
+		return result;
 	}
 
 	@Override
 	public Boolean modify(AnimeRoleDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<ConstraintViolation<AnimeRoleDto>> set = this.validator.validate(dto, AnimeRoleDto.Save.class);
+		for (ConstraintViolation<AnimeRoleDto> error : set) {
+			throw new RuntimeException(error.getMessage());
+		}
+		if(dto == null){
+			logger.error("modify:参数对象为空");
+			throw new RuntimeException("参数对象为空");
+		}
+		
+		AnimeRoleVo vo = this.getById(dto.getId());
+		if(vo == null){
+			logger.error("modify:管理员信息未持久化");
+			throw new RuntimeException("管理员信息未持久化");
+		}
+		List<String> permissionIdLs= StringTool.split(dto.getPermissionId(), "|");
+		for (String id : permissionIdLs) {
+			AnimePermission animePermission = animePermissionMapper.selectByPrimaryKey(Integer.valueOf(id));
+			if(animePermission == null){
+				logger.error("save:该权限不存在");
+				throw new RuntimeException("该权限不存在");
+			}
+		}
+		try {
+			AnimeRole po = AnimeRole.class.newInstance();
+			AutoMapper.mapping(dto,po);
+			animeRoleMapper.updateByPrimaryKeySelective(po);
+			return Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
+		}
 	}
 
 	@Override

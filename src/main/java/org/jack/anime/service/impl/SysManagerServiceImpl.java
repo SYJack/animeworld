@@ -23,8 +23,6 @@ import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.SysManagerService;
 import org.jack.anime.service.vo.animeManager.AnimeManagerDto;
 import org.jack.anime.service.vo.animeManager.AnimeManagerVo;
-import org.jack.anime.service.vo.animeUser.AnimeUserDto;
-import org.jack.anime.service.vo.animeUser.AnimeUserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

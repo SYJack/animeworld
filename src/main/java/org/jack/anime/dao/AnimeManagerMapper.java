@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.jack.anime.entity.AnimeManager;
-import org.jack.anime.entity.AnimeUser;
 import org.springframework.stereotype.Repository;
 
 @Repository("animeManagerMapper")
@@ -17,6 +16,8 @@ public interface AnimeManagerMapper {
     int insertSelective(AnimeManager record);
 
     AnimeManager selectByPrimaryKey(Integer id);
+    
+    AnimeManager selectByCId(Integer cid);
 
     int updateByPrimaryKeySelective(AnimeManager record);
 

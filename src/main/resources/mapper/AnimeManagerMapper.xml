@@ -18,6 +18,13 @@
     where ID = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectByCId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anime_manager
+    where CUSTOMER_ID = #{id,jdbcType=INTEGER}
+  </select>
+  
   <select id="totalItem" resultType="java.lang.Integer">
   	select count(1) from anime_manager
   </select>

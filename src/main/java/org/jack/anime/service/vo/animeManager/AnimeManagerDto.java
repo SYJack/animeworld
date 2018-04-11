@@ -31,8 +31,6 @@ public class AnimeManagerDto extends BaseEntity{
 	@NotNull(message ="状态不能为空",groups = {Modify.class,Save.class})
     private Short status;
 
-    private Long createTimestamp;
-
 	public Integer getId() {
 		return id;
 	}
@@ -63,14 +61,6 @@ public class AnimeManagerDto extends BaseEntity{
 
 	public void setStatus(Short status) {
 		this.status = status;
-	}
-
-	public Long getCreateTimestamp() {
-		return createTimestamp;
-	}
-
-	public void setCreateTimestamp(Long createTimestamp) {
-		this.createTimestamp = createTimestamp;
 	}
 
 }

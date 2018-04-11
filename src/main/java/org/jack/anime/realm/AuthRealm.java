@@ -2,10 +2,14 @@ package org.jack.anime.realm;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -15,13 +19,20 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.jack.anime.dao.AnimeManagerMapper;
+import org.jack.anime.dao.AnimePermissionMapper;
+import org.jack.anime.dao.AnimeRoleMapper;
 import org.jack.anime.dao.AnimeUserMapper;
+import org.jack.anime.entity.AnimeManager;
+import org.jack.anime.entity.AnimeRole;
 import org.jack.anime.entity.AnimeUser;
 import org.jack.anime.service.impl.AnimeTimetableServiceImpl;
 import org.jack.anime.utils.tool.Encodes;
+import org.jack.anime.utils.tool.StringTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -31,6 +42,15 @@ public class AuthRealm extends AuthorizingRealm{
 
 	@Resource(name = "animeUserMapper")
 	AnimeUserMapper animeUserMapper;
+	
+	@Resource(name = "animeManagerMapper")
+	AnimeManagerMapper animeManagerMapper;
+	
+	@Resource(name = "animeRoleMapper")
+	AnimeRoleMapper animeRoleMapper;
+	
+	@Resource(name = "animePermissionMapper")
+	AnimePermissionMapper animePermissionMapper;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AnimeTimetableServiceImpl.class);
 	/**  
@@ -67,7 +87,23 @@ public class AuthRealm extends AuthorizingRealm{
      */  
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		return null;
+		ShiroUser shiroUser = (ShiroUser)principalCollection.getPrimaryPrincipal();
+		AnimeManager animeManager = animeManagerMapper.selectByCId(shiroUser.getId());
+		AnimeRole animeRole = animeRoleMapper.selectByPrimaryKey(animeManager.getRoleId());
+		SimpleAuthorizationInfo info = null;
+		if(!StringUtils.isEmpty(animeRole.getName())){
+			info = new SimpleAuthorizationInfo();
+			Set<String> permissions = new HashSet<String>();
+			//一个角色的所有权限的code集合
+			List<String> permissionIdLs= StringTool.split(animeRole.getPermissionId(), "|");
+			for (String id : permissionIdLs) {
+				permissions.add(animePermissionMapper.selectByPrimaryKey(Integer.valueOf(id)).getCode());
+			}
+			//添加所有的角色和权限
+			info.addRole(animeRole.getName());
+			info.addStringPermissions(permissions);
+		}
+		return info;
 	}
 	
 	//清除缓存
