@@ -50,7 +50,7 @@ public class SysUserListController extends BaseController {
 	
 	@RequestMapping(value = "/sysuser/del", method = RequestMethod.POST, produces = {"application/json; charset=utf-8" })
 	@ResponseBody
-	public Result<String> deleteAnimeSchedule(Integer id){
+	public Result<String> deleteAnimeUser(Integer id){
 		try {
 			if(id == null){
 				return new Result<>(false, "id不能为空!");
