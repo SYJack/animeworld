@@ -124,6 +124,13 @@ public class LoginController extends BaseController {
 		map.put("msg", "登录成功");
 		return new Result<Map<String,Object>>(true, map);
 	}
+	
+	@GetMapping("/systemLogout")
+	public String logout(){
+		SecurityUtils.getSubject().logout();
+		return "redirect:/admin/login";
+	}
+	
 	@GetMapping("/index")
 	public String showView(HttpServletRequest request){
 		return "/admin/index";
