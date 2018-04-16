@@ -28,14 +28,6 @@ public class AnimePermissionDto extends BaseEntity {
 	@NotNull(message = "权限url不能为空", groups = { Modify.class, Save.class })
 	private String url;
 
-	@NotNull(message = "权限代码不能为空", groups = { Modify.class, Save.class })
-	private String code;
-
-	private String description;
-
-	@NotNull(message = "权限状态不能为空", groups = { Modify.class, Save.class })
-	private Short status;
-
 	public Integer getId() {
 		return id;
 	}
@@ -58,30 +50,6 @@ public class AnimePermissionDto extends BaseEntity {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Short getStatus() {
-		return status;
-	}
-
-	public void setStatus(Short status) {
-		this.status = status;
 	}
 
 }

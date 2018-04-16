@@ -14,13 +14,14 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.jack.anime.common.dataMapping.AutoMapper;
 import org.jack.anime.dao.AnimePermissionMapper;
 import org.jack.anime.dao.AnimeRoleMapper;
-import org.jack.anime.entity.AnimePermission;
+import org.jack.anime.dao.RolePermMapper;
 import org.jack.anime.entity.AnimeRole;
 import org.jack.anime.entity.PageResult;
+import org.jack.anime.entity.RolePerm;
 import org.jack.anime.service.api.SysRoleService;
 import org.jack.anime.service.vo.animeRole.AnimeRoleDto;
 import org.jack.anime.service.vo.animeRole.AnimeRoleVo;
-import org.jack.anime.utils.tool.StringTool;
+import org.jack.anime.service.vo.rolePerm.RolePermDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Resource(name = "animePermissionMapper")
 	private AnimePermissionMapper animePermissionMapper;
 	
+	@Resource(name = "rolePermMapper")
+	private RolePermMapper rolePermMapper;
+	
 	@Override
 	public Integer countRole() {
 		Integer result = (Integer) animeRoleMapper.totalItem();
@@ -58,18 +62,32 @@ public class SysRoleServiceImpl implements SysRoleService {
 			logger.error("save:参数对象为空");
 			throw new RuntimeException("参数对象为空");
 		}
-		List<String> permissionIdLs= StringTool.split(dto.getPermissionId(), "|");
-		for (String id : permissionIdLs) {
-			AnimePermission animePermission = animePermissionMapper.selectByPrimaryKey(Integer.valueOf(id));
-			if(animePermission == null){
-				logger.error("save:权限不存在");
-				throw new RuntimeException("权限不存在");
-			}
+		if(this.getRoleByRoleName(dto.getName())!=null){
+			logger.error("save:该角色名已存在");
+			throw new RuntimeException("该角色名已存在");
 		}
 		try {
 			AnimeRole po = AnimeRole.class.newInstance();
 			AutoMapper.mapping(dto,po);
-			result = animeRoleMapper.insertSelective(po);
+			if(animeRoleMapper.insertSelective(po)!=1){
+				logger.error("save:添加角色失败");
+	            throw new RuntimeException("添加角色失败");
+	        }
+			if(dto.getList()!=null && dto.getList().size()>0){
+				AnimeRoleVo vo = this.getRoleByRoleName(po.getName());
+				for(int i=0;i<dto.getList().size();i++){
+					Set<ConstraintViolation<RolePermDto>> rolePermSet = this.validator.validate(dto.getList().get(i), RolePermDto.Save.class);
+					for (ConstraintViolation<RolePermDto> error : rolePermSet) {
+						throw new RuntimeException(error.getMessage());
+					}
+					RolePerm rolePerm = RolePerm.class.newInstance();
+					rolePerm.setRoleId(vo.getId());
+					rolePerm.setPermissionId(dto.getList().get(i).getPermissionId());
+					if(rolePermMapper.insertSelective(rolePerm)!=1){
+	                    throw new RuntimeException("添加角色-权限失败");
+	                }
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
@@ -92,14 +110,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if(vo == null){
 			logger.error("modify:管理员信息未持久化");
 			throw new RuntimeException("管理员信息未持久化");
-		}
-		List<String> permissionIdLs= StringTool.split(dto.getPermissionId(), "|");
-		for (String id : permissionIdLs) {
-			AnimePermission animePermission = animePermissionMapper.selectByPrimaryKey(Integer.valueOf(id));
-			if(animePermission == null){
-				logger.error("save:该权限不存在");
-				throw new RuntimeException("该权限不存在");
-			}
 		}
 		try {
 			AnimeRole po = AnimeRole.class.newInstance();
@@ -175,4 +185,25 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return pageResult;
 	}
 
+	@Override
+	public AnimeRoleVo getRoleByRoleName(String roleName) {
+		AnimeRoleVo vo = null;
+		if(roleName == null){
+			logger.error("角色名称为空");
+			throw new RuntimeException("角色名称为空");
+		}
+		AnimeRole po = animeRoleMapper.getRoleByRoleName(roleName);
+		if (po == null) {
+			logger.error("数据未持久化");
+			throw new RuntimeException("数据未持久化");
+		}
+		try {
+			vo = AnimeRoleVo.class.newInstance();
+			BeanUtils.copyProperties(vo, po);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	
 }

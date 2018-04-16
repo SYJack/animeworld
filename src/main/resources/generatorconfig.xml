@@ -85,15 +85,23 @@
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
         
-        <table schema="test" tableName="anime_manager" domainObjectName="AnimeManager"
+        <!-- <table schema="test" tableName="anime_manager" domainObjectName="AnimeManager"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table> -->
+      
+        <table schema="test" tableName="anime_permission" domainObjectName="AnimePermission"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
-      
-        <table schema="test" tableName="anime_permission" domainObjectName="AnimePermission"
+        
+        <table schema="test" tableName="tb_role_perm" domainObjectName="RolePerm"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">

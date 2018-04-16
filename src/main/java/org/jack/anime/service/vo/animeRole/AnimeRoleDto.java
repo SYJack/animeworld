@@ -1,10 +1,13 @@
 package org.jack.anime.service.vo.animeRole;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.jack.anime.entity.BaseEntity;
+import org.jack.anime.service.vo.rolePerm.RolePermDto;
 
 public class AnimeRoleDto extends BaseEntity{
 
@@ -27,9 +30,8 @@ public class AnimeRoleDto extends BaseEntity{
     private String name;
 
     private String description;
-
-    @NotEmpty(message = "权限不能为空", groups = { Save.class,Modify.class})
-    private String permissionId;
+    
+    private List<RolePermDto> list;
 
 	public Integer getId() {
 		return id;
@@ -55,13 +57,14 @@ public class AnimeRoleDto extends BaseEntity{
 		this.description = description;
 	}
 
-	public String getPermissionId() {
-		return permissionId;
+	public List<RolePermDto> getList() {
+		return list;
 	}
 
-	public void setPermissionId(String permissionId) {
-		this.permissionId = permissionId;
+	public void setList(List<RolePermDto> list) {
+		this.list = list;
 	}
-    
-    
+	
+	
+
 }

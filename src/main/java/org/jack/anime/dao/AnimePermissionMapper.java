@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.jack.anime.entity.AnimePermission;
-import org.jack.anime.entity.AnimeUser;
 import org.springframework.stereotype.Repository;
 
 @Repository("animePermissionMapper")

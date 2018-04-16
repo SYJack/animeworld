@@ -10,8 +10,6 @@ import org.jack.anime.service.api.SysPermissionService;
 import org.jack.anime.service.api.SysRoleService;
 import org.jack.anime.service.api.SysUserService;
 import org.jack.anime.service.vo.animeManager.AnimeManagerDto;
-import org.jack.anime.service.vo.animePermission.AnimePermissionDto;
-import org.jack.anime.service.vo.animeRole.AnimeRoleDto;
 import org.junit.Test;
 
 /**

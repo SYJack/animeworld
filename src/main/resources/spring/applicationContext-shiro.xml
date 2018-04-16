@@ -15,7 +15,7 @@
 	default-lazy-init="true">
 
 	<!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的ShiroDbRealm.java -->
-	<bean id="authRealm" class="org.jack.anime.realm.AuthRealm">
+	<bean id="authRealm" class="org.jack.anime.shiro.AuthRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher" /> 
 	</bean>
 

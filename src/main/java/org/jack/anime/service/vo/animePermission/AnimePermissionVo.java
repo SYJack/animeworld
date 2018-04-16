@@ -15,12 +15,6 @@ public class AnimePermissionVo extends BaseEntity {
 
 	private String url;
 
-	private String code;
-
-	private String description;
-
-	private Short status;
-
 	public Integer getId() {
 		return id;
 	}
@@ -43,30 +37,6 @@ public class AnimePermissionVo extends BaseEntity {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Short getStatus() {
-		return status;
-	}
-
-	public void setStatus(Short status) {
-		this.status = status;
 	}
 
 }

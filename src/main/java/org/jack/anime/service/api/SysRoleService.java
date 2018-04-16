@@ -56,4 +56,10 @@ public interface SysRoleService {
 	 * @return
 	 */
 	public PageResult<AnimeRoleVo> getListpager(Map<String, Object> params,Integer startRow, Integer pageSize);
+	
+	/**
+	 * @param roleName 角色名
+	 * @return
+	 */
+	public AnimeRoleVo getRoleByRoleName(String roleName);
 }

@@ -1,6 +1,9 @@
 package org.jack.anime.service.vo.animeRole;
 
+import java.util.List;
+
 import org.jack.anime.entity.BaseEntity;
+import org.jack.anime.service.vo.rolePerm.RolePermVo;
 
 public class AnimeRoleVo extends BaseEntity{
 
@@ -14,8 +17,8 @@ public class AnimeRoleVo extends BaseEntity{
     private String name;
 
     private String description;
-
-    private String permissionId;
+    
+    private List<RolePermVo> list;
 
 	public Integer getId() {
 		return id;
@@ -41,13 +44,15 @@ public class AnimeRoleVo extends BaseEntity{
 		this.description = description;
 	}
 
-	public String getPermissionId() {
-		return permissionId;
+	public List<RolePermVo> getList() {
+		return list;
 	}
 
-	public void setPermissionId(String permissionId) {
-		this.permissionId = permissionId;
+	public void setList(List<RolePermVo> list) {
+		this.list = list;
 	}
-    
-    
+
+	
+	
+
 }

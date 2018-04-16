@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.jack.anime.service.impl;
 
 import java.util.ArrayList;

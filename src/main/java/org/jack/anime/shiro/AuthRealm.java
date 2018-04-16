@@ -1,4 +1,4 @@
-package org.jack.anime.realm;
+package org.jack.anime.shiro;
 
 import java.io.Serializable;
 import java.util.HashMap;
