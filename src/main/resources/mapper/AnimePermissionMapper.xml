@@ -35,6 +35,17 @@
     </where>
   </select>
   
+  <select id="getPermissions" resultType="java.lang.Integer">
+  	SELECT
+		p.URL
+	FROM
+		anime_manager m
+	LEFT JOIN tb_role_perm rp ON m.ROLE_ID = rp.ROLE_ID
+	LEFT JOIN anime_permission p ON rp.PERMISSION_ID = p.ID
+	WHERE
+		m.CUSTOMER_ID = #{uId,jdbcType=INTEGER}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from anime_permission
     where ID = #{id,jdbcType=INTEGER}

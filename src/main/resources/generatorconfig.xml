@@ -77,7 +77,7 @@
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table> -->
         
-        <table schema="test" tableName="anime_role" domainObjectName="AnimeRole"
+        <!-- <table schema="test" tableName="anime_role" domainObjectName="AnimeRole"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">
@@ -85,13 +85,13 @@
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
         </table>
         
-        <!-- <table schema="test" tableName="anime_manager" domainObjectName="AnimeManager"
+        <table schema="test" tableName="anime_manager" domainObjectName="AnimeManager"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false" />
             <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
-        </table> -->
+        </table>
       
         <table schema="test" tableName="anime_permission" domainObjectName="AnimePermission"
             enableCountByExample="false" enableUpdateByExample="false"
@@ -102,6 +102,14 @@
         </table>
         
         <table schema="test" tableName="tb_role_perm" domainObjectName="RolePerm"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+        </table> -->
+        
+        <table schema="test" tableName="anime_shiro_filter" domainObjectName="AnimeShiroFilter"
             enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false"
             selectByExampleQueryId="false">

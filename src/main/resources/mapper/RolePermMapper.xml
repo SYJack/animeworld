@@ -26,8 +26,11 @@
     from tb_role_perm
     <where>
     	<choose>
-    		<when test="params!=null and params.name!=null">
-    			and NAME = #{params.name,jdbcType=INTEGER}
+    		<when test="params!=null and params.roleId!=null">
+    			and ROLE_ID = #{params.roleId,jdbcType=INTEGER}
+    		</when>
+    		<when test="params!=null and params.permissionId!=null">
+    			and PERMISSION_ID = #{params.permissionId,jdbcType=INTEGER}
     		</when>
     		<otherwise>  
             </otherwise>

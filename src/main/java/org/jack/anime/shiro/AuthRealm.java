@@ -2,10 +2,7 @@ package org.jack.anime.shiro;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -32,7 +29,6 @@ import org.jack.anime.entity.AnimeRole;
 import org.jack.anime.entity.AnimeUser;
 import org.jack.anime.service.impl.AnimeTimetableServiceImpl;
 import org.jack.anime.utils.tool.Encodes;
-import org.jack.anime.utils.tool.StringTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -93,15 +89,10 @@ public class AuthRealm extends AuthorizingRealm{
 		SimpleAuthorizationInfo info = null;
 		if(!StringUtils.isEmpty(animeRole.getName())){
 			info = new SimpleAuthorizationInfo();
-			Set<String> permissions = new HashSet<String>();
-			//一个角色的所有权限的code集合
-			List<String> permissionIdLs= StringTool.split(animeRole.getPermissionId(), "|");
-			for (String id : permissionIdLs) {
-				permissions.add(animePermissionMapper.selectByPrimaryKey(Integer.valueOf(id)).getCode());
-			}
-			//添加所有的角色和权限
+			//获得授权角色
 			info.addRole(animeRole.getName());
-			info.addStringPermissions(permissions);
+			//获得授权权限
+			info.addStringPermissions(animePermissionMapper.getPermissions(shiroUser.getId()));
 		}
 		return info;
 	}

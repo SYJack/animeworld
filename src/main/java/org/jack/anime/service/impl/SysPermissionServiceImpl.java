@@ -4,6 +4,7 @@
 package org.jack.anime.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,8 +17,10 @@ import javax.validation.Validator;
 import org.apache.commons.beanutils.BeanUtils;
 import org.jack.anime.common.dataMapping.AutoMapper;
 import org.jack.anime.dao.AnimePermissionMapper;
+import org.jack.anime.dao.RolePermMapper;
 import org.jack.anime.entity.AnimePermission;
 import org.jack.anime.entity.PageResult;
+import org.jack.anime.entity.RolePerm;
 import org.jack.anime.service.api.SysPermissionService;
 import org.jack.anime.service.vo.animePermission.AnimePermissionDto;
 import org.jack.anime.service.vo.animePermission.AnimePermissionVo;
@@ -41,6 +44,9 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 
 	@Resource(name = "animePermissionMapper")
 	private AnimePermissionMapper animePermissionMapper;
+	
+	@Resource(name = "rolePermMapper")
+	private RolePermMapper rolePermMapper;
 
 	@Override
 	public Integer countPermission() {
@@ -124,7 +130,17 @@ public class SysPermissionServiceImpl implements SysPermissionService {
 			logger.error("delete:数据未持久化");
 			throw new RuntimeException("数据未持久化");
 		}
-		animePermissionMapper.deleteByPrimaryKey(id);
+		if(animePermissionMapper.deleteByPrimaryKey(id)!=1){
+			throw new RuntimeException("delete:数据删除失败!");
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("permissionId", id);
+		List<RolePerm> resultLs = this.rolePermMapper.getListpager(params);
+		if(resultLs.get(0)!=null){
+			if (this.rolePermMapper.deleteByPrimaryKey(resultLs.get(0).getId()) != 1) {
+	            throw new RuntimeException("delete:删除角色权限失败");
+            }
+		}
 		return Boolean.TRUE;
 	}
 

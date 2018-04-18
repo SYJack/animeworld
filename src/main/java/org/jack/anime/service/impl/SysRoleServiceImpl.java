@@ -1,6 +1,7 @@
 package org.jack.anime.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -111,10 +112,49 @@ public class SysRoleServiceImpl implements SysRoleService {
 			logger.error("modify:管理员信息未持久化");
 			throw new RuntimeException("管理员信息未持久化");
 		}
+		if(this.getRoleByRoleName(dto.getName())!=null){
+			logger.error("save:该角色名已存在");
+			throw new RuntimeException("该角色名已存在");
+		}
+		
 		try {
 			AnimeRole po = AnimeRole.class.newInstance();
 			AutoMapper.mapping(dto,po);
-			animeRoleMapper.updateByPrimaryKeySelective(po);
+			if(animeRoleMapper.updateByPrimaryKeySelective(po)!=1){
+				logger.error("modify:修改角色失败");
+	            throw new RuntimeException("修改角色失败");
+	        }
+			if(dto.getList()!=null){
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("roleId", dto.getId());
+				List<RolePerm> resultLs = this.rolePermMapper.getListpager(params);
+				if(resultLs!=null){
+					for (RolePerm rolePerm : resultLs) {
+						if (this.rolePermMapper.deleteByPrimaryKey(rolePerm.getId()) != 1) {
+	        	            throw new RuntimeException("删除角色权限失败");
+	                    }
+					}
+				}
+				for(int i=0;i<dto.getList().size();i++){
+					RolePerm rolePerm = RolePerm.class.newInstance();
+					rolePerm.setRoleId(dto.getId());
+					rolePerm.setPermissionId(dto.getList().get(i).getPermissionId());
+					if(rolePermMapper.insertSelective(rolePerm)!=1){
+	                    throw new RuntimeException("添加角色-权限失败");
+	                }
+				}
+			}else{
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("roleId", dto.getId());
+				List<RolePerm> resultLs = this.rolePermMapper.getListpager(params);
+				if(resultLs!=null){
+					for (RolePerm rolePerm : resultLs) {
+						if (this.rolePermMapper.deleteByPrimaryKey(rolePerm.getId()) != 1) {
+	        	            throw new RuntimeException("删除角色权限失败");
+	                    }
+					}
+				}
+			}
 			return Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,7 +190,19 @@ public class SysRoleServiceImpl implements SysRoleService {
 			logger.error("delete:数据未持久化");
 			throw new RuntimeException("数据未持久化");
 		}
-		animeRoleMapper.deleteByPrimaryKey(id);
+		if(animeRoleMapper.deleteByPrimaryKey(id)!=1){
+			throw new RuntimeException("delete:数据删除失败!");
+		}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("roleId", id);
+		List<RolePerm> resultLs = this.rolePermMapper.getListpager(params);
+		if(resultLs!=null){
+			for (RolePerm rolePerm : resultLs) {
+				if (this.rolePermMapper.deleteByPrimaryKey(rolePerm.getId()) != 1) {
+    	            throw new RuntimeException("delete:删除角色权限失败");
+                }
+			}
+		}
 		return Boolean.TRUE;
 	}
 
