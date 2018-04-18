@@ -18,15 +18,13 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.jack.anime.common.dataMapping.AutoMapper;
 import org.jack.anime.dao.AnimeShiroFilterMapper;
 import org.jack.anime.entity.AnimeShiroFilter;
-import org.jack.anime.entity.AnimeUser;
 import org.jack.anime.entity.PageResult;
 import org.jack.anime.service.api.AnimeShiroFilterService;
 import org.jack.anime.service.vo.animeShiroFilter.AnimeShiroFilterDto;
 import org.jack.anime.service.vo.animeShiroFilter.AnimeShiroFilterVo;
-import org.jack.anime.service.vo.animeUser.AnimeUserDto;
-import org.jack.anime.service.vo.animeUser.AnimeUserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -35,6 +33,7 @@ import com.github.pagehelper.PageInfo;
  * @author jack
  *
  */
+@Service("animeShiroFilterServiceImpl")
 public class AnimeShiroFilterServiceImpl implements AnimeShiroFilterService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AnimeShiroFilterServiceImpl.class);
