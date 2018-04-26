@@ -82,7 +82,12 @@
 			            <dd><a href="javascript:;" data-url="${baseUrl}/admin/sysRoleList">系统角色管理</a></dd>
 		          	</dl>
 		        </li>
-		        <li class="layui-nav-item"><a href="javascript:;" data-url="">系统管理</a></li>
+		        <li class="layui-nav-item">
+		        	<a href="javascript:;" data-url="">系统管理</a>
+		        	<dl class="layui-nav-child">
+			            <dd><a href="javascript:;" data-url="${baseUrl}/admin/sysUserList">权限配置</a></dd>
+		          	</dl>
+		        </li>
 		      </ul>
 		    </div>
 		  </div>

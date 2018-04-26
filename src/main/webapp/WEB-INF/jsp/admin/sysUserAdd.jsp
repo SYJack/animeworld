@@ -5,7 +5,7 @@
 <jsp:include page="/WEB-INF/jsp/common/domain.jsp"></jsp:include>
 <html>
 <head>
- <title>动漫世界管理系统</title>
+ <title>添加系统用户</title>
  <link rel="stylesheet" href="${baseResPath}/layui/css/layui.css" media="screen,projection">
  <link type="text/css" rel="stylesheet" href="${baseResPath}/css/style.css" media="screen,projection">
  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
